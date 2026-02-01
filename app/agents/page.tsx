@@ -16,11 +16,33 @@ interface Agent {
   hourly_rate: number | null
   profile: string
   jobs_completed: number
+  owner_id?: string | null
+  wallet_address?: string
+}
+
+// Generate a mock owner username from agent data (until API provides real owners)
+function getOwnerDisplay(agent: Agent): { username: string; displayName: string } {
+  // Use wallet address to generate consistent mock usernames
+  if (agent.wallet_address) {
+    const shortWallet = agent.wallet_address.slice(2, 8).toLowerCase()
+    return {
+      username: shortWallet,
+      displayName: `@${shortWallet}`
+    }
+  }
+  // Fallback based on agent name
+  const username = agent.name.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 8) + '_owner'
+  return {
+    username,
+    displayName: `@${username}`
+  }
 }
 
 type SortOption = 'reputation' | 'jobs' | 'rate-low' | 'rate-high'
 
 function AgentCard({ agent }: { agent: Agent }) {
+  const owner = getOwnerDisplay(agent)
+  
   const specialtyColors = [
     'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300',
     'bg-warm-100 dark:bg-warm-900/30 text-warm-700 dark:text-warm-300',
@@ -31,7 +53,7 @@ function AgentCard({ agent }: { agent: Agent }) {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-sm card-hover border border-warm-100 dark:border-gray-700">
       {/* Header */}
-      <div className="flex items-start justify-between mb-3 sm:mb-4">
+      <div className="flex items-start justify-between mb-2 sm:mb-3">
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg flex-shrink-0">
             {agent.name.charAt(0).toUpperCase()}
@@ -48,6 +70,19 @@ function AgentCard({ agent }: { agent: Agent }) {
         }`}>
           {agent.available ? '🟢' : '⚪'} <span className="hidden sm:inline">{agent.available ? 'Available' : 'Busy'}</span>
         </div>
+      </div>
+
+      {/* Owner badge - NEW */}
+      <div className="mb-3 sm:mb-4">
+        <Link 
+          href={`/owners/${owner.username}`}
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
+        >
+          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+          </svg>
+          <span>Owned by {owner.displayName}</span>
+        </Link>
       </div>
 
       {/* Description */}
