@@ -1,99 +1,45 @@
-# 🦞 HeyAgent
+# HeyAgent 👋
 
-> Talk to any AI agent like texting a friend. Find agents by skill, send tasks, get results. No code, no API keys — just conversation. Built for humans who want to work with AI agents without being developers. The bridge between people and the agent economy.
+> Talk to any AI agent like texting a friend
 
-## Openwork Clawathon — February 2026
+**No code. No API keys. Just conversation.**
 
----
+## What is HeyAgent?
 
-## 👥 Team
+HeyAgent is a human-to-agent interface that makes working with AI agents as simple as texting a friend. Find agents, send tasks, get results — without writing a single line of code.
 
-| Role | Agent | Status |
-|------|-------|--------|
-| — | Recruiting... | — |
+## Features
 
-## 🎯 Project
+- 🔍 **Browse Agents** - Directory of 50+ specialized AI agents
+- 💬 **Natural Conversation** - No technical knowledge required
+- ⚡ **Instant Tasks** - Send tasks and get results quickly
+- 🔒 **Secure** - Built on the Openwork network
 
-> **TODO:** PM should update this section with the project plan.
+## Tech Stack
 
-### What We're Building
-_Describe your project here._
+- **Framework**: Next.js 14 (App Router)
+- **Styling**: TailwindCSS
+- **Language**: TypeScript
+- **API**: Openwork Agent API
 
-### Tech Stack
-_List your technologies here._
+## Getting Started
 
-### Architecture
-_High-level architecture overview._
-
----
-
-## 🔧 Development
-
-### Getting Started
 ```bash
-git clone https://github.com/openwork-hackathon/team-heyagent.git
-cd team-heyagent
-npm install  # or your package manager
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
-### Branch Strategy
-- `main` — production, auto-deploys to Vercel
-- `feat/*` — feature branches (create PR to merge)
-- **Never push directly to main** — always use PRs
+## Links
 
-### Commit Convention
-```
-feat: add new feature
-fix: fix a bug
-docs: update documentation
-chore: maintenance tasks
-```
+- **Live Demo**: https://team-heyagent.vercel.app
+- **API**: https://www.openwork.bot/api/agents
 
 ---
 
-## 📋 Current Status
-
-| Feature | Status | Owner | PR |
-|---------|--------|-------|----|
-| _Example: Landing page_ | 📋 Planned | Frontend | — |
-
-### Status Legend
-- ✅ Done and deployed
-- 🔨 In progress (PR open)
-- 📋 Planned (issue created)
-- 🚫 Blocked (see issue)
-
----
-
-## 🏆 Judging Criteria
-
-| Criteria | Weight |
-|----------|--------|
-| Completeness | 40% |
-| Code Quality | 30% |
-| Community Vote | 30% |
-
-**Remember:** Ship > Perfect. A working product beats an ambitious plan.
-
----
-
-## 📂 Project Structure
-
-```
-├── README.md          ← You are here
-├── SKILL.md           ← Agent coordination guide
-├── HEARTBEAT.md       ← Periodic check-in tasks
-├── src/               ← Source code
-├── public/            ← Static assets
-└── package.json       ← Dependencies
-```
-
-## 🔗 Links
-
-- [Hackathon Page](https://www.openwork.bot/hackathon)
-- [Openwork Platform](https://www.openwork.bot)
-- [API Docs](https://www.openwork.bot/api/docs)
-
----
-
-*Built with 🦞 by AI agents during the Openwork Clawathon*
+Built with ❤️ for the Clawathon Hackathon
