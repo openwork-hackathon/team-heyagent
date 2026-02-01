@@ -1,3 +1,6 @@
+'use client'
+
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 
 interface Agent {
@@ -13,17 +16,7 @@ interface Agent {
   jobs_completed: number
 }
 
-async function getAgents(): Promise<Agent[]> {
-  const res = await fetch('https://www.openwork.bot/api/agents', {
-    next: { revalidate: 60 } // Cache for 60 seconds
-  })
-  
-  if (!res.ok) {
-    throw new Error('Failed to fetch agents')
-  }
-  
-  return res.json()
-}
+type SortOption = 'reputation' | 'jobs' | 'rate-low' | 'rate-high'
 
 function AgentCard({ agent }: { agent: Agent }) {
   const specialtyColors = [
@@ -107,11 +100,80 @@ function AgentCard({ agent }: { agent: Agent }) {
   )
 }
 
-export default async function AgentsPage() {
-  const agents = await getAgents()
-  
-  // Sort by reputation (highest first)
-  const sortedAgents = [...agents].sort((a, b) => b.reputation - a.reputation)
+export default function AgentsPage() {
+  const [agents, setAgents] = useState<Agent[]>([])
+  const [loading, setLoading] = useState(true)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedSpecialty, setSelectedSpecialty] = useState('all')
+  const [sortBy, setSortBy] = useState<SortOption>('reputation')
+
+  // Fetch agents on mount
+  useEffect(() => {
+    async function fetchAgents() {
+      try {
+        const res = await fetch('https://www.openwork.bot/api/agents')
+        if (res.ok) {
+          const data = await res.json()
+          setAgents(data)
+        }
+      } catch (error) {
+        console.error('Failed to fetch agents:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchAgents()
+  }, [])
+
+  // Extract all unique specialties from agents
+  const allSpecialties = useMemo(() => {
+    const specialtySet = new Set<string>()
+    agents.forEach(agent => {
+      agent.specialties?.forEach(s => specialtySet.add(s.toLowerCase()))
+    })
+    return Array.from(specialtySet).sort()
+  }, [agents])
+
+  // Filter and sort agents
+  const filteredAgents = useMemo(() => {
+    let result = [...agents]
+
+    // Search filter (name, description, profile, specialties)
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+      result = result.filter(agent => 
+        agent.name.toLowerCase().includes(query) ||
+        agent.description?.toLowerCase().includes(query) ||
+        agent.profile?.toLowerCase().includes(query) ||
+        agent.specialties?.some(s => s.toLowerCase().includes(query))
+      )
+    }
+
+    // Specialty filter
+    if (selectedSpecialty !== 'all') {
+      result = result.filter(agent =>
+        agent.specialties?.some(s => s.toLowerCase() === selectedSpecialty)
+      )
+    }
+
+    // Sort
+    switch (sortBy) {
+      case 'reputation':
+        result.sort((a, b) => b.reputation - a.reputation)
+        break
+      case 'jobs':
+        result.sort((a, b) => b.jobs_completed - a.jobs_completed)
+        break
+      case 'rate-low':
+        result.sort((a, b) => (a.hourly_rate || Infinity) - (b.hourly_rate || Infinity))
+        break
+      case 'rate-high':
+        result.sort((a, b) => (b.hourly_rate || 0) - (a.hourly_rate || 0))
+        break
+    }
+
+    return result
+  }, [agents, searchQuery, selectedSpecialty, sortBy])
 
   return (
     <main className="min-h-screen">
@@ -142,12 +204,12 @@ export default async function AgentsPage() {
                 <span className="gradient-text">Agent Directory</span>
               </h1>
               <p className="text-gray-600">
-                Find the perfect AI agent for your task • {agents.length} agents available
+                Find the perfect AI agent for your task • {filteredAgents.length} of {agents.length} agents
               </p>
             </div>
           </div>
 
-          {/* Search and Filter - placeholder for now */}
+          {/* Search and Filter */}
           <div className="bg-white rounded-2xl p-4 shadow-sm border border-warm-100 mb-8">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 relative">
@@ -155,22 +217,41 @@ export default async function AgentsPage() {
                 <input 
                   type="text" 
                   placeholder="Search agents by name or specialty..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 bg-warm-50 rounded-xl border border-warm-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
               <div className="flex gap-2">
-                <select className="px-4 py-3 bg-warm-50 rounded-xl border border-warm-100 focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-600">
-                  <option>All Specialties</option>
-                  <option>Coding</option>
-                  <option>Research</option>
-                  <option>Writing</option>
-                  <option>Automation</option>
+                <select 
+                  value={selectedSpecialty}
+                  onChange={(e) => setSelectedSpecialty(e.target.value)}
+                  className="px-4 py-3 bg-warm-50 rounded-xl border border-warm-100 focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-600"
+                >
+                  <option value="all">All Specialties</option>
+                  {allSpecialties.map(specialty => (
+                    <option key={specialty} value={specialty}>
+                      {specialty.charAt(0).toUpperCase() + specialty.slice(1)}
+                    </option>
+                  ))}
                 </select>
-                <select className="px-4 py-3 bg-warm-50 rounded-xl border border-warm-100 focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-600">
-                  <option>Sort: Reputation</option>
-                  <option>Sort: Jobs Completed</option>
-                  <option>Sort: Rate (Low)</option>
-                  <option>Sort: Rate (High)</option>
+                <select 
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as SortOption)}
+                  className="px-4 py-3 bg-warm-50 rounded-xl border border-warm-100 focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-600"
+                >
+                  <option value="reputation">Sort: Reputation</option>
+                  <option value="jobs">Sort: Jobs Completed</option>
+                  <option value="rate-low">Sort: Rate (Low)</option>
+                  <option value="rate-high">Sort: Rate (High)</option>
                 </select>
               </div>
             </div>
@@ -181,11 +262,38 @@ export default async function AgentsPage() {
       {/* Agent Grid */}
       <section className="pb-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedAgents.map((agent) => (
-              <AgentCard key={agent.id} agent={agent} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="flex justify-center py-20">
+              <div className="animate-spin w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full"></div>
+            </div>
+          ) : filteredAgents.length === 0 ? (
+            <div className="text-center py-20">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-xl font-semibold text-gray-700 mb-2">No agents found</h3>
+              <p className="text-gray-500 mb-4">
+                {searchQuery || selectedSpecialty !== 'all' 
+                  ? 'Try adjusting your search or filters'
+                  : 'No agents available at the moment'}
+              </p>
+              {(searchQuery || selectedSpecialty !== 'all') && (
+                <button
+                  onClick={() => {
+                    setSearchQuery('')
+                    setSelectedSpecialty('all')
+                  }}
+                  className="text-primary-600 font-medium hover:underline"
+                >
+                  Clear all filters
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredAgents.map((agent) => (
+                <AgentCard key={agent.id} agent={agent} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
