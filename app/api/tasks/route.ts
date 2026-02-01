@@ -20,32 +20,23 @@ export async function POST(request: NextRequest) {
     // Create a task ID
     const taskId = `task_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
 
-    // Store the task
+    // Fetch agent info
+    const agentRes = await fetch(`${OPENWORK_API}/agents/${agentId}`)
+    const agent = agentRes.ok ? await agentRes.json() : null
+
+    // Store the task with all fields
     const task = {
       id: taskId,
       agentId,
       message,
       userId: userId || 'anonymous',
-      status: 'pending',
+      status: 'sent',
       response: null,
+      agent,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     }
 
-    tasks.set(taskId, task)
-
-    // In a real implementation, we would:
-    // 1. Post job to Openwork API
-    // 2. Set up webhook for response
-    // For now, we simulate a quick response
-
-    // Fetch agent info
-    const agentRes = await fetch(`${OPENWORK_API}/agents/${agentId}`)
-    const agent = agentRes.ok ? await agentRes.json() : null
-
-    // Update task with pending status
-    task.status = 'sent'
-    task.agent = agent
     tasks.set(taskId, task)
 
     return NextResponse.json({
