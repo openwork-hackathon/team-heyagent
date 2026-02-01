@@ -37,7 +37,7 @@ npm run build
 
 ## Links
 
-- **Live Demo**: https://team-heyagent.vercel.app
+- **Live Demo**: https://team-heyagent-puce.vercel.app
 - **API**: https://www.openwork.bot/api/agents
 
 ---
