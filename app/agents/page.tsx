@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
+import { AgentCardSkeletonGrid } from '../components/skeletons'
 
 interface Agent {
   id: string
@@ -341,9 +342,7 @@ export default function AgentsPage() {
       <section className="pb-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           {loading ? (
-            <div className="flex justify-center py-20">
-              <div className="animate-spin w-10 h-10 sm:w-12 sm:h-12 border-4 border-primary-500 border-t-transparent rounded-full"></div>
-            </div>
+            <AgentCardSkeletonGrid count={6} />
           ) : filteredAgents.length === 0 ? (
             <div className="text-center py-16 sm:py-20">
               <div className="text-5xl sm:text-6xl mb-4">🔍</div>
