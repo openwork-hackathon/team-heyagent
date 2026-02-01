@@ -18,6 +18,39 @@ interface Agent {
   jobs_completed: number
   owner_id?: string | null
   wallet_address?: string
+  visibility?: 'public' | 'friends' | 'private'  // Permission level
+  hasAccess?: boolean  // Whether current user has access
+}
+
+// Simulate visibility based on agent data (for demo)
+function getAgentVisibility(agent: Agent): { visibility: 'public' | 'friends' | 'private'; hasAccess: boolean } {
+  // Use reputation to simulate different visibility levels for demo
+  if (agent.reputation >= 70) {
+    return { visibility: 'public', hasAccess: true }
+  } else if (agent.reputation >= 50) {
+    // Friends-only - simulate random access
+    const hasAccess = agent.jobs_completed % 2 === 0
+    return { visibility: 'friends', hasAccess }
+  } else {
+    return { visibility: 'private', hasAccess: false }
+  }
+}
+
+// Visibility badge component
+function VisibilityBadge({ visibility }: { visibility: 'public' | 'friends' | 'private' }) {
+  const config = {
+    public: { icon: '🌐', label: 'Public', className: 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400' },
+    friends: { icon: '👥', label: 'Friends', className: 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' },
+    private: { icon: '🔒', label: 'Private', className: 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400' },
+  }
+  const { icon, label, className } = config[visibility]
+  
+  return (
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${className}`}>
+      <span>{icon}</span>
+      <span>{label}</span>
+    </span>
+  )
 }
 
 // Generate a mock owner username from agent data (until API provides real owners)
@@ -61,7 +94,9 @@ function getOwnerStats(agents: Agent[]): { username: string; displayName: string
 }
 
 function AgentCard({ agent }: { agent: Agent }) {
+  const [requestSent, setRequestSent] = useState(false)
   const owner = getOwnerDisplay(agent)
+  const { visibility, hasAccess } = getAgentVisibility(agent)
   
   const specialtyColors = [
     'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300',
@@ -70,12 +105,25 @@ function AgentCard({ agent }: { agent: Agent }) {
     'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300',
   ]
 
+  const handleRequestAccess = () => {
+    setRequestSent(true)
+    // In real app, this would send a request to the owner
+  }
+
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-sm card-hover border border-warm-100 dark:border-gray-700">
+    <div className={`bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-sm card-hover border ${
+      visibility === 'private' && !hasAccess 
+        ? 'border-gray-200 dark:border-gray-600 opacity-75' 
+        : 'border-warm-100 dark:border-gray-700'
+    }`}>
       {/* Header */}
       <div className="flex items-start justify-between mb-2 sm:mb-3">
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg flex-shrink-0">
+          <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${
+            visibility === 'private' && !hasAccess 
+              ? 'from-gray-400 to-gray-500' 
+              : 'from-primary-400 to-primary-600'
+          } rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg flex-shrink-0`}>
             {agent.name.charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
@@ -83,16 +131,19 @@ function AgentCard({ agent }: { agent: Agent }) {
             <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{agent.platform}</span>
           </div>
         </div>
-        <div className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
-          agent.available 
-            ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
-            : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
-        }`}>
-          {agent.available ? '🟢' : '⚪'} <span className="hidden sm:inline">{agent.available ? 'Available' : 'Busy'}</span>
+        <div className="flex flex-col items-end gap-1">
+          <VisibilityBadge visibility={visibility} />
+          <div className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
+            agent.available 
+              ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
+              : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+          }`}>
+            {agent.available ? '🟢' : '⚪'} <span className="hidden sm:inline">{agent.available ? 'Available' : 'Busy'}</span>
+          </div>
         </div>
       </div>
 
-      {/* Owner badge - NEW */}
+      {/* Owner badge */}
       <div className="mb-3 sm:mb-4">
         <Link 
           href={`/owners/${owner.username}`}
