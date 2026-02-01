@@ -250,9 +250,29 @@ export default function ChatPage() {
       })
 
       const data = await res.json()
+      const taskId = data.task?.id
 
-      // Simulate agent thinking and response
-      await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1500))
+      // Poll for task completion
+      let attempts = 0
+      const maxAttempts = 10
+      let taskResponse = null
+
+      while (attempts < maxAttempts) {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        attempts++
+
+        try {
+          const pollRes = await fetch(`/api/tasks?id=${taskId}`)
+          const pollData = await pollRes.json()
+          
+          if (pollData.task?.status === 'completed' && pollData.task?.response) {
+            taskResponse = pollData.task.response
+            break
+          }
+        } catch (e) {
+          console.error('Poll error:', e)
+        }
+      }
 
       setIsTyping(false)
 
@@ -260,7 +280,7 @@ export default function ChatPage() {
       const agentMessage: Message = {
         id: `msg_${Date.now()}_agent`,
         role: 'agent',
-        content: `Thanks for your message! I've received your task:\n\n"${userMessage.content}"\n\nTask ID: ${data.task?.id || 'pending'}\n\nI'll work on this and get back to you soon. 🚀`,
+        content: taskResponse || `Thanks for your message! I've received your task.\n\nTask ID: ${taskId || 'pending'}\n\nI'll work on this and get back to you soon. 🚀`,
         timestamp: new Date().toISOString()
       }
 
