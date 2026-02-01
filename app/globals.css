@@ -4,10 +4,22 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
+/* Light theme variables */
 :root {
   --foreground-rgb: 51, 51, 51;
   --background-start-rgb: 255, 253, 250;
   --background-end-rgb: 255, 248, 240;
+  --card-bg: 255, 255, 255;
+  --border-color: 245, 240, 235;
+}
+
+/* Dark theme variables */
+.dark {
+  --foreground-rgb: 245, 245, 245;
+  --background-start-rgb: 17, 17, 17;
+  --background-end-rgb: 26, 26, 26;
+  --card-bg: 38, 38, 38;
+  --border-color: 55, 55, 55;
 }
 
 body {
@@ -18,7 +30,8 @@ body {
       rgb(var(--background-end-rgb)) 100%
     );
   min-height: 100vh;
-  min-height: 100dvh; /* Dynamic viewport height for mobile */
+  min-height: 100dvh;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Smooth scrolling */
@@ -88,6 +101,13 @@ html, body {
   background-clip: text;
 }
 
+/* Card styles with dark mode support */
+.card {
+  background: rgb(var(--card-bg));
+  border-color: rgb(var(--border-color));
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
 /* Card hover effects */
 .card-hover {
   transition: all 0.3s ease;
@@ -96,6 +116,10 @@ html, body {
 .card-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.dark .card-hover:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 /* Disable hover effects on touch devices */
@@ -127,15 +151,40 @@ html, body {
 }
 
 .btn-secondary {
-  @apply bg-white border-2 border-primary-500 text-primary-600 font-semibold px-6 py-3 sm:px-8 sm:py-4 rounded-full transition-all duration-300;
+  @apply bg-white dark:bg-gray-800 border-2 border-primary-500 text-primary-600 dark:text-primary-400 font-semibold px-6 py-3 sm:px-8 sm:py-4 rounded-full transition-all duration-300;
 }
 
 .btn-secondary:hover {
-  @apply bg-primary-50 border-primary-600;
+  @apply bg-primary-50 dark:bg-gray-700 border-primary-600;
 }
 
 .btn-secondary:active {
-  @apply bg-primary-100;
+  @apply bg-primary-100 dark:bg-gray-600;
+}
+
+/* Dark mode utility classes */
+.dark-card {
+  @apply bg-white dark:bg-gray-800 border-warm-100 dark:border-gray-700;
+}
+
+.dark-text {
+  @apply text-gray-800 dark:text-gray-100;
+}
+
+.dark-text-muted {
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+.dark-text-subtle {
+  @apply text-gray-500 dark:text-gray-500;
+}
+
+.dark-bg-subtle {
+  @apply bg-warm-50 dark:bg-gray-800/50;
+}
+
+.dark-border {
+  @apply border-warm-100 dark:border-gray-700;
 }
 
 /* Touch-friendly tap targets */
@@ -189,6 +238,16 @@ textarea:focus-visible {
   animation: shimmer 1.5s ease-in-out infinite;
 }
 
+.dark .animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    #374151 0%,
+    #4b5563 50%,
+    #374151 100%
+  );
+  background-size: 200% 100%;
+}
+
 /* Smooth transitions for filtered content */
 .transition-grid {
   transition: all 0.3s ease-out;
@@ -240,4 +299,24 @@ textarea:focus-visible {
 
 .animate-typing-dot {
   animation: typingDot 1.4s ease-in-out infinite;
+}
+
+/* Theme transition */
+* {
+  transition-property: background-color, border-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* Exclude animations from theme transitions */
+.animate-float,
+.animate-fade-in-up,
+.animate-pulse-glow,
+.animate-shimmer,
+.animate-card-enter,
+.animate-message-in,
+.animate-typing-dot,
+.animate-spin,
+.animate-bounce {
+  transition: none;
 }
