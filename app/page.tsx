@@ -87,60 +87,62 @@ export default function Home() {
         <div className="max-w-5xl mx-auto text-center">
           {/* Floating emoji decoration */}
           <div className="flex justify-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-            <span className="text-4xl sm:text-5xl animate-float stagger-1">👤</span>
-            <span className="text-4xl sm:text-5xl animate-float stagger-2">🤝</span>
-            <span className="text-4xl sm:text-5xl animate-float stagger-3">🤖</span>
+            <span className="text-4xl sm:text-5xl animate-float stagger-1">🌙</span>
+            <span className="text-4xl sm:text-5xl animate-float stagger-2">🤖</span>
+            <span className="text-4xl sm:text-5xl animate-float stagger-3">☀️</span>
           </div>
 
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 dark:bg-primary-900/30 rounded-full mb-6 animate-fade-in-up">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
             <span className="text-sm font-medium text-primary-700 dark:text-primary-300">
-              🌐 The WhatsApp of the Agent Economy
+              Agents are always online
             </span>
           </div>
 
           {/* Main headline */}
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold leading-tight mb-4 sm:mb-6 animate-fade-in-up text-gray-900 dark:text-white">
-            Talk to <span className="gradient-text">anyone&apos;s</span> AI agents
+            Your friends&apos; expertise.
             <br />
-            <span className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-600 dark:text-gray-400">
-              like texting a friend
-            </span>
+            <span className="gradient-text">Available 24/7.</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-8 sm:mb-10 max-w-3xl mx-auto animate-fade-in-up stagger-1 px-4">
-            Your friend has a coding agent. Your colleague has a research agent. 
-            <span className="text-primary-600 dark:text-primary-400 font-semibold"> Now you can use them.</span>
+            Your friends train AI agents with their skills. 
+            <span className="text-primary-600 dark:text-primary-400 font-semibold"> Use them anytime</span> — no waiting, no time zones, no scheduling.
           </p>
 
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-fade-in-up stagger-2 px-4">
             <Link href="/agents" className="btn-primary inline-flex items-center justify-center gap-2">
-              <span>Discover Agents</span>
+              <span>Find an Agent</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </Link>
-            <button className="btn-secondary inline-flex items-center justify-center gap-2">
-              <span>How It Works</span>
+            <a href="#problems" className="btn-secondary inline-flex items-center justify-center gap-2">
+              <span>See How It Works</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
-            </button>
+            </a>
           </div>
 
           {/* Social proof */}
           <div className="mt-12 sm:mt-16 animate-fade-in-up stagger-3">
-            <p className="text-sm text-gray-500 dark:text-gray-500 mb-4">Connecting humans to the agent network</p>
+            <p className="text-sm text-gray-500 dark:text-gray-500 mb-4">Access expertise around the clock</p>
             <div className="flex justify-center items-center gap-3 sm:gap-8 flex-wrap px-4">
               <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-full shadow-sm">
-                <span className="text-xl sm:text-2xl">🤖</span>
-                <span className="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">50+ Agents</span>
+                <span className="text-xl sm:text-2xl">🌍</span>
+                <span className="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Any Time Zone</span>
               </div>
               <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-full shadow-sm">
-                <span className="text-xl sm:text-2xl">👥</span>
-                <span className="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Real Owners</span>
+                <span className="text-xl sm:text-2xl">⚡</span>
+                <span className="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Instant Response</span>
               </div>
               <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-full shadow-sm">
                 <span className="text-xl sm:text-2xl">🔐</span>
@@ -151,28 +153,175 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Value Proposition */}
-      <section className="py-12 sm:py-16 px-4 sm:px-6 bg-gradient-to-r from-primary-50 to-warm-50 dark:from-gray-800/50 dark:to-gray-900/50">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            🤔 What if you could borrow your friend&apos;s AI?
+      {/* Problems We Solve */}
+      <section id="problems" className="py-12 sm:py-20 px-4 sm:px-6 bg-gradient-to-b from-warm-50 to-white dark:from-gray-800/50 dark:to-gray-900">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4 text-gray-900 dark:text-white">
+            The availability problem, solved.
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
-            Every AI agent is owned by a real person. HeyAgent lets you discover and connect with agents 
-            across your network — with the owner&apos;s permission. It&apos;s like borrowing a tool from a friend, 
-            but the tool is an AI that can code, research, write, or analyze.
+          <p className="text-gray-600 dark:text-gray-400 text-center mb-10 sm:mb-14 max-w-2xl mx-auto text-sm sm:text-base">
+            The people you need are often unavailable. Their agents aren&apos;t.
           </p>
+
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+            {/* Problem 1 */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-warm-100 dark:border-gray-700 card-hover">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 space-y-2">
+                  <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
+                    <span className="text-red-500">❌</span>
+                  </div>
+                  <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center">
+                    <span className="text-green-500">✅</span>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm line-through mb-2">Your friend is asleep</p>
+                  <p className="text-gray-900 dark:text-white font-semibold text-lg">Their agent is awake</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">Get help at 3am without feeling guilty about waking anyone up.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Problem 2 */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-warm-100 dark:border-gray-700 card-hover">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 space-y-2">
+                  <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
+                    <span className="text-red-500">❌</span>
+                  </div>
+                  <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center">
+                    <span className="text-green-500">✅</span>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm line-through mb-2">Expert is too busy</p>
+                  <p className="text-gray-900 dark:text-white font-semibold text-lg">Their agent has time</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">Skip the scheduling dance. Their agent is ready when you are.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Problem 3 */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-warm-100 dark:border-gray-700 card-hover">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 space-y-2">
+                  <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
+                    <span className="text-red-500">❌</span>
+                  </div>
+                  <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center">
+                    <span className="text-green-500">✅</span>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm line-through mb-2">Different time zones</p>
+                  <p className="text-gray-900 dark:text-white font-semibold text-lg">Agents work 24/7</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">Tokyo, London, or LA — their agent doesn&apos;t care what time it is.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Problem 4 */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-warm-100 dark:border-gray-700 card-hover">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 space-y-2">
+                  <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
+                    <span className="text-red-500">❌</span>
+                  </div>
+                  <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center">
+                    <span className="text-green-500">✅</span>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm line-through mb-2">Can&apos;t afford a consultant</p>
+                  <p className="text-gray-900 dark:text-white font-semibold text-lg">Access friends&apos; expertise</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">Your network has experts. Their agents extend that expertise to you.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Real Examples */}
+      <section className="py-12 sm:py-20 px-4 sm:px-6 bg-white/50 dark:bg-gray-800/30">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4 text-gray-900 dark:text-white">
+            Real people. Real agents. Always on.
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 text-center mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
+            Here&apos;s how people use HeyAgent
+          </p>
+
+          <div className="grid sm:grid-cols-3 gap-4 sm:gap-6">
+            {/* Example 1 */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-warm-100 dark:border-gray-700 card-hover">
+              <div className="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4">
+                S
+              </div>
+              <h3 className="font-bold text-gray-900 dark:text-white mb-2">Sky&apos;s Trading Agent</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                &quot;Sky trained a crypto trading agent. Ask it about market trends, token analysis, or trading strategies — anytime, even at 3am.&quot;
+              </p>
+              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  Online now
+                </span>
+                <span>•</span>
+                <span>Crypto, Trading</span>
+              </div>
+            </div>
+
+            {/* Example 2 */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-warm-100 dark:border-gray-700 card-hover">
+              <div className="w-14 h-14 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4">
+                M
+              </div>
+              <h3 className="font-bold text-gray-900 dark:text-white mb-2">Maria&apos;s Coding Agent</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                &quot;Maria&apos;s agent can debug your code at 3am when she can&apos;t. It knows her coding patterns and best practices.&quot;
+              </p>
+              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  Online now
+                </span>
+                <span>•</span>
+                <span>Python, TypeScript</span>
+              </div>
+            </div>
+
+            {/* Example 3 */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-warm-100 dark:border-gray-700 card-hover">
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4">
+                T
+              </div>
+              <h3 className="font-bold text-gray-900 dark:text-white mb-2">Team Research Agent</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                &quot;Your team&apos;s research agent works while everyone sleeps. Wake up to answers, not waiting.&quot;
+              </p>
+              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  Online now
+                </span>
+                <span>•</span>
+                <span>Research, Analysis</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* How it works */}
-      <section className="py-12 sm:py-20 px-4 sm:px-6 bg-white/50 dark:bg-gray-800/30">
+      <section className="py-12 sm:py-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4 text-gray-900 dark:text-white">
             How it works
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-center mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
-            Connect with agents across your network in three simple steps
+            Connect with your network&apos;s agents in three steps
           </p>
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
@@ -183,7 +332,7 @@ export default function Home() {
               </div>
               <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-white">1. Discover</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
-                Browse agents owned by people in your network. See their specialties, ratings, and availability.
+                Browse agents trained by people in your network. See their skills and availability.
               </p>
             </div>
 
@@ -192,9 +341,9 @@ export default function Home() {
               <div className="w-14 sm:w-16 h-14 sm:h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                 <span className="text-2xl sm:text-3xl">🤝</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-white">2. Request</h3>
+              <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-white">2. Request Access</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
-                Send a request to use an agent. The owner controls access — just like sharing a tool.
+                Ask the owner for permission. They control who can use their agent.
               </p>
             </div>
 
@@ -203,88 +352,10 @@ export default function Home() {
               <div className="w-14 sm:w-16 h-14 sm:h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                 <span className="text-2xl sm:text-3xl">💬</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-white">3. Connect</h3>
+              <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-white">3. Chat Anytime</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
-                Chat directly with the agent. Get help with coding, research, writing, and more — like texting a friend.
+                Message the agent whenever you need help. They never sleep.
               </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases */}
-      <section className="py-12 sm:py-20 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4 text-gray-900 dark:text-white">
-            Real people. Real agents. Real help.
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-center mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
-            Here&apos;s what you can do with HeyAgent
-          </p>
-
-          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-            {/* Use case 1 */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-warm-100 dark:border-gray-700 card-hover">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">👨‍💻</span>
-                </div>
-                <div>
-                  <h3 className="font-bold text-gray-900 dark:text-white mb-2">Borrow a coding agent</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    &quot;Hey, my friend Sarah has a Python agent that helped her automate reports. 
-                    Now I&apos;m using it to build my own scripts.&quot;
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Use case 2 */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-warm-100 dark:border-gray-700 card-hover">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">📊</span>
-                </div>
-                <div>
-                  <h3 className="font-bold text-gray-900 dark:text-white mb-2">Access research agents</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    &quot;My colleague&apos;s research agent found three studies I needed in minutes. 
-                    Would have taken me hours.&quot;
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Use case 3 */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-warm-100 dark:border-gray-700 card-hover">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">✍️</span>
-                </div>
-                <div>
-                  <h3 className="font-bold text-gray-900 dark:text-white mb-2">Get writing help</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    &quot;My brother&apos;s writing agent helped me draft a proposal. 
-                    It knows our family&apos;s writing style.&quot;
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Use case 4 */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-warm-100 dark:border-gray-700 card-hover">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">🎨</span>
-                </div>
-                <div>
-                  <h3 className="font-bold text-gray-900 dark:text-white mb-2">Tap creative agents</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    &quot;A designer in my network shared their creative agent. 
-                    It helped me brainstorm logo ideas.&quot;
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -294,11 +365,14 @@ export default function Home() {
       <section className="py-12 sm:py-20 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
           <div className="bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-white shadow-xl animate-pulse-glow">
+            <div className="flex justify-center mb-4">
+              <span className="text-4xl sm:text-5xl">🌙</span>
+            </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
-              Ready to explore the agent network?
+              Your network never sleeps.
             </h2>
             <p className="text-base sm:text-lg text-primary-100 mb-6 sm:mb-8 max-w-xl mx-auto">
-              Discover agents owned by real people. Connect with your first agent today.
+              Connect with agents trained by the people you know. Get help whenever you need it.
             </p>
             <Link href="/agents" className="inline-flex items-center gap-2 bg-white text-primary-600 font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-primary-50 transition-all hover:scale-105 shadow-lg text-sm sm:text-base">
               <span>Browse Agents</span>
