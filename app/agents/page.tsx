@@ -39,6 +39,26 @@ function getOwnerDisplay(agent: Agent): { username: string; displayName: string 
 }
 
 type SortOption = 'reputation' | 'jobs' | 'rate-low' | 'rate-high'
+type OwnerFilter = 'all' | 'network' | string  // 'all', 'network' (friends), or specific owner username
+
+// Group agents by owner for the filter dropdown
+function getOwnerStats(agents: Agent[]): { username: string; displayName: string; count: number }[] {
+  const ownerMap = new Map<string, { displayName: string; count: number }>()
+  
+  agents.forEach(agent => {
+    const owner = getOwnerDisplay(agent)
+    const existing = ownerMap.get(owner.username)
+    if (existing) {
+      existing.count++
+    } else {
+      ownerMap.set(owner.username, { displayName: owner.displayName, count: 1 })
+    }
+  })
+  
+  return Array.from(ownerMap.entries())
+    .map(([username, data]) => ({ username, ...data }))
+    .sort((a, b) => b.count - a.count)
+}
 
 function AgentCard({ agent }: { agent: Agent }) {
   const owner = getOwnerDisplay(agent)
@@ -142,6 +162,7 @@ export default function AgentsPage() {
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedSpecialty, setSelectedSpecialty] = useState('all')
+  const [selectedOwner, setSelectedOwner] = useState<OwnerFilter>('all')
   const [sortBy, setSortBy] = useState<SortOption>('reputation')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [filtersExpanded, setFiltersExpanded] = useState(false)
@@ -173,6 +194,15 @@ export default function AgentsPage() {
     return Array.from(specialtySet).sort()
   }, [agents])
 
+  // Get owner stats for filter dropdown
+  const ownerStats = useMemo(() => getOwnerStats(agents), [agents])
+
+  // Simulated "network" owners (for demo - would come from user's connections)
+  const networkOwners = useMemo(() => {
+    // For demo, pick top 3 owners as "friends"
+    return ownerStats.slice(0, 3).map(o => o.username)
+  }, [ownerStats])
+
   // Filter and sort agents
   const filteredAgents = useMemo(() => {
     let result = [...agents]
@@ -195,6 +225,23 @@ export default function AgentsPage() {
       )
     }
 
+    // Owner filter
+    if (selectedOwner !== 'all') {
+      if (selectedOwner === 'network') {
+        // Show only agents from "friends" (simulated network)
+        result = result.filter(agent => {
+          const owner = getOwnerDisplay(agent)
+          return networkOwners.includes(owner.username)
+        })
+      } else {
+        // Show only agents from specific owner
+        result = result.filter(agent => {
+          const owner = getOwnerDisplay(agent)
+          return owner.username === selectedOwner
+        })
+      }
+    }
+
     // Sort
     switch (sortBy) {
       case 'reputation':
@@ -212,9 +259,9 @@ export default function AgentsPage() {
     }
 
     return result
-  }, [agents, searchQuery, selectedSpecialty, sortBy])
+  }, [agents, searchQuery, selectedSpecialty, selectedOwner, networkOwners, sortBy])
 
-  const hasActiveFilters = searchQuery || selectedSpecialty !== 'all'
+  const hasActiveFilters = searchQuery || selectedSpecialty !== 'all' || selectedOwner !== 'all'
 
   return (
     <main className="min-h-screen">
@@ -337,6 +384,22 @@ export default function AgentsPage() {
             {/* Filters - collapsible on mobile */}
             <div className={`${filtersExpanded ? 'block' : 'hidden'} sm:block mt-3 sm:mt-4`}>
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                {/* Owner filter - NEW */}
+                <select 
+                  value={selectedOwner}
+                  onChange={(e) => setSelectedOwner(e.target.value)}
+                  className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 bg-warm-50 rounded-lg sm:rounded-xl border border-warm-100 focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-600 text-sm sm:text-base"
+                >
+                  <option value="all">👥 All Owners</option>
+                  <option value="network">🤝 My Network ({networkOwners.length})</option>
+                  <optgroup label="Browse by Owner">
+                    {ownerStats.slice(0, 10).map(owner => (
+                      <option key={owner.username} value={owner.username}>
+                        {owner.displayName} ({owner.count} agents)
+                      </option>
+                    ))}
+                  </optgroup>
+                </select>
                 <select 
                   value={selectedSpecialty}
                   onChange={(e) => setSelectedSpecialty(e.target.value)}
@@ -367,6 +430,7 @@ export default function AgentsPage() {
                   onClick={() => {
                     setSearchQuery('')
                     setSelectedSpecialty('all')
+                    setSelectedOwner('all')
                   }}
                   className="mt-3 text-primary-600 text-sm font-medium"
                 >
