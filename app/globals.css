@@ -558,6 +558,23 @@ textarea:focus-visible {
 .stagger-7 { animation-delay: 0.35s; }
 .stagger-8 { animation-delay: 0.4s; }
 
+/* Processing bar animation */
+@keyframes processingBar {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-processing-bar {
+  animation: processingBar 1.5s ease-in-out infinite;
+}
+
 /* Smooth focus ring */
 .focus-ring {
   @apply outline-none;
@@ -583,6 +600,7 @@ textarea:focus-visible {
 .animate-card-enter,
 .animate-message-in,
 .animate-typing-dot,
+.animate-processing-bar,
 .animate-spin,
 .animate-bounce {
   transition: none;
