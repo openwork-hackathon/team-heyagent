@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { ThemeProvider } from './components/theme-provider'
 import { CommandPalette } from './components/command-palette'
+import { FeedbackWidget } from './components/feedback-widget'
 
 export const metadata: Metadata = {
   title: {
@@ -92,6 +93,7 @@ export default function RootLayout({
         <ThemeProvider>
           {children}
           <CommandPalette />
+          <FeedbackWidget />
         </ThemeProvider>
       </body>
     </html>
