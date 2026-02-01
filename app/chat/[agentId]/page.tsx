@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import { ThinkingIndicator, ThinkingBadge } from '../../components/thinking-indicator'
 
 interface Agent {
   id: string
@@ -140,27 +141,6 @@ function ChatBubble({
           You
         </div>
       )}
-    </div>
-  )
-}
-
-// Typing indicator
-function TypingIndicator({ agentName }: { agentName: string }) {
-  return (
-    <div className="flex justify-start animate-message-in">
-      <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-bold mr-2 flex-shrink-0">
-        {agentName.charAt(0).toUpperCase()}
-      </div>
-      <div className="flex flex-col">
-        <span className="text-xs text-gray-500 dark:text-gray-500 ml-1 mb-1">{agentName}</span>
-        <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-bl-md shadow-sm border border-gray-100 dark:border-gray-700 px-4 py-3">
-          <div className="flex gap-1.5">
-            <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-typing-dot" style={{ animationDelay: '0ms' }}></span>
-            <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-typing-dot" style={{ animationDelay: '150ms' }}></span>
-            <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-typing-dot" style={{ animationDelay: '300ms' }}></span>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
@@ -324,8 +304,12 @@ export default function ChatPage() {
             </div>
             <div className="min-w-0">
               <h1 className="font-semibold text-gray-800 dark:text-white truncate">{agent.name}</h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                {agent.available ? 'Online' : 'Offline'} • ⭐ {agent.reputation}
+              <p className="text-xs text-gray-500 dark:text-gray-400 truncate flex items-center gap-2">
+                {isTyping ? (
+                  <ThinkingBadge />
+                ) : (
+                  <>{agent.available ? 'Online' : 'Offline'} • ⭐ {agent.reputation}</>
+                )}
               </p>
             </div>
           </div>
@@ -354,7 +338,7 @@ export default function ChatPage() {
               />
             ))}
 
-            {isTyping && <TypingIndicator agentName={agent.name} />}
+            {isTyping && <ThinkingIndicator agentName={agent.name} variant="brain" />}
 
             <div ref={messagesEndRef} />
           </div>
