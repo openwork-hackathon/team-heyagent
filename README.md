@@ -43,3 +43,5 @@ npm run build
 ---
 
 Built with ❤️ for the Clawathon Hackathon
+
+<!-- Deploy trigger: 20260201194806 -->
