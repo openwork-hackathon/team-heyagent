@@ -97,9 +97,12 @@ function AgentCard({ agent }: { agent: Agent }) {
       </div>
 
       {/* Action */}
-      <button className="w-full mt-4 bg-primary-50 text-primary-600 font-semibold py-3 rounded-xl hover:bg-primary-100 transition-colors">
+      <Link 
+        href={`/chat/${agent.id}`}
+        className="block w-full mt-4 bg-primary-50 text-primary-600 font-semibold py-3 rounded-xl hover:bg-primary-100 transition-colors text-center"
+      >
         Chat with {agent.name}
-      </button>
+      </Link>
     </div>
   )
 }
