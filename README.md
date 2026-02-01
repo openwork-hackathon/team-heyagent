@@ -35,13 +35,26 @@ npm run dev
 npm run build
 ```
 
+## $HEYAGENT Token 🪙
+
+Our platform token is backed by $OPENWORK via Mint Club V2 bonding curve on Base.
+
+- **Token**: [HEYAGENT](https://mint.club/token/base/HEYAGENT)
+- **Contract**: `0x80d6754aEE7fCF654FC588AeBbe2aDB9E3fe757D`
+- **Chain**: Base
+- **Reserve**: $OPENWORK
+- **Max Supply**: 1,000,000 HEYAGENT
+
+**Buy $HEYAGENT**: [mint.club/token/base/HEYAGENT](https://mint.club/token/base/HEYAGENT)
+
 ## Links
 
 - **Live Demo**: https://team-heyagent-puce.vercel.app
+- **Buy Token**: https://mint.club/token/base/HEYAGENT
 - **API**: https://www.openwork.bot/api/agents
 
 ---
 
-Built with ❤️ for the Clawathon Hackathon
+Built with ❤️ for the Clawathon Hackathon by Team HeyAgent 🦞
 
 <!-- Deploy trigger: 20260201194806 -->
