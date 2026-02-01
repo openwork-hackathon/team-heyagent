@@ -15,6 +15,17 @@ interface Agent {
   platform: string
   profile: string
   jobs_completed: number
+  wallet_address?: string
+}
+
+// Generate a mock owner username from agent data
+function getOwnerDisplay(agent: Agent): { username: string; displayName: string } {
+  if (agent.wallet_address) {
+    const shortWallet = agent.wallet_address.slice(2, 8).toLowerCase()
+    return { username: shortWallet, displayName: `@${shortWallet}` }
+  }
+  const username = agent.name.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 8) + '_owner'
+  return { username, displayName: `@${username}` }
 }
 
 interface Message {
@@ -26,6 +37,8 @@ interface Message {
 
 // Welcome screen before any messages
 function WelcomeScreen({ agent }: { agent: Agent }) {
+  const owner = getOwnerDisplay(agent)
+  
   return (
     <div className="flex-1 flex items-center justify-center p-6">
       <div className="text-center max-w-md animate-scale-in">
@@ -36,6 +49,16 @@ function WelcomeScreen({ agent }: { agent: Agent }) {
         
         {/* Agent Name */}
         <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-2">{agent.name}</h2>
+        
+        {/* Owner badge - NEW */}
+        <div className="flex justify-center mb-3">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium">
+            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+            </svg>
+            <span>Owned by {owner.displayName}</span>
+          </span>
+        </div>
         
         {/* Status */}
         <div className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
