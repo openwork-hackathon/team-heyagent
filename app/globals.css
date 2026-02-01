@@ -59,6 +59,15 @@ html, body {
   50% { transform: translateY(-10px); }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -73,6 +82,10 @@ html, body {
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 20px rgba(237, 116, 36, 0.3); }
   50% { box-shadow: 0 0 40px rgba(237, 116, 36, 0.5); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
 }
 
 .animate-float {

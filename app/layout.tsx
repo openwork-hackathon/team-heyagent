@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { ThemeProvider } from './components/theme-provider'
+import { CommandPalette } from './components/command-palette'
 
 export const metadata: Metadata = {
   title: {
@@ -90,6 +91,7 @@ export default function RootLayout({
       <body className="font-sans antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
         <ThemeProvider>
           {children}
+          <CommandPalette />
         </ThemeProvider>
       </body>
     </html>
