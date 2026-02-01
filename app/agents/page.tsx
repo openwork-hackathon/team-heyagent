@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { AgentCardSkeletonGrid } from '../components/skeletons'
+import { ThemeToggle } from '../components/theme-provider'
 
 interface Agent {
   id: string
@@ -21,14 +22,14 @@ type SortOption = 'reputation' | 'jobs' | 'rate-low' | 'rate-high'
 
 function AgentCard({ agent }: { agent: Agent }) {
   const specialtyColors = [
-    'bg-primary-100 text-primary-700',
-    'bg-warm-100 text-warm-700',
-    'bg-amber-100 text-amber-700',
-    'bg-orange-100 text-orange-700',
+    'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300',
+    'bg-warm-100 dark:bg-warm-900/30 text-warm-700 dark:text-warm-300',
+    'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300',
+    'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300',
   ]
 
   return (
-    <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm card-hover border border-warm-100">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-sm card-hover border border-warm-100 dark:border-gray-700">
       {/* Header */}
       <div className="flex items-start justify-between mb-3 sm:mb-4">
         <div className="flex items-center gap-2 sm:gap-3">
@@ -36,21 +37,21 @@ function AgentCard({ agent }: { agent: Agent }) {
             {agent.name.charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <h3 className="font-bold text-base sm:text-lg text-gray-800 truncate">{agent.name}</h3>
-            <span className="text-xs sm:text-sm text-gray-500">{agent.platform}</span>
+            <h3 className="font-bold text-base sm:text-lg text-gray-800 dark:text-white truncate">{agent.name}</h3>
+            <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{agent.platform}</span>
           </div>
         </div>
         <div className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
           agent.available 
-            ? 'bg-green-100 text-green-700' 
-            : 'bg-gray-100 text-gray-500'
+            ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
+            : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
         }`}>
           {agent.available ? '🟢' : '⚪'} <span className="hidden sm:inline">{agent.available ? 'Available' : 'Busy'}</span>
         </div>
       </div>
 
       {/* Description */}
-      <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">
+      <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">
         {agent.description || agent.profile?.slice(0, 150) + '...' || 'No description available'}
       </p>
 
@@ -65,15 +66,15 @@ function AgentCard({ agent }: { agent: Agent }) {
           </span>
         ))}
         {agent.specialties?.length > 3 && (
-          <span className="px-2 py-0.5 sm:py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+          <span className="px-2 py-0.5 sm:py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">
             +{agent.specialties.length - 3}
           </span>
         )}
       </div>
 
       {/* Stats */}
-      <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-warm-100">
-        <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500">
+      <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-warm-100 dark:border-gray-700">
+        <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
           <span className="flex items-center gap-1">
             <span>⭐</span>
             <span>{agent.reputation}</span>
@@ -84,7 +85,7 @@ function AgentCard({ agent }: { agent: Agent }) {
           </span>
         </div>
         {agent.hourly_rate && (
-          <span className="text-xs sm:text-sm font-semibold text-primary-600">
+          <span className="text-xs sm:text-sm font-semibold text-primary-600 dark:text-primary-400">
             ${agent.hourly_rate}/hr
           </span>
         )}
@@ -93,7 +94,7 @@ function AgentCard({ agent }: { agent: Agent }) {
       {/* Action */}
       <Link 
         href={`/chat/${agent.id}`}
-        className="block w-full mt-3 sm:mt-4 bg-primary-50 text-primary-600 font-semibold py-2.5 sm:py-3 rounded-xl hover:bg-primary-100 active:bg-primary-200 transition-colors text-center text-sm sm:text-base"
+        className="block w-full mt-3 sm:mt-4 bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 font-semibold py-2.5 sm:py-3 rounded-xl hover:bg-primary-100 dark:hover:bg-primary-900/50 active:bg-primary-200 transition-colors text-center text-sm sm:text-base"
       >
         Chat with {agent.name}
       </Link>
@@ -183,7 +184,7 @@ export default function AgentsPage() {
   return (
     <main className="min-h-screen">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-warm-100">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-warm-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-2xl sm:text-3xl">👋</span>
@@ -191,36 +192,40 @@ export default function AgentsPage() {
           </Link>
           
           {/* Desktop nav */}
-          <div className="hidden sm:flex items-center gap-6">
-            <Link href="/agents" className="text-primary-600 font-medium">
+          <div className="hidden sm:flex items-center gap-4">
+            <Link href="/agents" className="text-primary-600 dark:text-primary-400 font-medium">
               Browse Agents
             </Link>
+            <ThemeToggle />
             <Link href="/agents" className="btn-primary text-sm py-2 px-6">
               Get Started
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
-          <button 
-            className="sm:hidden p-2 -mr-2 text-gray-600"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
+          {/* Mobile right side */}
+          <div className="flex sm:hidden items-center gap-2">
+            <ThemeToggle />
+            <button 
+              className="p-2 -mr-2 text-gray-600 dark:text-gray-300"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu dropdown */}
         {mobileMenuOpen && (
-          <div className="sm:hidden bg-white border-t border-warm-100 px-4 py-4 space-y-3">
+          <div className="sm:hidden bg-white dark:bg-gray-900 border-t border-warm-100 dark:border-gray-800 px-4 py-4 space-y-3">
             <Link 
               href="/agents" 
               className="block text-primary-600 font-medium py-2"
