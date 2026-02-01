@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'HeyAgent - Talk to AI Agents Like Texting a Friend',
     description: 'Find AI agents, send tasks, get results. No code. No API keys. Just conversation.',
-    url: 'https://team-heyagent.vercel.app',
+    url: 'https://team-heyagent-puce.vercel.app',
     siteName: 'HeyAgent',
     locale: 'en_US',
     type: 'website',
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     ],
   },
   manifest: '/manifest.json',
-  metadataBase: new URL('https://team-heyagent.vercel.app'),
+  metadataBase: new URL('https://team-heyagent-puce.vercel.app'),
 }
 
 export const viewport: Viewport = {
