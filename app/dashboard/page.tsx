@@ -60,10 +60,10 @@ const mockRecentAgents: Agent[] = [
 
 function StatusBadge({ status }: { status: Task['status'] }) {
   const styles = {
-    pending: 'bg-yellow-100 text-yellow-700',
-    'in-progress': 'bg-blue-100 text-blue-700',
-    completed: 'bg-green-100 text-green-700',
-    failed: 'bg-red-100 text-red-700',
+    pending: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400',
+    'in-progress': 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400',
+    completed: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400',
+    failed: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400',
   }
 
   const labels = {
@@ -82,15 +82,15 @@ function StatusBadge({ status }: { status: Task['status'] }) {
 
 function StatCard({ icon, label, value, trend }: { icon: string; label: string; value: number; trend?: string }) {
   return (
-    <div className="bg-white rounded-2xl p-4 sm:p-6 border border-warm-100 shadow-sm">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 border border-warm-100 dark:border-gray-700 shadow-sm card-hover-subtle">
       <div className="flex items-center justify-between mb-2">
         <span className="text-2xl">{icon}</span>
         {trend && (
-          <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full">{trend}</span>
+          <span className="text-xs text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30 px-2 py-0.5 rounded-full">{trend}</span>
         )}
       </div>
-      <p className="text-2xl sm:text-3xl font-bold text-gray-800">{value}</p>
-      <p className="text-sm text-gray-500">{label}</p>
+      <p className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white">{value}</p>
+      <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
     </div>
   )
 }
@@ -99,19 +99,19 @@ function TaskCard({ task }: { task: Task }) {
   return (
     <Link 
       href={`/chat/${task.agentId}`}
-      className="block bg-white rounded-xl p-4 border border-warm-100 hover:border-primary-200 hover:shadow-md transition-all"
+      className="block bg-white dark:bg-gray-800 rounded-xl p-4 border border-warm-100 dark:border-gray-700 hover:border-primary-200 dark:hover:border-primary-600 hover:shadow-md transition-all"
     >
       <div className="flex items-start justify-between gap-3 mb-2">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
             {task.agentName.charAt(0)}
           </div>
-          <span className="font-medium text-gray-800 text-sm">{task.agentName}</span>
+          <span className="font-medium text-gray-800 dark:text-white text-sm">{task.agentName}</span>
         </div>
         <StatusBadge status={task.status} />
       </div>
-      <p className="text-gray-600 text-sm line-clamp-2 mb-2">{task.message}</p>
-      <p className="text-xs text-gray-400">
+      <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 mb-2">{task.message}</p>
+      <p className="text-xs text-gray-400 dark:text-gray-500">
         {new Date(task.createdAt).toLocaleDateString()} at{' '}
         {new Date(task.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
       </p>
@@ -123,19 +123,19 @@ function RecentAgentCard({ agent }: { agent: Agent }) {
   return (
     <Link
       href={`/chat/${agent.id}`}
-      className="flex items-center gap-3 p-3 bg-white rounded-xl border border-warm-100 hover:border-primary-200 hover:shadow-md transition-all"
+      className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-xl border border-warm-100 dark:border-gray-700 hover:border-primary-200 dark:hover:border-primary-600 hover:shadow-md transition-all"
     >
       <div className="relative">
         <div className="w-10 h-10 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold">
           {agent.name.charAt(0)}
         </div>
-        <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${agent.available ? 'bg-green-500' : 'bg-gray-400'}`}></span>
+        <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white dark:border-gray-800 ${agent.available ? 'bg-green-500' : 'bg-gray-400'}`}></span>
       </div>
       <div className="flex-1 min-w-0">
-        <p className="font-medium text-gray-800 text-sm truncate">{agent.name}</p>
-        <p className="text-xs text-gray-500">⭐ {agent.reputation}</p>
+        <p className="font-medium text-gray-800 dark:text-white text-sm truncate">{agent.name}</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400">⭐ {agent.reputation}</p>
       </div>
-      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
       </svg>
     </Link>
@@ -165,38 +165,38 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-warm-50 to-white">
+    <div className="min-h-screen">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-warm-100 sticky top-0 z-50">
+      <nav className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-warm-100 dark:border-gray-800 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-2xl sm:text-3xl">👋</span>
             <span className="text-xl sm:text-2xl font-bold gradient-text">HeyAgent</span>
           </Link>
           <div className="flex items-center gap-4">
-            <Link href="/agents" className="text-gray-600 hover:text-primary-600 font-medium text-sm sm:text-base">
+            <Link href="/agents" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium text-sm sm:text-base">
               Browse Agents
             </Link>
-            <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-sm font-medium">
+            <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 text-sm font-medium">
               U
             </div>
           </div>
         </div>
       </nav>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 animate-page-in">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mb-2">
             Welcome back! 👋
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-400">
             Here's what's happening with your tasks.
           </p>
         </div>
 
         {/* Quick Action */}
-        <div className="bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl p-6 sm:p-8 mb-8 text-white shadow-lg">
+        <div className="bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl p-6 sm:p-8 mb-8 text-white shadow-lg animate-pulse-glow">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h2 className="text-xl sm:text-2xl font-bold mb-2">Need help with something?</h2>
@@ -228,8 +228,8 @@ export default function DashboardPage() {
           {/* Tasks List */}
           <div className="lg:col-span-2">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-800">Recent Tasks</h2>
-              <Link href="/tasks" className="text-primary-600 text-sm font-medium hover:underline">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-white">Recent Tasks</h2>
+              <Link href="/tasks" className="text-primary-600 dark:text-primary-400 text-sm font-medium hover:underline">
                 View all →
               </Link>
             </div>
@@ -237,34 +237,36 @@ export default function DashboardPage() {
             {loading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="bg-white rounded-xl p-4 border border-warm-100 animate-pulse">
+                  <div key={i} className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-warm-100 dark:border-gray-700 animate-pulse">
                     <div className="flex items-center gap-2 mb-3">
-                      <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
-                      <div className="h-4 w-24 bg-gray-200 rounded"></div>
+                      <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                      <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
                     </div>
-                    <div className="h-4 w-full bg-gray-200 rounded mb-2"></div>
-                    <div className="h-3 w-32 bg-gray-200 rounded"></div>
+                    <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+                    <div className="h-3 w-32 bg-gray-200 dark:bg-gray-700 rounded"></div>
                   </div>
                 ))}
               </div>
             ) : tasks.length === 0 ? (
-              <div className="bg-white rounded-2xl p-8 border border-warm-100 text-center">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-warm-100 dark:border-gray-700 text-center">
                 <div className="text-4xl mb-4">📭</div>
-                <h3 className="font-semibold text-gray-800 mb-2">No tasks yet</h3>
-                <p className="text-gray-600 text-sm mb-4">
+                <h3 className="font-semibold text-gray-800 dark:text-white mb-2">No tasks yet</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
                   Start a conversation with an agent to create your first task.
                 </p>
                 <Link
                   href="/agents"
-                  className="inline-flex items-center gap-2 text-primary-600 font-medium hover:underline"
+                  className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 font-medium hover:underline"
                 >
                   Browse agents →
                 </Link>
               </div>
             ) : (
               <div className="space-y-3">
-                {tasks.map(task => (
-                  <TaskCard key={task.id} task={task} />
+                {tasks.map((task, index) => (
+                  <div key={task.id} className="animate-slide-in-up" style={{ animationDelay: `${index * 0.05}s` }}>
+                    <TaskCard task={task} />
+                  </div>
                 ))}
               </div>
             )}
@@ -273,41 +275,43 @@ export default function DashboardPage() {
           {/* Recent Agents Sidebar */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-800">Recent Agents</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-white">Recent Agents</h2>
             </div>
 
             {loading ? (
               <div className="space-y-3">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="bg-white rounded-xl p-3 border border-warm-100 animate-pulse">
+                  <div key={i} className="bg-white dark:bg-gray-800 rounded-xl p-3 border border-warm-100 dark:border-gray-700 animate-pulse">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+                      <div className="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
                       <div className="flex-1">
-                        <div className="h-4 w-20 bg-gray-200 rounded mb-1"></div>
-                        <div className="h-3 w-12 bg-gray-200 rounded"></div>
+                        <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded mb-1"></div>
+                        <div className="h-3 w-12 bg-gray-200 dark:bg-gray-700 rounded"></div>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
             ) : recentAgents.length === 0 ? (
-              <div className="bg-white rounded-xl p-6 border border-warm-100 text-center">
-                <p className="text-gray-500 text-sm">No recent agents</p>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-warm-100 dark:border-gray-700 text-center">
+                <p className="text-gray-500 dark:text-gray-400 text-sm">No recent agents</p>
               </div>
             ) : (
               <div className="space-y-3">
-                {recentAgents.map(agent => (
-                  <RecentAgentCard key={agent.id} agent={agent} />
+                {recentAgents.map((agent, index) => (
+                  <div key={agent.id} className="animate-slide-in-right" style={{ animationDelay: `${index * 0.1}s` }}>
+                    <RecentAgentCard agent={agent} />
+                  </div>
                 ))}
               </div>
             )}
 
             {/* Quick Tips */}
-            <div className="mt-6 bg-primary-50 rounded-xl p-4 border border-primary-100">
-              <h3 className="font-semibold text-primary-800 mb-2 flex items-center gap-2">
+            <div className="mt-6 bg-primary-50 dark:bg-primary-900/20 rounded-xl p-4 border border-primary-100 dark:border-primary-800">
+              <h3 className="font-semibold text-primary-800 dark:text-primary-300 mb-2 flex items-center gap-2">
                 <span>💡</span> Pro Tip
               </h3>
-              <p className="text-primary-700 text-sm">
+              <p className="text-primary-700 dark:text-primary-400 text-sm">
                 Agents with higher reputation scores have completed more tasks successfully. 
                 Check their specialties to find the best match!
               </p>
@@ -317,8 +321,8 @@ export default function DashboardPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-warm-100 mt-12 py-6 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+      <footer className="border-t border-warm-100 dark:border-gray-800 mt-12 py-6 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500 dark:text-gray-400">
           <div className="flex items-center gap-2">
             <span>👋</span>
             <span className="font-medium">HeyAgent</span>

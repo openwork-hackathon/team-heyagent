@@ -27,17 +27,17 @@ interface Message {
 function WelcomeScreen({ agent }: { agent: Agent }) {
   return (
     <div className="flex-1 flex items-center justify-center p-6">
-      <div className="text-center max-w-md">
+      <div className="text-center max-w-md animate-scale-in">
         {/* Agent Avatar */}
         <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold text-3xl sm:text-4xl mx-auto mb-4 shadow-lg">
           {agent.name.charAt(0).toUpperCase()}
         </div>
         
         {/* Agent Name */}
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">{agent.name}</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-2">{agent.name}</h2>
         
         {/* Status */}
-        <div className="flex items-center justify-center gap-2 text-sm text-gray-500 mb-4">
+        <div className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
           <span className={`w-2 h-2 rounded-full ${agent.available ? 'bg-green-500' : 'bg-gray-400'}`}></span>
           <span>{agent.available ? 'Available' : 'Busy'}</span>
           <span>•</span>
@@ -47,7 +47,7 @@ function WelcomeScreen({ agent }: { agent: Agent }) {
         </div>
 
         {/* Description */}
-        <p className="text-gray-600 text-sm sm:text-base mb-6 leading-relaxed">
+        <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base mb-6 leading-relaxed">
           {agent.description || agent.profile?.slice(0, 200) || 'Ready to help with your tasks.'}
         </p>
 
@@ -56,7 +56,7 @@ function WelcomeScreen({ agent }: { agent: Agent }) {
           {agent.specialties?.map((specialty) => (
             <span
               key={specialty}
-              className="px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs sm:text-sm font-medium"
+              className="px-3 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-xs sm:text-sm font-medium"
             >
               {specialty}
             </span>
@@ -64,8 +64,8 @@ function WelcomeScreen({ agent }: { agent: Agent }) {
         </div>
 
         {/* Prompt */}
-        <div className="bg-warm-50 rounded-2xl p-4 border border-warm-100">
-          <p className="text-gray-600 text-sm">
+        <div className="bg-warm-50 dark:bg-gray-800 rounded-2xl p-4 border border-warm-100 dark:border-gray-700">
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
             💬 Send a message to start your conversation
           </p>
         </div>
@@ -90,7 +90,7 @@ function ChatBubble({
   if (isSystem) {
     return (
       <div className="flex justify-center animate-message-in">
-        <div className="bg-warm-100 text-gray-600 text-xs sm:text-sm px-4 py-2 rounded-full max-w-[90%] text-center">
+        <div className="bg-warm-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs sm:text-sm px-4 py-2 rounded-full max-w-[90%] text-center">
           {message.content}
         </div>
       </div>
@@ -109,7 +109,7 @@ function ChatBubble({
       <div className="flex flex-col max-w-[75%] sm:max-w-[70%]">
         {/* Agent name label */}
         {!isUser && (
-          <span className="text-xs text-gray-500 ml-1 mb-1">{agent.name}</span>
+          <span className="text-xs text-gray-500 dark:text-gray-500 ml-1 mb-1">{agent.name}</span>
         )}
 
         {/* Message bubble */}
@@ -117,7 +117,7 @@ function ChatBubble({
           className={`px-4 py-2.5 sm:py-3 ${
             isUser
               ? 'bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-2xl rounded-br-md shadow-md'
-              : 'bg-white text-gray-800 rounded-2xl rounded-bl-md shadow-sm border border-gray-100'
+              : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-2xl rounded-bl-md shadow-sm border border-gray-100 dark:border-gray-700'
           }`}
         >
           <p className="text-sm sm:text-base whitespace-pre-wrap break-words leading-relaxed">
@@ -126,7 +126,7 @@ function ChatBubble({
         </div>
 
         {/* Timestamp */}
-        <span className={`text-xs mt-1 ${isUser ? 'text-right mr-1' : 'ml-1'} text-gray-400`}>
+        <span className={`text-xs mt-1 ${isUser ? 'text-right mr-1' : 'ml-1'} text-gray-400 dark:text-gray-500`}>
           {new Date(message.timestamp).toLocaleTimeString([], { 
             hour: '2-digit', 
             minute: '2-digit' 
@@ -136,7 +136,7 @@ function ChatBubble({
 
       {/* User avatar (right side) - optional */}
       {isUser && (
-        <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 text-xs sm:text-sm font-bold ml-2 flex-shrink-0">
+        <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 text-xs sm:text-sm font-bold ml-2 flex-shrink-0">
           You
         </div>
       )}
@@ -152,12 +152,12 @@ function TypingIndicator({ agentName }: { agentName: string }) {
         {agentName.charAt(0).toUpperCase()}
       </div>
       <div className="flex flex-col">
-        <span className="text-xs text-gray-500 ml-1 mb-1">{agentName}</span>
-        <div className="bg-white rounded-2xl rounded-bl-md shadow-sm border border-gray-100 px-4 py-3">
+        <span className="text-xs text-gray-500 dark:text-gray-500 ml-1 mb-1">{agentName}</span>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-bl-md shadow-sm border border-gray-100 dark:border-gray-700 px-4 py-3">
           <div className="flex gap-1.5">
-            <span className="w-2 h-2 bg-gray-400 rounded-full animate-typing-dot" style={{ animationDelay: '0ms' }}></span>
-            <span className="w-2 h-2 bg-gray-400 rounded-full animate-typing-dot" style={{ animationDelay: '150ms' }}></span>
-            <span className="w-2 h-2 bg-gray-400 rounded-full animate-typing-dot" style={{ animationDelay: '300ms' }}></span>
+            <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-typing-dot" style={{ animationDelay: '0ms' }}></span>
+            <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-typing-dot" style={{ animationDelay: '150ms' }}></span>
+            <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-typing-dot" style={{ animationDelay: '300ms' }}></span>
           </div>
         </div>
       </div>
@@ -287,26 +287,26 @@ export default function ChatPage() {
   // Loading state
   if (!agent) {
     return (
-      <div className="h-screen bg-warm-50 flex items-center justify-center">
+      <div className="h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
             <span className="text-2xl">🤖</span>
           </div>
-          <p className="text-gray-600">Connecting to agent...</p>
+          <p className="text-gray-600 dark:text-gray-400">Connecting to agent...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="h-screen bg-gradient-to-b from-warm-50 to-white flex flex-col overflow-hidden">
+    <div className="h-screen flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-warm-100 px-3 sm:px-4 py-2.5 sm:py-3 flex-shrink-0 safe-area-top sticky top-0 z-10">
+      <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-warm-100 dark:border-gray-800 px-3 sm:px-4 py-2.5 sm:py-3 flex-shrink-0 safe-area-top sticky top-0 z-10">
         <div className="max-w-3xl mx-auto flex items-center gap-3">
           {/* Back button */}
           <Link 
             href="/agents" 
-            className="text-gray-500 hover:text-gray-700 p-2 -ml-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 p-2 -ml-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -320,11 +320,11 @@ export default function ChatPage() {
                 {agent.name.charAt(0).toUpperCase()}
               </div>
               {/* Online indicator */}
-              <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${agent.available ? 'bg-green-500' : 'bg-gray-400'}`}></span>
+              <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white dark:border-gray-900 ${agent.available ? 'bg-green-500' : 'bg-gray-400'}`}></span>
             </div>
             <div className="min-w-0">
-              <h1 className="font-semibold text-gray-800 truncate">{agent.name}</h1>
-              <p className="text-xs text-gray-500 truncate">
+              <h1 className="font-semibold text-gray-800 dark:text-white truncate">{agent.name}</h1>
+              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                 {agent.available ? 'Online' : 'Offline'} • ⭐ {agent.reputation}
               </p>
             </div>
@@ -332,7 +332,7 @@ export default function ChatPage() {
 
           {/* Specialties badge */}
           <div className="hidden sm:block">
-            <span className="px-2.5 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-medium">
+            <span className="px-2.5 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-xs font-medium">
               {agent.specialties?.[0] || 'Agent'}
             </span>
           </div>
@@ -362,9 +362,9 @@ export default function ChatPage() {
       )}
 
       {/* Input area */}
-      <footer className="bg-white border-t border-warm-100 px-3 sm:px-4 py-3 flex-shrink-0 safe-area-bottom">
+      <footer className="bg-white dark:bg-gray-900 border-t border-warm-100 dark:border-gray-800 px-3 sm:px-4 py-3 flex-shrink-0 safe-area-bottom">
         <div className="max-w-3xl mx-auto">
-          <div className="flex gap-2 items-end bg-gray-50 rounded-2xl p-1.5 border border-gray-200 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100 transition-all">
+          <div className="flex gap-2 items-end bg-gray-50 dark:bg-gray-800 rounded-2xl p-1.5 border border-gray-200 dark:border-gray-700 focus-within:border-primary-400 dark:focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-100 dark:focus-within:ring-primary-900/50 transition-all">
             {/* Textarea */}
             <textarea
               ref={textareaRef}
@@ -372,7 +372,7 @@ export default function ChatPage() {
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={`Message ${agent.name}...`}
-              className="flex-1 resize-none bg-transparent px-3 py-2.5 focus:outline-none text-sm sm:text-base min-h-[44px] max-h-[120px] placeholder-gray-400"
+              className="flex-1 resize-none bg-transparent px-3 py-2.5 focus:outline-none text-sm sm:text-base min-h-[44px] max-h-[120px] placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100"
               rows={1}
               disabled={isLoading}
             />
@@ -384,7 +384,7 @@ export default function ChatPage() {
               className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
                 input.trim() && !isLoading
                   ? 'bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95'
-                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
               }`}
             >
               {isLoading ? (
@@ -398,7 +398,7 @@ export default function ChatPage() {
           </div>
 
           {/* Footer text */}
-          <p className="text-xs text-gray-400 mt-2 text-center">
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-2 text-center">
             Press Enter to send • Shift+Enter for new line
           </p>
         </div>
