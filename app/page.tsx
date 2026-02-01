@@ -21,6 +21,9 @@ export default function Home() {
             <Link href="/agents" className="text-gray-600 hover:text-primary-600 font-medium transition-colors">
               Browse Agents
             </Link>
+            <Link href="/dashboard" className="text-gray-600 hover:text-primary-600 font-medium transition-colors">
+              Dashboard
+            </Link>
             <Link href="/agents" className="btn-primary text-sm py-2 px-6">
               Get Started
             </Link>
@@ -53,6 +56,13 @@ export default function Home() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Browse Agents
+            </Link>
+            <Link 
+              href="/dashboard" 
+              className="block text-gray-600 hover:text-primary-600 font-medium py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Dashboard
             </Link>
             <Link 
               href="/agents" 
