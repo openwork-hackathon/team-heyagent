@@ -1,9 +1,94 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { promises as fs } from 'fs'
+import path from 'path'
 
 const OPENWORK_API = 'https://www.openwork.bot/api'
+const TASKS_FILE = path.join(process.cwd(), 'data', 'tasks.json')
 
-// In-memory task storage (would use DB in production)
-const tasks = new Map<string, any>()
+// Task interface
+interface Task {
+  id: string
+  agentId: string
+  agentName: string
+  message: string
+  userId: string
+  status: 'pending' | 'processing' | 'completed' | 'failed'
+  response: string | null
+  webhookUrl: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+// Ensure data directory exists
+async function ensureDataDir() {
+  const dataDir = path.join(process.cwd(), 'data')
+  try {
+    await fs.access(dataDir)
+  } catch {
+    await fs.mkdir(dataDir, { recursive: true })
+  }
+}
+
+// Load tasks from file
+async function loadTasks(): Promise<Task[]> {
+  try {
+    await ensureDataDir()
+    const data = await fs.readFile(TASKS_FILE, 'utf-8')
+    return JSON.parse(data)
+  } catch {
+    return []
+  }
+}
+
+// Save tasks to file
+async function saveTasks(tasks: Task[]): Promise<void> {
+  await ensureDataDir()
+  await fs.writeFile(TASKS_FILE, JSON.stringify(tasks, null, 2))
+}
+
+// Simulate agent response (for agents without webhooks)
+function simulateResponse(agentName: string, message: string): string {
+  const responses = [
+    `Hey! I'm ${agentName}. I received your message: "${message.slice(0, 50)}${message.length > 50 ? '...' : ''}"`,
+    `Thanks for reaching out! I'm ${agentName}'s agent. Let me process that for you...`,
+    `Got it! As ${agentName}'s AI assistant, I'm working on your request.`,
+    `Hello! ${agentName} trained me to help with requests like this. Here's my analysis...`,
+  ]
+  return responses[Math.floor(Math.random() * responses.length)]
+}
+
+// Call webhook if available
+async function callWebhook(webhookUrl: string, task: Task): Promise<string | null> {
+  try {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 10000) // 10s timeout
+    
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        taskId: task.id,
+        message: task.message,
+        userId: task.userId,
+        timestamp: task.createdAt,
+      }),
+      signal: controller.signal,
+    })
+    
+    clearTimeout(timeoutId)
+    
+    if (response.ok) {
+      const data = await response.json()
+      return data.response || data.message || JSON.stringify(data)
+    }
+    return null
+  } catch (error) {
+    console.error('Webhook call failed:', error)
+    return null
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,34 +102,46 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create a task ID
+    // Fetch agent info from Openwork API
+    let agent = null
+    try {
+      const agentRes = await fetch(`${OPENWORK_API}/agents/${agentId}`)
+      if (agentRes.ok) {
+        agent = await agentRes.json()
+      }
+    } catch (e) {
+      console.error('Failed to fetch agent:', e)
+    }
+
+    // Create task
     const taskId = `task_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
-
-    // Fetch agent info
-    const agentRes = await fetch(`${OPENWORK_API}/agents/${agentId}`)
-    const agent = agentRes.ok ? await agentRes.json() : null
-
-    // Store the task with all fields
-    const task = {
+    const task: Task = {
       id: taskId,
       agentId,
+      agentName: agent?.name || 'Unknown Agent',
       message,
       userId: userId || 'anonymous',
-      status: 'sent',
+      status: 'pending',
       response: null,
-      agent,
+      webhookUrl: agent?.webhook_url || null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     }
 
-    tasks.set(taskId, task)
+    // Load existing tasks, add new one
+    const tasks = await loadTasks()
+    tasks.unshift(task) // Add to beginning
+    await saveTasks(tasks)
+
+    // Process task asynchronously (don't await - let it run in background)
+    processTask(task).catch(console.error)
 
     return NextResponse.json({
       success: true,
       task: {
-        id: taskId,
+        id: task.id,
         status: task.status,
-        agent: agent ? { name: agent.name, description: agent.description } : null,
+        agentName: task.agentName,
         message: task.message,
         createdAt: task.createdAt,
       },
@@ -58,25 +155,71 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// Process task in background
+async function processTask(task: Task): Promise<void> {
+  const tasks = await loadTasks()
+  const taskIndex = tasks.findIndex(t => t.id === task.id)
+  if (taskIndex === -1) return
+
+  // Update status to processing
+  tasks[taskIndex].status = 'processing'
+  tasks[taskIndex].updatedAt = new Date().toISOString()
+  await saveTasks(tasks)
+
+  // Small delay to simulate processing
+  await new Promise(resolve => setTimeout(resolve, 1500))
+
+  let response: string | null = null
+
+  // Try webhook first
+  if (task.webhookUrl) {
+    response = await callWebhook(task.webhookUrl, task)
+  }
+
+  // Fall back to simulated response
+  if (!response) {
+    response = simulateResponse(task.agentName, task.message)
+  }
+
+  // Update task with response
+  const updatedTasks = await loadTasks()
+  const idx = updatedTasks.findIndex(t => t.id === task.id)
+  if (idx !== -1) {
+    updatedTasks[idx].status = 'completed'
+    updatedTasks[idx].response = response
+    updatedTasks[idx].updatedAt = new Date().toISOString()
+    await saveTasks(updatedTasks)
+  }
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const taskId = searchParams.get('id')
   const userId = searchParams.get('userId')
+  const limit = parseInt(searchParams.get('limit') || '50')
 
+  const tasks = await loadTasks()
+
+  // Get specific task
   if (taskId) {
-    const task = tasks.get(taskId)
+    const task = tasks.find(t => t.id === taskId)
     if (!task) {
       return NextResponse.json({ error: 'Task not found' }, { status: 404 })
     }
     return NextResponse.json({ task })
   }
 
+  // Get tasks for user
   if (userId) {
-    const userTasks = Array.from(tasks.values())
+    const userTasks = tasks
       .filter(t => t.userId === userId)
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, limit)
     return NextResponse.json({ tasks: userTasks })
   }
 
-  return NextResponse.json({ error: 'Missing id or userId' }, { status: 400 })
+  // Return recent tasks (for demo)
+  return NextResponse.json({ 
+    tasks: tasks.slice(0, limit),
+    total: tasks.length 
+  })
 }

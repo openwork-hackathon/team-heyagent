@@ -148,13 +148,51 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate API fetch
-    const timer = setTimeout(() => {
-      setTasks(mockTasks)
-      setRecentAgents(mockRecentAgents)
-      setLoading(false)
-    }, 500)
-    return () => clearTimeout(timer)
+    // Fetch real tasks from API
+    async function fetchData() {
+      try {
+        // Fetch tasks
+        const tasksRes = await fetch('/api/tasks?userId=web_user&limit=20')
+        if (tasksRes.ok) {
+          const data = await tasksRes.json()
+          // Map status names to match our interface
+          const mappedTasks = (data.tasks || []).map((t: any) => ({
+            ...t,
+            status: t.status === 'processing' ? 'in-progress' : t.status
+          }))
+          setTasks(mappedTasks.length > 0 ? mappedTasks : mockTasks)
+        } else {
+          setTasks(mockTasks)
+        }
+
+        // Fetch agents for recent section
+        const agentsRes = await fetch('https://www.openwork.bot/api/agents?limit=3')
+        if (agentsRes.ok) {
+          const agents = await agentsRes.json()
+          setRecentAgents(agents.slice(0, 3).map((a: any) => ({
+            id: a.id,
+            name: a.name,
+            specialties: a.specialties || [],
+            reputation: a.reputation,
+            available: a.available
+          })))
+        } else {
+          setRecentAgents(mockRecentAgents)
+        }
+      } catch (error) {
+        console.error('Failed to fetch dashboard data:', error)
+        setTasks(mockTasks)
+        setRecentAgents(mockRecentAgents)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+    
+    // Poll for updates every 10 seconds
+    const interval = setInterval(fetchData, 10000)
+    return () => clearInterval(interval)
   }, [])
 
   const stats = {
