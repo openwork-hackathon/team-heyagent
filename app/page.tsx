@@ -60,35 +60,40 @@ export default function Home() {
 
         {/* Mobile menu dropdown */}
         {mobileMenuOpen && (
-          <div className="sm:hidden bg-white dark:bg-gray-900 border-t border-warm-100 dark:border-gray-800 px-4 py-4 space-y-3">
+          <div className="sm:hidden bg-white dark:bg-gray-900 border-t border-warm-100 dark:border-gray-800 px-4 py-4 space-y-3 animate-fade-in">
             <Link 
               href="/dashboard" 
-              className="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium py-2"
+              className="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium py-3 px-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              My Agents
+              <span className="text-xl">🤖</span>
+              <span>My Agents</span>
             </Link>
             <Link 
               href="/agents" 
-              className="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium py-2"
+              className="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium py-3 px-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Discover
+              <span className="text-xl">🔍</span>
+              <span>Discover</span>
             </Link>
             <Link 
               href="/leaderboard" 
-              className="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium py-2"
+              className="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium py-3 px-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              🏆 Leaderboard
+              <span className="text-xl">🏆</span>
+              <span>Leaderboard</span>
             </Link>
-            <Link 
-              href="/create" 
-              className="block btn-primary text-sm py-3 px-6 text-center"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Create Agent
-            </Link>
+            <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
+              <Link 
+                href="/create" 
+                className="block btn-primary text-sm py-3 px-6 text-center"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Create Agent
+              </Link>
+            </div>
           </div>
         )}
       </nav>
