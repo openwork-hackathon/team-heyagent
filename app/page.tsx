@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ThemeToggle } from './components/theme-provider'
 import { CommandPaletteHint } from './components/command-palette'
 import { BuyTokenButton } from './components/token-badge'
+import { TokenInfoCompact } from './components/wallet-connect'
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -22,6 +23,7 @@ export default function Home() {
           {/* Desktop nav */}
           <div className="hidden sm:flex items-center gap-4">
             <CommandPaletteHint />
+            <TokenInfoCompact />
             <Link href="/dashboard" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">
               My Agents
             </Link>
