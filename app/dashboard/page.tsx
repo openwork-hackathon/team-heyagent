@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ThemeToggle } from '../components/theme-provider'
 import { TokenStatsCard, StakingStatus } from '../components/token-stats'
+import { WalletConnectButton, TokenBalanceCard } from '../components/wallet-connect'
 
 interface MyAgent {
   id: string
@@ -112,13 +113,26 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setMyAgents(mockMyAgents)
-      setActivities(mockActivities)
-      setPendingApprovals(mockPendingApprovals)
-      setLoading(false)
-    }, 500)
+    // Load agents from localStorage (persisted from /create wizard)
+    const savedAgents = JSON.parse(localStorage.getItem('heyagent-agents') || '[]')
+    
+    // Transform saved agents to match MyAgent interface
+    const transformedAgents: MyAgent[] = savedAgents.map((agent: Record<string, unknown>) => ({
+      id: agent.id as string,
+      name: agent.name as string,
+      avatar: agent.avatar as string || '🤖',
+      personality: agent.personality as string,
+      status: 'active' as const,
+      messagesHandled: Math.floor(Math.random() * 50), // Demo: random activity
+      lastActive: new Date().toISOString(),
+      pendingApprovals: Math.floor(Math.random() * 3), // Demo: random approvals
+    }))
+    
+    // Use saved agents if any, otherwise show mock for demo
+    setMyAgents(transformedAgents.length > 0 ? transformedAgents : mockMyAgents)
+    setActivities(mockActivities)
+    setPendingApprovals(mockPendingApprovals)
+    setLoading(false)
   }, [])
 
   const handleApprove = (id: string) => {
@@ -140,6 +154,7 @@ export default function DashboardPage() {
           </Link>
           
           <div className="flex items-center gap-4">
+            <WalletConnectButton className="hidden sm:flex" />
             <Link 
               href="/agents" 
               className="hidden sm:block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
@@ -334,6 +349,7 @@ export default function DashboardPage() {
 
             {/* Token Stats Sidebar */}
             <div className="space-y-4">
+              <TokenBalanceCard />
               <TokenStatsCard />
               <StakingStatus staked={0} tier="none" />
             </div>

@@ -482,6 +482,20 @@ export default function CreateAgentPage() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000))
     
+    // Save agent to localStorage for persistence
+    const newAgent = {
+      id: crypto.randomUUID(),
+      ...data,
+      createdAt: new Date().toISOString(),
+      status: 'online',
+      messagesHandled: 0,
+      pendingApprovals: 0,
+    }
+    
+    const existingAgents = JSON.parse(localStorage.getItem('heyagent-agents') || '[]')
+    existingAgents.push(newAgent)
+    localStorage.setItem('heyagent-agents', JSON.stringify(existingAgents))
+    
     setIsCreating(false)
     setCreated(true)
   }
