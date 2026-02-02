@@ -156,6 +156,26 @@ export function ThinkingBadge({ className = '' }: { className?: string }) {
   )
 }
 
+// Premium sparkle thinking indicator
+export function SparkleThinking({ message = 'Crafting response...' }: { message?: string }) {
+  return (
+    <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200 dark:border-purple-800">
+      <div className="relative">
+        <span className="text-2xl animate-pulse">✨</span>
+        <span className="absolute -top-1 -right-1 text-sm animate-bounce" style={{ animationDelay: '200ms' }}>⭐</span>
+      </div>
+      <div>
+        <p className="text-sm font-medium text-purple-700 dark:text-purple-300">{message}</p>
+        <div className="flex gap-1 mt-1">
+          <span className="w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '0ms' }} />
+          <span className="w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
+          <span className="w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // Full-width processing bar for page-level loading
 export function ProcessingBar({ show }: { show: boolean }) {
   if (!show) return null
