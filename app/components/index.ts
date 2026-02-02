@@ -18,7 +18,7 @@ export { TokenStatsCard, StakingStatus, PriorityQueueBadge } from './token-stats
 export { TokenBalanceHeader, TokenBalanceMini } from './token-balance'
 
 // Chat components
-export { TypingIndicator, ThinkingBadge, SparkleThinking, ProcessingBar } from './thinking-indicator'
+export { ThinkingIndicator, ThinkingBadge, SparkleThinking, ProcessingBar } from './thinking-indicator'
 export { FeedbackButtons, CopyButton, RegenerateButton, MessageActions } from './feedback'
 export { SuggestedResponseCard, ResponseTime, AgentDisclosure } from './chat-ui'
 export { QuickActionPill, QuickActionsBar, FloatingActionButton, PRESET_ACTIONS } from './quick-actions'
