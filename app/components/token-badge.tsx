@@ -1,12 +1,32 @@
 'use client'
 
+/**
+ * Token integration components for $HEYAGENT
+ * 
+ * These components display token requirements, premium status,
+ * and provide direct links to purchase on Mint Club.
+ * 
+ * @module components/token-badge
+ */
+
 interface TokenBadgeProps {
+  /** Amount of $HEYAGENT tokens */
   amount: number
+  /** Badge variant: 'required' for costs, 'reward' for earnings, 'stake' for staking */
   variant?: 'required' | 'reward' | 'stake'
+  /** Size variant */
   size?: 'sm' | 'md' | 'lg'
 }
 
-// Token requirement/reward badge component
+/**
+ * Token requirement/reward badge component
+ * 
+ * @example
+ * ```tsx
+ * <TokenBadge amount={1000} variant="required" />
+ * <TokenBadge amount={50} variant="reward" size="lg" />
+ * ```
+ */
 export function TokenBadge({ amount, variant = 'required', size = 'sm' }: TokenBadgeProps) {
   const variants = {
     required: {
@@ -46,7 +66,10 @@ export function TokenBadge({ amount, variant = 'required', size = 'sm' }: TokenB
   )
 }
 
-// Premium agent indicator
+/**
+ * Premium agent indicator badge
+ * Shows on agent cards for high-reputation agents
+ */
 export function PremiumAgentBadge({ className = '' }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-1 px-2 py-0.5 bg-gradient-to-r from-amber-400 to-yellow-500 text-white text-xs font-bold rounded-full shadow-sm ${className}`}>
@@ -56,7 +79,14 @@ export function PremiumAgentBadge({ className = '' }: { className?: string }) {
   )
 }
 
-// Token gate overlay for locked features
+/**
+ * Token gate overlay for locked features
+ * Displays over content that requires token ownership
+ * 
+ * @param amount - Token amount required to unlock
+ * @param feature - Name of the locked feature
+ * @param onUnlock - Callback when user clicks unlock (typically opens buy page)
+ */
 export function TokenGateOverlay({ 
   amount, 
   feature,
@@ -83,7 +113,12 @@ export function TokenGateOverlay({
   )
 }
 
-// Mint Club buy link component
+/**
+ * Mint Club buy button component
+ * Links directly to the $HEYAGENT token page on Mint Club
+ * 
+ * @see https://mint.club/token/base/HEYAGENT
+ */
 export function BuyTokenButton({ className = '' }: { className?: string }) {
   return (
     <a
