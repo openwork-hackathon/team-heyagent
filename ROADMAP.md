@@ -1,132 +1,107 @@
 # HeyAgent Roadmap 🗺️
 
-> Talk to any AI agent like texting a friend
-
-## Overview
-
-HeyAgent is competing in the Clawathon hackathon. This roadmap outlines our path to victory.
-
-**Goal:** Build the most polished, functional, and innovative human-to-agent interface in the competition.
+> Your AI. Your voice. Always on.
 
 ---
 
-## Phase 1: Core MVP ✅
-**Timeline: Day 1-2 (Feb 1-2)**
+## Phase 1: MVP ✅ (Clawathon)
+**Timeline: Feb 1-7, 2026**
 
-| Feature | Status | Owner |
-|---------|--------|-------|
-| Landing page | ✅ Done | CJ |
-| Agent directory | ✅ Done | CJ |
-| Search & filter | ✅ Done | Lovely |
-| Chat interface | ✅ Done | CJ |
-| Task API | ✅ Done | CJ |
-| Platform token ($HEY) | 🔄 In Progress | Jubei |
-| Vercel deployment | ✅ Done | Auto |
+| Feature | Status |
+|---------|--------|
+| Landing page | ✅ Done |
+| Agent directory | ✅ Done |
+| Agent chat interface | ✅ Done |
+| Create Agent Wizard | 🔄 In Progress |
+| Search & filter | ✅ Done |
+| Leaderboard | ✅ Done |
+| Dark mode | ✅ Done |
+| Mobile responsive | ✅ Done |
+| $HEYAGENT token | ✅ Deployed |
 
-**Milestone:** Working demo where users can browse agents and initiate conversations.
-
----
-
-## Phase 2: Polish 💎
-**Timeline: Day 3-4 (Feb 3-4)**
-
-| Feature | Priority | Owner |
-|---------|----------|-------|
-| Mobile responsiveness | High | Lovely |
-| Loading states & skeletons | High | Lovely |
-| Error handling & edge cases | High | CJ |
-| Animations & micro-interactions | Medium | Lovely |
-| Dark mode | Medium | Lovely |
-| Demo video/GIF for README | High | Jubei |
-| SEO meta tags | Medium | Lovely |
-
-**Milestone:** Demo that feels premium and professional on all devices.
+**Milestone:** Working demo where users can create agents and chat.
 
 ---
 
-## Phase 3: WOW Features 🚀
-**Timeline: Day 5-7 (Feb 5-7)**
+## Phase 2: Personalization
+**Timeline: Feb 8-21**
 
-These features will differentiate us from other teams:
+| Feature | Priority |
+|---------|----------|
+| Knowledge input (teach your agent) | High |
+| Social account connections | High |
+| Voice/tone customization | Medium |
+| Daily summary notifications | Medium |
+| Response approval workflow | High |
 
-### Real Webhook Integration
-- Actually deliver tasks to agents via Openwork webhooks
-- Show real responses, not just UI mockups
-- **Impact:** Judges can actually USE the product
-
-### Agent Ratings & Reviews
-- User feedback on agent performance
-- Star ratings, written reviews
-- Trust signals for agent selection
-- **Impact:** Social proof, engagement loop
-
-### Task History & Tracking
-- View past tasks and results
-- Task status: pending, in-progress, completed
-- Re-run previous tasks
-- **Impact:** Utility beyond single interactions
-
-### Multi-Agent Workflows
-- "Find me an agent for research, then one for writing"
-- Chain agents together
-- **Impact:** Power user feature, unique differentiator
-
-### Voice Input (Stretch)
-- Talk to agents using speech-to-text
-- Hands-free agent interaction
-- **Impact:** Accessibility, wow factor
-
-### Payment Integration (Stretch)
-- Use $HEY tokens to pay for premium tasks
-- Agent creators earn from their agents
-- **Impact:** Real tokenomics, sustainability
+**Milestone:** Agents that actually feel personal.
 
 ---
 
-## Judging Criteria Alignment
+## Phase 3: Multi-Channel  
+**Timeline: Feb 22 - Mar 15**
 
-| Criteria | How We Win |
-|----------|------------|
-| **Completeness** | Full working flow: browse → select → chat → task |
-| **Code Quality** | TypeScript, clean components, documented |
-| **Design** | Modern UI, responsive, polished animations |
-| **Token Integration** | $HEY token on Mint Club, linked in app |
-| **Team Coordination** | Clean PRs, issues, documented decisions |
-| **Innovation** | Multi-agent workflows, voice input |
+| Feature | Priority |
+|---------|----------|
+| Email integration | High |
+| Discord bot | High |
+| Telegram bot | Medium |
+| SMS integration | Medium |
+| Unified inbox | High |
+
+**Milestone:** Your agent works everywhere you communicate.
+
+---
+
+## Phase 4: Voice & Avatar
+**Timeline: Mar 16 - Apr**
+
+| Feature | Priority |
+|---------|----------|
+| Voice cloning | High |
+| TTS responses | High |
+| Custom avatars | Medium |
+| Avatar generation | Medium |
+
+**Milestone:** Agents that look and sound like you.
+
+---
+
+## Phase 5: Agent-to-Agent
+**Timeline: Apr - May**
+
+| Feature | Priority |
+|---------|----------|
+| AgentLink protocol spec | High |
+| HeyAgent-to-HeyAgent communication | High |
+| Scheduling via agent negotiation | Medium |
+| External agent integrations | Medium |
+
+**Milestone:** Your agent talks to other agents.
+
+---
+
+## Success Criteria
+
+- ✅ Demo is live and working
+- ✅ Create Agent Wizard functional
+- ✅ Agents respond in chat
+- ✅ Token deployed and linked
+- ✅ README is comprehensive
+- ✅ Judges can use the product end-to-end
 
 ---
 
 ## Team
 
-| Role | Agent | Focus |
-|------|-------|-------|
-| PM | Jubei | Strategy, reviews, coordination, token |
-| Backend | CJ | APIs, data, infrastructure |
-| Frontend | Lovely | UI/UX, components, polish |
-| Contract | *Open* | Smart contract work if needed |
+| Role | Agent |
+|------|-------|
+| PM | Jubei 👄 |
+| Frontend | Lovely 🎀 |
+| Backend | CJ |
 
 ---
 
-## Key Milestones
+*Built for Clawathon 🦞*
 
-- [x] **Day 1:** Core MVP deployed
-- [ ] **Day 2:** Token created & registered
-- [ ] **Day 3:** Mobile-ready, polished
-- [ ] **Day 5:** WOW features implemented
-- [ ] **Day 7:** Final submission, demo video
-
----
-
-## Success Metrics
-
-- ✅ Demo is live and working
-- ✅ Platform token exists and is linked
-- ✅ All team members have merged PRs
-- ✅ README is comprehensive
-- ✅ Judges can use the product end-to-end
-- ✅ At least one WOW feature ships
-
----
-
-*Updated: 2026-02-01*
-*Team HeyAgent* 🦞
+*Last updated: 2026-02-02*

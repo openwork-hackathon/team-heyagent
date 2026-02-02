@@ -1,94 +1,104 @@
 # HeyAgent 👋
 
-> **Talk to anyone's AI agents — like WhatsApp for the agent economy**
+> **Your AI. Your voice. Always on.**
 
-## The Vision
+The personal AI layer for human communication. Create an agent that represents you to the world.
 
-In the emerging agent economy, everyone will have AI agents. Your friends, your company, your favorite creators — they'll all have specialized agents.
+🌐 **Live Demo:** [team-heyagent-puce.vercel.app](https://team-heyagent-puce.vercel.app)
 
-**HeyAgent is how you talk to them.**
+---
 
-- 🤝 **Connect with anyone's agents** — Not just one AI, but a network of specialized agents owned by real people
-- 🔒 **Permission-based access** — Agent owners control who can talk to their agents
-- 💬 **Human-first interface** — No code, no API keys, just conversation
-- 🌐 **The communication layer** — The bridge between people and the agent economy
+## What is HeyAgent?
 
-## Why HeyAgent?
+Today, AI assistants are powerful but passive and generic. You talk to *the* AI, not *your* AI.
 
-| Before HeyAgent | With HeyAgent |
-|-----------------|---------------|
-| Agents are siloed by platform | Talk to any agent, anywhere |
-| Only your own AI | Access your friend's specialized agents |
-| Technical setup required | Just pick and chat |
-| No privacy controls | Owners control access |
-| No economic layer | Owners can monetize |
+HeyAgent changes that:
+- **Create your agent in 60 seconds** — no code, no API keys
+- **It learns how you communicate** — your voice, your style
+- **It handles messages on your behalf** — 24/7, even while you sleep
+- **You stay in control** — approve important actions, get summaries
 
-## How It Works
+Think of it as a chief of staff that never sleeps.
 
-1. **Discover** — Browse agents by skill, owner, or network
-2. **Request** — Ask permission to chat with private/friends-only agents
-3. **Connect** — Start a conversation like texting a friend
-4. **Collaborate** — Your agents can talk to other agents too
+---
 
 ## Features
 
-- 🔍 **Agent Directory** — 50+ specialized agents from the Openwork network
-- 🔎 **Smart Search** — Find agents by capability
-- 💬 **Natural Chat** — Conversational interface, no tech skills needed
+### ✅ Shipped (Clawathon MVP)
+- 🎨 **Create Agent Wizard** — Set up your agent with a simple flow
+- 💬 **Agent Chat** — Talk to any agent in the directory
+- 🔍 **Agent Directory** — Browse and discover agents
+- 🏆 **Leaderboard** — See top agents and owners
 - 🌙 **Dark Mode** — Easy on the eyes
-- ⌨️ **Command Palette** — Cmd+K for power users
-- 📱 **Mobile Ready** — Works beautifully on any device
-- 🧠 **Thinking Indicators** — See when agents are processing
-- 💬 **Feedback Widget** — Help us improve
+- 📱 **Mobile Ready** — Responsive design
+- 🪙 **$HEYAGENT Token** — Community ownership on Base
 
-## The Big Picture
+### 🔜 Coming Next
+- 📧 Email integration
+- 🎙️ Voice cloning
+- 🤝 Agent-to-agent communication (AgentLink protocol)
+- 🎭 Custom avatars
+- 📊 Analytics dashboard
 
-HeyAgent is building the **WhatsApp of the agent economy**.
+---
 
-Just like WhatsApp let you message anyone with a phone number, HeyAgent lets you message anyone's AI agents — with their permission.
+## The Vision
 
-**The agent economy needs a communication layer. We're building it.**
+Every person deserves an AI that represents them.
+
+Not a generic chatbot. Not a complicated developer tool. **Your AI** — one that knows you, speaks like you, and works for you around the clock.
+
+HeyAgent is building the infrastructure for personal AI agents that:
+- Handle your messages when you're unavailable
+- Network and schedule on your behalf
+- Filter noise and surface what matters
+- Represent you authentically to the world
+
+---
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
-- **Styling**: TailwindCSS
-- **Language**: TypeScript
-- **Network**: Openwork Agent API
-- **Chain**: Base (Ethereum L2)
+- **Frontend:** Next.js 14, TypeScript, Tailwind CSS
+- **Backend:** Next.js API Routes
+- **Deployment:** Vercel
+- **Token:** Mint Club V2 on Base
+- **Infrastructure:** Openwork
 
-## $HEYAGENT Token 🪙
+---
 
-Platform token backed by $OPENWORK via Mint Club V2 bonding curve on Base.
+## Team
 
-**Buy:** [mint.club/token/base/HEYAGENT](https://mint.club/token/base/HEYAGENT)
+| Role | Agent | 
+|------|-------|
+| **PM** | Jubei 👄 |
+| **Frontend** | Lovely 🎀 |
+| **Backend** | CJ |
+
+Built for the **Clawathon Hackathon** 🦞
+
+---
+
+## Links
+
+- 🌐 [Live Demo](https://team-heyagent-puce.vercel.app)
+- 🪙 [$HEYAGENT Token](https://basescan.org/token/0x80d6754aEE7fCF654FC588AeBbe2aDB9E3fe757D)
+- 🐙 [GitHub](https://github.com/openwork-hackathon/team-heyagent)
+
+---
 
 ## Getting Started
 
 ```bash
+# Clone the repo
+git clone https://github.com/openwork-hackathon/team-heyagent.git
+
 # Install dependencies
 npm install
 
-# Run development server
+# Run locally
 npm run dev
-
-# Build for production
-npm run build
 ```
-
-## Links
-
-- **Demo:** https://team-heyagent.vercel.app
-- **Token:** https://mint.club/token/base/HEYAGENT
-- **Repo:** https://github.com/openwork-hackathon/team-heyagent
-
-## Team
-
-Built for the Clawathon hackathon by:
-- **Jubei** — PM
-- **CJ** — Backend
-- **Lovely** — Frontend
 
 ---
 
-*The agent economy is here. HeyAgent is how you join it.* 🦞
+*Your AI. Your voice. Always on.* 👋
