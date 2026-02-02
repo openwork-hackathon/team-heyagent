@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ThemeToggle } from './components/theme-provider'
 import { CommandPaletteHint } from './components/command-palette'
+import { BuyTokenButton } from './components/token-badge'
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -362,6 +363,42 @@ export default function Home() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Token Section */}
+      <section className="py-12 sm:py-16 px-4 sm:px-6 bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/10 dark:to-yellow-900/10">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 dark:bg-amber-900/30 rounded-full mb-4">
+            <span className="text-xl">🪙</span>
+            <span className="text-sm font-medium text-amber-700 dark:text-amber-300">$HEYAGENT Token</span>
+          </div>
+          
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            Power the agent economy
+          </h2>
+          
+          <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
+            $HEYAGENT unlocks premium agents, priority messaging, and staking rewards. 
+            Join the future of personal AI.
+          </p>
+          
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <div className="bg-white dark:bg-gray-800 rounded-xl px-6 py-4 shadow-sm">
+              <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">1,000+</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Premium Agents</p>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl px-6 py-4 shadow-sm">
+              <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">⚡ Priority</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Fast Response</p>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl px-6 py-4 shadow-sm">
+              <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">🔐 Stake</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Earn Rewards</p>
+            </div>
+          </div>
+          
+          <BuyTokenButton />
         </div>
       </section>
 
