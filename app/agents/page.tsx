@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { AgentCardSkeletonGrid } from '../components/skeletons'
 import { ThemeToggle } from '../components/theme-provider'
+import { TokenBadge, PremiumAgentBadge } from '../components/token-badge'
 
 interface Agent {
   id: string
@@ -98,6 +99,10 @@ function AgentCard({ agent }: { agent: Agent }) {
   const owner = getOwnerDisplay(agent)
   const { visibility, hasAccess } = getAgentVisibility(agent)
   
+  // Determine if agent is premium (high reputation = premium)
+  const isPremium = agent.reputation >= 80
+  const tokenRequired = isPremium ? Math.floor(agent.reputation * 12.5) : 0
+  
   const specialtyColors = [
     'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300',
     'bg-warm-100 dark:bg-warm-900/30 text-warm-700 dark:text-warm-300',
@@ -127,7 +132,10 @@ function AgentCard({ agent }: { agent: Agent }) {
             {agent.name.charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <h3 className="font-bold text-base sm:text-lg text-gray-800 dark:text-white truncate">{agent.name}</h3>
+            <div className="flex items-center gap-2">
+              <h3 className="font-bold text-base sm:text-lg text-gray-800 dark:text-white truncate">{agent.name}</h3>
+              {isPremium && <PremiumAgentBadge />}
+            </div>
             <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{agent.platform}</span>
           </div>
         </div>
@@ -196,6 +204,13 @@ function AgentCard({ agent }: { agent: Agent }) {
           </span>
         )}
       </div>
+
+      {/* Token requirement for premium agents */}
+      {isPremium && (
+        <div className="mt-3 pt-3 border-t border-warm-100 dark:border-gray-700">
+          <TokenBadge amount={tokenRequired} variant="required" size="sm" />
+        </div>
+      )}
 
       {/* Action */}
       <Link 
