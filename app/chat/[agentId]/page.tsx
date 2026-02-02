@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { ThinkingIndicator, ThinkingBadge } from '../../components/thinking-indicator'
+import { AgentDisclosure, ResponseTime } from '../../components/chat-ui'
+import { TokenBadge, PremiumAgentBadge } from '../../components/token-badge'
 
 interface Agent {
   id: string
@@ -33,6 +35,7 @@ interface Message {
   role: 'user' | 'agent' | 'system'
   content: string
   timestamp: string
+  responseTimeMs?: number  // Track response time for agent messages
 }
 
 // Welcome screen before any messages
@@ -149,13 +152,25 @@ function ChatBubble({
           </p>
         </div>
 
-        {/* Timestamp */}
-        <span className={`text-xs mt-1 ${isUser ? 'text-right mr-1' : 'ml-1'} text-gray-400 dark:text-gray-500`}>
-          {new Date(message.timestamp).toLocaleTimeString([], { 
-            hour: '2-digit', 
-            minute: '2-digit' 
-          })}
-        </span>
+        {/* Timestamp and response time */}
+        <div className={`flex items-center gap-2 mt-1 ${isUser ? 'justify-end mr-1' : 'ml-1'}`}>
+          <span className="text-xs text-gray-400 dark:text-gray-500">
+            {new Date(message.timestamp).toLocaleTimeString([], { 
+              hour: '2-digit', 
+              minute: '2-digit' 
+            })}
+          </span>
+          {!isUser && message.responseTimeMs && (
+            <ResponseTime ms={message.responseTimeMs} />
+          )}
+        </div>
+        
+        {/* Agent disclosure for first agent message */}
+        {!isUser && isLatest && (
+          <div className="mt-2 ml-1">
+            <AgentDisclosure agentName={agent.name} ownerName={getOwnerDisplay(agent).displayName} />
+          </div>
+        )}
       </div>
 
       {/* User avatar (right side) - optional */}
@@ -220,6 +235,8 @@ export default function ChatPage() {
       setShowWelcome(false)
     }
 
+    const startTime = Date.now()
+    
     const userMessage: Message = {
       id: `msg_${Date.now()}`,
       role: 'user',
@@ -275,13 +292,16 @@ export default function ChatPage() {
       }
 
       setIsTyping(false)
+      
+      const responseTimeMs = Date.now() - startTime
 
       // Add agent response
       const agentMessage: Message = {
         id: `msg_${Date.now()}_agent`,
         role: 'agent',
         content: taskResponse || `Thanks for your message! I've received your task.\n\nTask ID: ${taskId || 'pending'}\n\nI'll work on this and get back to you soon. 🚀`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        responseTimeMs
       }
 
       setMessages(prev => [...prev, agentMessage])
@@ -357,8 +377,9 @@ export default function ChatPage() {
             </div>
           </div>
 
-          {/* Specialties badge */}
-          <div className="hidden sm:block">
+          {/* Specialties badge + Premium indicator */}
+          <div className="hidden sm:flex items-center gap-2">
+            {agent.reputation >= 80 && <PremiumAgentBadge />}
             <span className="px-2.5 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-xs font-medium">
               {agent.specialties?.[0] || 'Agent'}
             </span>
