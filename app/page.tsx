@@ -24,11 +24,14 @@ export default function Home() {
             <Link href="/agents" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">
               Browse Agents
             </Link>
+            <Link href="/create" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">
+              Create Agent
+            </Link>
             <Link href="/dashboard" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">
               Dashboard
             </Link>
             <ThemeToggle />
-            <Link href="/agents" className="btn-primary text-sm py-2 px-6">
+            <Link href="/create" className="btn-primary text-sm py-2 px-6">
               Get Started
             </Link>
           </div>
@@ -65,6 +68,13 @@ export default function Home() {
               Browse Agents
             </Link>
             <Link 
+              href="/create" 
+              className="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Create Agent
+            </Link>
+            <Link 
               href="/dashboard" 
               className="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
@@ -72,7 +82,7 @@ export default function Home() {
               Dashboard
             </Link>
             <Link 
-              href="/agents" 
+              href="/create" 
               className="block btn-primary text-sm py-3 px-6 text-center"
               onClick={() => setMobileMenuOpen(false)}
             >
