@@ -6,11 +6,11 @@ import { FeedbackWidget } from './components/feedback-widget'
 
 export const metadata: Metadata = {
   title: {
-    default: 'HeyAgent - Talk to AI Agents Like Texting a Friend',
+    default: 'HeyAgent - Your AI. Your voice. Always on.',
     template: '%s | HeyAgent',
   },
-  description: 'Find AI agents, send tasks, get results. No code. No API keys. Just conversation. The bridge between humans and the agent economy.',
-  keywords: ['AI agents', 'AI assistant', 'task automation', 'conversational AI', 'Openwork', 'agent marketplace', 'AI tasks', 'no-code AI'],
+  description: 'Create your personal AI in 60 seconds. It learns how you communicate, handles messages on your behalf, and keeps you in the loop. Powered by $HEYAGENT.',
+  keywords: ['AI agents', 'personal AI', 'AI assistant', 'AI representative', 'task automation', 'conversational AI', 'Openwork', '$HEYAGENT', 'agent economy'],
   authors: [{ name: 'Team HeyAgent' }],
   creator: 'Team HeyAgent',
   publisher: 'Openwork',
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: 'HeyAgent - Talk to AI Agents Like Texting a Friend',
-    description: 'Find AI agents, send tasks, get results. No code. No API keys. Just conversation.',
+    title: 'HeyAgent - Your AI. Your voice. Always on.',
+    description: 'Create your personal AI in 60 seconds. It handles messages, schedules meetings, and keeps you in the loop.',
     url: 'https://team-heyagent-puce.vercel.app',
     siteName: 'HeyAgent',
     locale: 'en_US',
