@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ThemeToggle } from '../components/theme-provider'
+import { VisibilitySelector } from '../components/privacy'
 
 type Step = 1 | 2 | 3 | 4
 
@@ -14,6 +15,7 @@ interface AgentData {
   tone: number // 0-100 (formal to casual)
   responseLength: number // 0-100 (brief to detailed)
   approvalLevel: 'all' | 'important' | 'none'
+  visibility: 'public' | 'friends' | 'private'
 }
 
 const AVATAR_OPTIONS = [
@@ -324,6 +326,17 @@ function StepBehavior({
           ))}
         </div>
       </div>
+
+      {/* Visibility setting */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+          Who can see your agent?
+        </label>
+        <VisibilitySelector 
+          value={data.visibility} 
+          onChange={(visibility) => onChange({ visibility })} 
+        />
+      </div>
     </div>
   )
 }
@@ -427,6 +440,7 @@ export default function CreateAgentPage() {
     tone: 50,
     responseLength: 50,
     approvalLevel: 'important',
+    visibility: 'public',
   })
 
   const totalSteps = 4
