@@ -319,6 +319,82 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Live Demo Chat */}
+      <section className="py-12 sm:py-20 px-4 sm:px-6 bg-gradient-to-b from-primary-50 to-white dark:from-primary-900/10 dark:to-gray-900">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-3 text-gray-900 dark:text-white">
+            See it in action
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 text-center mb-8 max-w-xl mx-auto">
+            Watch how your agent handles a conversation
+          </p>
+
+          {/* Mock Chat Interface */}
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden max-w-lg mx-auto">
+            {/* Chat Header */}
+            <div className="bg-gray-50 dark:bg-gray-900 px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold">
+                🤖
+              </div>
+              <div>
+                <p className="font-semibold text-gray-900 dark:text-white">My Agent</p>
+                <p className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  Always online
+                </p>
+              </div>
+            </div>
+
+            {/* Chat Messages */}
+            <div className="p-4 space-y-4 min-h-[280px]">
+              {/* Incoming message */}
+              <div className="flex justify-start">
+                <div className="bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-bl-sm px-4 py-2 max-w-[80%]">
+                  <p className="text-sm text-gray-800 dark:text-gray-200">Hey, are you free for a call tomorrow?</p>
+                  <p className="text-xs text-gray-400 mt-1">Sarah • 2:34 PM</p>
+                </div>
+              </div>
+
+              {/* Agent response */}
+              <div className="flex justify-end">
+                <div className="bg-primary-500 rounded-2xl rounded-br-sm px-4 py-2 max-w-[80%]">
+                  <p className="text-sm text-white">Hi Sarah! Let me check the calendar... 📅</p>
+                  <p className="text-sm text-white mt-2">Yes! There&apos;s availability at 2pm or 4pm. Which works better for you?</p>
+                  <p className="text-xs text-primary-200 mt-1 flex items-center gap-1">
+                    <span>🤖</span> Agent • 2:34 PM
+                  </p>
+                </div>
+              </div>
+
+              {/* Another incoming */}
+              <div className="flex justify-start">
+                <div className="bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-bl-sm px-4 py-2 max-w-[80%]">
+                  <p className="text-sm text-gray-800 dark:text-gray-200">4pm works! Thanks</p>
+                  <p className="text-xs text-gray-400 mt-1">Sarah • 2:35 PM</p>
+                </div>
+              </div>
+
+              {/* Agent confirms */}
+              <div className="flex justify-end">
+                <div className="bg-primary-500 rounded-2xl rounded-br-sm px-4 py-2 max-w-[80%]">
+                  <p className="text-sm text-white">Done! I&apos;ve scheduled a call for tomorrow at 4pm. You&apos;ll both get calendar invites. ✅</p>
+                  <p className="text-xs text-primary-200 mt-1 flex items-center gap-1">
+                    <span>🤖</span> Agent • 2:35 PM
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Try it CTA */}
+            <div className="bg-gray-50 dark:bg-gray-900 px-4 py-4 border-t border-gray-200 dark:border-gray-700">
+              <Link href="/create" className="block w-full bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-xl text-center transition-colors">
+                Create Your Agent →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* How it works */}
       <section id="how-it-works" className="py-12 sm:py-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
