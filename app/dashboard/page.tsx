@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ThemeToggle } from '../components/theme-provider'
+import { TokenStatsCard, StakingStatus } from '../components/token-stats'
 
 interface MyAgent {
   id: string
@@ -329,6 +330,12 @@ export default function DashboardPage() {
                   </p>
                 </div>
               )}
+            </div>
+
+            {/* Token Stats Sidebar */}
+            <div className="space-y-4">
+              <TokenStatsCard />
+              <StakingStatus staked={0} tier="none" />
             </div>
 
             {/* Empty state for new users */}
