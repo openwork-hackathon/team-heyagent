@@ -24,6 +24,9 @@ export default function Home() {
             <Link href="/agents" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">
               Browse Agents
             </Link>
+            <Link href="/leaderboard" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">
+              Leaderboard
+            </Link>
             <Link href="/dashboard" className="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">
               Dashboard
             </Link>
@@ -63,6 +66,13 @@ export default function Home() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Browse Agents
+            </Link>
+            <Link 
+              href="/leaderboard" 
+              className="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              🏆 Leaderboard
             </Link>
             <Link 
               href="/dashboard" 
