@@ -39,10 +39,10 @@ const PERSONALITY_OPTIONS = [
 // Step indicator component
 function StepIndicator({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) {
   return (
-    <div className="flex items-center justify-center gap-2 mb-8">
+    <div className="flex items-center justify-center gap-1 sm:gap-2 mb-6 sm:mb-8">
       {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
         <div key={step} className="flex items-center">
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all ${
+          <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm transition-all ${
             step === currentStep
               ? 'bg-primary-500 text-white scale-110 shadow-lg'
               : step < currentStep
@@ -52,7 +52,7 @@ function StepIndicator({ currentStep, totalSteps }: { currentStep: number; total
             {step < currentStep ? '✓' : step}
           </div>
           {step < totalSteps && (
-            <div className={`w-8 h-1 mx-1 rounded ${
+            <div className={`w-4 sm:w-8 h-1 mx-0.5 sm:mx-1 rounded ${
               step < currentStep ? 'bg-green-500' : 'bg-gray-200 dark:bg-gray-700'
             }`} />
           )}
