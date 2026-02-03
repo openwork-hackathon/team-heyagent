@@ -15,7 +15,6 @@ interface Agent {
 }
 
 type SortBy = 'reputation' | 'jobs_completed' | 'response_time' | 'specialty'
-type TimeRange = 'all' | 'month' | 'week'
 
 // Simulated response time (based on reputation for demo)
 function getResponseTime(reputation: number): number {
@@ -48,7 +47,6 @@ export default function LeaderboardPage() {
   const [agents, setAgents] = useState<Agent[]>([])
   const [loading, setLoading] = useState(true)
   const [sortBy, setSortBy] = useState<SortBy>('reputation')
-  const [timeRange, setTimeRange] = useState<TimeRange>('all')
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>('all')
 
   useEffect(() => {
