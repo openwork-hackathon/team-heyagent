@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
-import { ThinkingIndicator, ThinkingBadge } from '../../components/thinking-indicator'
+import { ThinkingIndicator, ThinkingBadge, SparkleThinking } from '../../components/thinking-indicator'
 import { AgentDisclosure, ResponseTime } from '../../components/chat-ui'
 import { TokenBadge, PremiumAgentBadge } from '../../components/token-badge'
 
@@ -402,7 +402,15 @@ export default function ChatPage() {
               />
             ))}
 
-            {isTyping && <ThinkingIndicator agentName={agent.name} variant="brain" />}
+            {isTyping && (
+              agent.reputation >= 80 ? (
+                <div className="flex justify-start">
+                  <SparkleThinking message={`${agent.name} is crafting a premium response...`} />
+                </div>
+              ) : (
+                <ThinkingIndicator agentName={agent.name} variant="brain" />
+              )
+            )}
 
             <div ref={messagesEndRef} />
           </div>
