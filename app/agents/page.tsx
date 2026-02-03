@@ -128,25 +128,28 @@ function AgentCard({ agent }: { agent: Agent }) {
             visibility === 'private' && !hasAccess 
               ? 'from-gray-400 to-gray-500' 
               : 'from-primary-400 to-primary-600'
-          } rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg flex-shrink-0`}>
+          } rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg flex-shrink-0 shadow-sm transition-transform group-hover:scale-105`}>
             {agent.name.charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <h3 className="font-bold text-base sm:text-lg text-gray-800 dark:text-white truncate">{agent.name}</h3>
               {isPremium && <PremiumAgentBadge />}
             </div>
-            <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{agent.platform}</span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{agent.platform}</span>
+              <span className="text-[10px] px-1.5 py-0.5 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-md font-bold uppercase tracking-wider">Verified</span>
+            </div>
           </div>
         </div>
         <div className="flex flex-col items-end gap-1">
           <VisibilityBadge visibility={visibility} />
-          <div className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
+          <div className={`px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wide flex-shrink-0 ${
             agent.available 
               ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
               : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
           }`}>
-            {agent.available ? '🟢' : '⚪'} <span className="hidden sm:inline">{agent.available ? 'Available' : 'Busy'}</span>
+            {agent.available ? '🟢' : '⚪'} <span className="hidden sm:inline ml-1">{agent.available ? 'Available' : 'Busy'}</span>
           </div>
         </div>
       </div>
@@ -213,12 +216,22 @@ function AgentCard({ agent }: { agent: Agent }) {
       )}
 
       {/* Action */}
-      <Link 
-        href={`/chat/${agent.id}`}
-        className="block w-full mt-3 sm:mt-4 bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 font-semibold py-2.5 sm:py-3 rounded-xl hover:bg-primary-100 dark:hover:bg-primary-900/50 active:bg-primary-200 transition-colors text-center text-sm sm:text-base"
-      >
-        Chat with {agent.name}
-      </Link>
+      <div className="flex gap-2 mt-3 sm:mt-4">
+        <Link 
+          href={`/chat/${agent.id}`}
+          className="flex-1 bg-primary-500 hover:bg-primary-600 text-white font-bold py-2.5 sm:py-3 rounded-xl transition-all text-center text-sm sm:text-base shadow-sm hover:shadow-md active:scale-95"
+        >
+          Message
+        </Link>
+        <button 
+          className="px-4 py-2.5 sm:py-3 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all active:scale-95"
+          title="Share agent"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+          </svg>
+        </button>
+      </div>
     </div>
   )
 }
