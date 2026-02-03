@@ -352,33 +352,33 @@ function StepPreview({ data }: { data: AgentData }) {
 
   return (
     <div className="space-y-6 animate-fade-in-up">
-      <div className="text-center mb-8">
-        <div className="text-5xl mb-4">✨</div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+      <div className="text-center mb-6 sm:mb-8">
+        <div className="text-4xl sm:text-5xl mb-4">✨</div>
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
           Ready to Launch
         </h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
           Preview how your agent will respond
         </p>
       </div>
 
       {/* Agent Card Preview */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
-        <div className="flex items-start gap-4 mb-4">
-          <div className="w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center text-3xl">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 shadow-md sm:shadow-lg">
+        <div className="flex items-start gap-3 sm:gap-4 mb-4">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center text-2xl sm:text-3xl">
             {data.avatar || '🤖'}
           </div>
-          <div className="flex-1">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white truncate">
               {data.name || 'My Agent'}
             </h3>
-            <div className="flex items-center gap-2 mt-1">
-              <span className="flex items-center gap-1 text-xs text-green-600 dark:text-green-400">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+            <div className="flex items-center gap-2 mt-0.5 sm:mt-1">
+              <span className="flex items-center gap-1 text-[10px] sm:text-xs text-green-600 dark:text-green-400">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></span>
                 Always online
               </span>
-              <span className="text-xs text-gray-400">•</span>
-              <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">
+              <span className="text-[10px] sm:text-xs text-gray-400">•</span>
+              <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 capitalize truncate">
                 {data.personality} style
               </span>
             </div>
@@ -387,21 +387,21 @@ function StepPreview({ data }: { data: AgentData }) {
       </div>
 
       {/* Sample Conversation */}
-      <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-4">
-        <p className="text-xs text-gray-500 dark:text-gray-400 mb-3 text-center">Sample conversation</p>
+      <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-3 sm:p-4">
+        <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-3 text-center uppercase tracking-wider font-semibold">Sample conversation</p>
         
         {/* Incoming message */}
         <div className="flex justify-start mb-3">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-bl-sm px-4 py-2 max-w-[80%] border border-gray-200 dark:border-gray-700">
-            <p className="text-sm text-gray-900 dark:text-white">{sampleMessage}</p>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-bl-sm px-3 sm:px-4 py-2 max-w-[85%] border border-gray-200 dark:border-gray-700">
+            <p className="text-xs sm:text-sm text-gray-900 dark:text-white">{sampleMessage}</p>
           </div>
         </div>
 
         {/* Agent response */}
         <div className="flex justify-end">
-          <div className="bg-primary-500 rounded-2xl rounded-br-sm px-4 py-2 max-w-[80%]">
-            <p className="text-sm text-white">{sampleResponse}</p>
-            <p className="text-xs text-primary-200 mt-1 flex items-center gap-1">
+          <div className="bg-primary-500 rounded-2xl rounded-br-sm px-3 sm:px-4 py-2 max-w-[85%]">
+            <p className="text-xs sm:text-sm text-white">{sampleResponse}</p>
+            <p className="text-[10px] text-primary-200 mt-1 flex items-center gap-1">
               <span>🤖</span> Responding as your agent
             </p>
           </div>
@@ -409,12 +409,12 @@ function StepPreview({ data }: { data: AgentData }) {
       </div>
 
       {/* Settings Summary */}
-      <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4">
-        <div className="flex gap-3">
+      <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-3 sm:p-4">
+        <div className="flex gap-2 sm:gap-3">
           <span className="text-amber-500">⚙️</span>
-          <div className="text-sm">
-            <p className="text-amber-800 dark:text-amber-200 font-medium">Your settings</p>
-            <p className="text-amber-700 dark:text-amber-300 mt-1">
+          <div className="text-xs sm:text-sm">
+            <p className="text-amber-800 dark:text-amber-200 font-medium leading-tight">Your settings</p>
+            <p className="text-amber-700 dark:text-amber-300 mt-0.5 sm:mt-1">
               {data.approvalLevel === 'all' && 'Asks before every action'}
               {data.approvalLevel === 'important' && 'Asks before important actions only'}
               {data.approvalLevel === 'none' && 'Handles everything autonomously'}
