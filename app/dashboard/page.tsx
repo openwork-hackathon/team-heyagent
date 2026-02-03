@@ -377,6 +377,18 @@ export default function DashboardPage() {
 
             {/* Sidebar */}
             <div className="space-y-4">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm">
+                <h3 className="font-bold text-gray-900 dark:text-white mb-4">Account Settings</h3>
+                <div className="space-y-2">
+                  <Link 
+                    href="/privacy" 
+                    className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors group"
+                  >
+                    <span className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-primary-600 transition-colors">Privacy Dashboard</span>
+                    <span className="text-gray-400">🔒</span>
+                  </Link>
+                </div>
+              </div>
               <TokenBalanceCard />
               <TokenStatsCard />
               <StakingStatus staked={0} tier="none" />
