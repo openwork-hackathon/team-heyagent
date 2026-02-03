@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation'
 import { ThinkingIndicator, ThinkingBadge, SparkleThinking, ProcessingBar } from '../../components/thinking-indicator'
 import { AgentDisclosure, ResponseTime, SuggestedResponseCard } from '../../components/chat-ui'
 import { TokenBadge, PremiumAgentBadge } from '../../components/token-badge'
+import { AgentHandoffCard } from '../../components/handoff'
 
 interface Agent {
   id: string
@@ -193,6 +194,7 @@ export default function ChatPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
   const [showWelcome, setShowWelcome] = useState(true)
+  const [showHandoffRequest, setShowHandoffRequest] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -306,6 +308,11 @@ export default function ChatPage() {
 
       setMessages(prev => [...prev, agentMessage])
 
+      // Demo: Show handoff request after specific message
+      if (userMessage.content.toLowerCase().includes('research') || userMessage.content.toLowerCase().includes('complex')) {
+        setTimeout(() => setShowHandoffRequest(true), 1500)
+      }
+
     } catch (error) {
       console.error('Send error:', error)
       setIsTyping(false)
@@ -413,7 +420,29 @@ export default function ChatPage() {
               )
             )}
 
-            {messages.length === 1 && !isTyping && (
+            {showHandoffRequest && (
+              <div className="max-w-md mx-auto pt-4 pb-8">
+                <AgentHandoffCard 
+                  fromAgent={agent.name}
+                  toAgent="Researcher Pro"
+                  task="This task requires deep web research and analysis. Should I delegate this to Researcher Pro for better results?"
+                  onConfirm={() => {
+                    setTimeout(() => {
+                      setShowHandoffRequest(false)
+                      setMessages(prev => [...prev, {
+                        id: `handoff_done_${Date.now()}`,
+                        role: 'system',
+                        content: `✅ Task successfully delegated to Researcher Pro.`,
+                        timestamp: new Date().toISOString()
+                      }])
+                    }, 1000)
+                  }}
+                  onCancel={() => setShowHandoffRequest(false)}
+                />
+              </div>
+            )}
+
+            {messages.length === 1 && !isTyping && !showHandoffRequest && (
               <div className="animate-message-in">
                 <SuggestedResponseCard 
                   agentName={agent.name}
