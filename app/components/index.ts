@@ -42,5 +42,8 @@ export { ScreenReaderOnly, SkipToContent, LiveRegion, FocusTrapHint, KeyboardSho
 // Theme
 export { ThemeProvider, ThemeToggle } from './theme-provider'
 
+// Handoff components
+export { AgentHandoffCard, HandoffLogEntry } from './handoff'
+
 // Command palette
 export { CommandPalette, CommandPaletteHint } from './command-palette'
