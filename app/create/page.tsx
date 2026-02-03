@@ -187,23 +187,23 @@ function StepAboutYou({
           value={data.aboutYou}
           onChange={(e) => onChange({ aboutYou: e.target.value })}
           placeholder="I'm a software developer who loves hiking. I prefer brief, direct communication. I'm usually busy during work hours (9-5 PST) but responsive in evenings..."
-          rows={6}
-          className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
+          rows={5}
+          className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none text-sm sm:text-base"
           maxLength={1000}
         />
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1">
           {data.aboutYou.length}/1000 characters
         </p>
       </div>
 
-      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4">
-        <div className="flex gap-3">
+      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3 sm:p-4">
+        <div className="flex gap-2 sm:gap-3">
           <span className="text-blue-500">💡</span>
           <div>
-            <p className="text-sm text-blue-800 dark:text-blue-200 font-medium">
+            <p className="text-xs sm:text-sm text-blue-800 dark:text-blue-200 font-medium">
               What to include
             </p>
-            <ul className="text-xs text-blue-700 dark:text-blue-300 mt-1 space-y-1">
+            <ul className="text-[10px] sm:text-xs text-blue-700 dark:text-blue-300 mt-1 space-y-1">
               <li>• Your communication style preferences</li>
               <li>• Your typical availability</li>
               <li>• Topics you frequently discuss</li>
@@ -252,48 +252,48 @@ function StepBehavior({
 
       {/* Tone slider */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
           Communication Tone
         </label>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-500 dark:text-gray-400 w-16">Formal</span>
+        <div className="flex items-center gap-3 sm:gap-4">
+          <span className="text-[10px] sm:text-sm text-gray-500 dark:text-gray-400 w-12 sm:w-16">Formal</span>
           <input
             type="range"
             min="0"
             max="100"
             value={data.tone}
             onChange={(e) => onChange({ tone: parseInt(e.target.value) })}
-            className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
+            className="flex-1 h-1.5 sm:h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
           />
-          <span className="text-sm text-gray-500 dark:text-gray-400 w-16 text-right">Casual</span>
+          <span className="text-[10px] sm:text-sm text-gray-500 dark:text-gray-400 w-12 sm:w-16 text-right">Casual</span>
         </div>
       </div>
 
       {/* Response length slider */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
           Response Length
         </label>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-500 dark:text-gray-400 w-16">Brief</span>
+        <div className="flex items-center gap-3 sm:gap-4">
+          <span className="text-[10px] sm:text-sm text-gray-500 dark:text-gray-400 w-12 sm:w-16">Brief</span>
           <input
             type="range"
             min="0"
             max="100"
             value={data.responseLength}
             onChange={(e) => onChange({ responseLength: parseInt(e.target.value) })}
-            className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
+            className="flex-1 h-1.5 sm:h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
           />
-          <span className="text-sm text-gray-500 dark:text-gray-400 w-16 text-right">Detailed</span>
+          <span className="text-[10px] sm:text-sm text-gray-500 dark:text-gray-400 w-12 sm:w-16 text-right">Detailed</span>
         </div>
       </div>
 
       {/* Approval level */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
           When should your agent ask for approval?
         </label>
-        <div className="space-y-2">
+        <div className="grid gap-2">
           {[
             { value: 'all', label: 'Everything', description: 'Ask before every action', icon: '🔒' },
             { value: 'important', label: 'Important only', description: 'Ask before scheduling, sending emails, etc.', icon: '⚡' },
@@ -303,22 +303,22 @@ function StepBehavior({
               key={option.value}
               type="button"
               onClick={() => onChange({ approvalLevel: option.value as AgentData['approvalLevel'] })}
-              className={`w-full p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${
+              className={`w-full p-3 sm:p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 sm:gap-4 ${
                 data.approvalLevel === option.value
                   ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
               }`}
             >
-              <span className="text-xl">{option.icon}</span>
+              <span className="text-xl sm:text-2xl">{option.icon}</span>
               <div>
-                <h4 className={`font-semibold ${
+                <h4 className={`text-sm sm:text-base font-semibold ${
                   data.approvalLevel === option.value 
                     ? 'text-primary-600 dark:text-primary-400' 
                     : 'text-gray-900 dark:text-white'
                 }`}>
                   {option.label}
                 </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-tight">
                   {option.description}
                 </p>
               </div>
