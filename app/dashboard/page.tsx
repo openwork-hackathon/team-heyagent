@@ -7,6 +7,57 @@ import { TokenStatsCard, StakingStatus } from '../components/token-stats'
 import { WalletConnectButton, TokenBalanceCard } from '../components/wallet-connect'
 import { AgentHandoffCard, HandoffLogEntry } from '../components/handoff'
 
+// Delete Confirmation Modal Component
+function DeleteModal({ 
+  agentName, 
+  onConfirm, 
+  onCancel 
+}: { 
+  agentName: string
+  onConfirm: () => void
+  onCancel: () => void 
+}) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onCancel}
+      />
+      
+      {/* Modal */}
+      <div className="relative bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full shadow-2xl animate-scale-in">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-3xl">⚠️</span>
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            Delete Agent?
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
+            Are you sure you want to delete <span className="font-semibold">{agentName}</span>? 
+            This action cannot be undone and all agent data will be permanently removed.
+          </p>
+          <div className="flex gap-3">
+            <button
+              onClick={onCancel}
+              className="flex-1 px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={onConfirm}
+              className="flex-1 px-4 py-3 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 transition-colors"
+            >
+              Delete Agent
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 interface MyAgent {
   id: string
   name: string
@@ -113,6 +164,7 @@ export default function DashboardPage() {
   const [activities, setActivities] = useState<Activity[]>([])
   const [pendingApprovals, setPendingApprovals] = useState<Activity[]>([])
   const [loading, setLoading] = useState(true)
+  const [deleteModalAgent, setDeleteModalAgent] = useState<MyAgent | null>(null)
 
   useEffect(() => {
     // Load agents from localStorage (persisted from /create wizard)
@@ -145,8 +197,38 @@ export default function DashboardPage() {
     setPendingApprovals(prev => prev.filter(p => p.id !== id))
   }
 
+  const handleDeleteAgent = (agent: MyAgent, e: React.MouseEvent) => {
+    e.preventDefault() // Prevent navigation to chat
+    e.stopPropagation()
+    setDeleteModalAgent(agent)
+  }
+
+  const confirmDeleteAgent = () => {
+    if (!deleteModalAgent) return
+    
+    // Remove from state
+    setMyAgents(prev => prev.filter(a => a.id !== deleteModalAgent.id))
+    
+    // Remove from localStorage
+    const savedAgents = JSON.parse(localStorage.getItem('heyagent-agents') || '[]')
+    const updatedAgents = savedAgents.filter((a: Record<string, unknown>) => a.id !== deleteModalAgent.id)
+    localStorage.setItem('heyagent-agents', JSON.stringify(updatedAgents))
+    
+    // Close modal
+    setDeleteModalAgent(null)
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-warm-50 to-white dark:from-gray-900 dark:to-gray-800">
+      {/* Delete Confirmation Modal */}
+      {deleteModalAgent && (
+        <DeleteModal
+          agentName={deleteModalAgent.name}
+          onConfirm={confirmDeleteAgent}
+          onCancel={() => setDeleteModalAgent(null)}
+        />
+      )}
+
       {/* Navigation */}
       <nav className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-warm-100 dark:border-gray-800 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
@@ -228,48 +310,58 @@ export default function DashboardPage() {
               {/* My Agents Grid */}
               <div className="grid sm:grid-cols-2 gap-4">
                 {myAgents.map(agent => (
-                  <Link
+                  <div
                     key={agent.id}
-                    href={`/chat/${agent.id}`}
-                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg hover:scale-[1.01] transition-all"
+                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all relative group"
                   >
-                    <div className="flex items-start gap-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center text-3xl">
-                        {agent.avatar}
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                            {agent.name}
-                          </h3>
-                          {agent.pendingApprovals > 0 && (
-                            <span className="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-xs font-medium rounded-full">
-                              {agent.pendingApprovals} pending
+                    {/* Delete Button */}
+                    <button
+                      onClick={(e) => handleDeleteAgent(agent, e)}
+                      className="absolute top-3 right-3 w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-100 dark:hover:bg-red-900/30 hover:text-red-500 transition-all"
+                      title="Delete agent"
+                    >
+                      <span className="text-sm">🗑️</span>
+                    </button>
+
+                    <Link href={`/chat/${agent.id}`} className="block">
+                      <div className="flex items-start gap-4">
+                        <div className="w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center text-3xl">
+                          {agent.avatar}
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                              {agent.name}
+                            </h3>
+                            {agent.pendingApprovals > 0 && (
+                              <span className="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-xs font-medium rounded-full">
+                                {agent.pendingApprovals} pending
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2 mt-1 text-sm">
+                            <span className={`flex items-center gap-1 ${
+                              agent.status === 'active' 
+                                ? 'text-green-600 dark:text-green-400' 
+                                : 'text-gray-400'
+                            }`}>
+                              <span className={`w-2 h-2 rounded-full ${
+                                agent.status === 'active' ? 'bg-green-500' : 'bg-gray-400'
+                              }`} />
+                              {agent.status === 'active' ? 'Active' : 'Paused'}
                             </span>
-                          )}
+                            <span className="text-gray-400">•</span>
+                            <span className="text-gray-500 dark:text-gray-400">
+                              {agent.messagesHandled} messages
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+                            Last active {formatTimeAgo(agent.lastActive)}
+                          </p>
                         </div>
-                        <div className="flex items-center gap-2 mt-1 text-sm">
-                          <span className={`flex items-center gap-1 ${
-                            agent.status === 'active' 
-                              ? 'text-green-600 dark:text-green-400' 
-                              : 'text-gray-400'
-                          }`}>
-                            <span className={`w-2 h-2 rounded-full ${
-                              agent.status === 'active' ? 'bg-green-500' : 'bg-gray-400'
-                            }`} />
-                            {agent.status === 'active' ? 'Active' : 'Paused'}
-                          </span>
-                          <span className="text-gray-400">•</span>
-                          <span className="text-gray-500 dark:text-gray-400">
-                            {agent.messagesHandled} messages
-                          </span>
-                        </div>
-                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
-                          Last active {formatTimeAgo(agent.lastActive)}
-                        </p>
                       </div>
-                    </div>
-                  </Link>
+                    </Link>
+                  </div>
                 ))}
 
                 {/* Create New Agent Card */}
