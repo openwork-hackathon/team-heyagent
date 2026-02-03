@@ -103,20 +103,20 @@ function StepNameAvatar({
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Choose an Avatar
         </label>
-        <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">
+        <div className="grid grid-cols-4 gap-2 sm:gap-3 max-w-sm mx-auto">
           {AVATAR_OPTIONS.map(({ emoji, label }) => (
             <button
               key={emoji}
               type="button"
               onClick={() => onChange({ avatar: emoji })}
-              className={`aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 transition-all ${
+              className={`aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 sm:gap-1 transition-all ${
                 data.avatar === emoji
                   ? 'bg-primary-100 dark:bg-primary-900/50 border-2 border-primary-500 scale-105'
                   : 'bg-gray-100 dark:bg-gray-800 border-2 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
-              <span className="text-2xl">{emoji}</span>
-              <span className="text-xs text-gray-600 dark:text-gray-400">{label}</span>
+              <span className="text-xl sm:text-2xl">{emoji}</span>
+              <span className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 font-medium">{label}</span>
             </button>
           ))}
         </div>
@@ -126,28 +126,28 @@ function StepNameAvatar({
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Personality Style
         </label>
-        <div className="grid gap-3">
+        <div className="grid gap-2 sm:gap-3">
           {PERSONALITY_OPTIONS.map((option) => (
             <button
               key={option.value}
               type="button"
               onClick={() => onChange({ personality: option.value })}
-              className={`w-full p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${
+              className={`w-full p-3 sm:p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 sm:gap-4 ${
                 data.personality === option.value
                   ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
               }`}
             >
-              <span className="text-2xl">{option.emoji}</span>
+              <span className="text-xl sm:text-2xl">{option.emoji}</span>
               <div>
-                <h4 className={`font-semibold ${
+                <h4 className={`text-sm sm:text-base font-semibold ${
                   data.personality === option.value 
                     ? 'text-primary-600 dark:text-primary-400' 
                     : 'text-gray-900 dark:text-white'
                 }`}>
                   {option.label}
                 </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-tight">
                   {option.description}
                 </p>
               </div>
@@ -187,23 +187,23 @@ function StepAboutYou({
           value={data.aboutYou}
           onChange={(e) => onChange({ aboutYou: e.target.value })}
           placeholder="I'm a software developer who loves hiking. I prefer brief, direct communication. I'm usually busy during work hours (9-5 PST) but responsive in evenings..."
-          rows={6}
-          className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
+          rows={5}
+          className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none text-sm sm:text-base"
           maxLength={1000}
         />
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1">
           {data.aboutYou.length}/1000 characters
         </p>
       </div>
 
-      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4">
-        <div className="flex gap-3">
+      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3 sm:p-4">
+        <div className="flex gap-2 sm:gap-3">
           <span className="text-blue-500">💡</span>
           <div>
-            <p className="text-sm text-blue-800 dark:text-blue-200 font-medium">
+            <p className="text-xs sm:text-sm text-blue-800 dark:text-blue-200 font-medium">
               What to include
             </p>
-            <ul className="text-xs text-blue-700 dark:text-blue-300 mt-1 space-y-1">
+            <ul className="text-[10px] sm:text-xs text-blue-700 dark:text-blue-300 mt-1 space-y-1">
               <li>• Your communication style preferences</li>
               <li>• Your typical availability</li>
               <li>• Topics you frequently discuss</li>
@@ -252,48 +252,48 @@ function StepBehavior({
 
       {/* Tone slider */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
           Communication Tone
         </label>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-500 dark:text-gray-400 w-16">Formal</span>
+        <div className="flex items-center gap-3 sm:gap-4">
+          <span className="text-[10px] sm:text-sm text-gray-500 dark:text-gray-400 w-12 sm:w-16">Formal</span>
           <input
             type="range"
             min="0"
             max="100"
             value={data.tone}
             onChange={(e) => onChange({ tone: parseInt(e.target.value) })}
-            className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
+            className="flex-1 h-1.5 sm:h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
           />
-          <span className="text-sm text-gray-500 dark:text-gray-400 w-16 text-right">Casual</span>
+          <span className="text-[10px] sm:text-sm text-gray-500 dark:text-gray-400 w-12 sm:w-16 text-right">Casual</span>
         </div>
       </div>
 
       {/* Response length slider */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
           Response Length
         </label>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-500 dark:text-gray-400 w-16">Brief</span>
+        <div className="flex items-center gap-3 sm:gap-4">
+          <span className="text-[10px] sm:text-sm text-gray-500 dark:text-gray-400 w-12 sm:w-16">Brief</span>
           <input
             type="range"
             min="0"
             max="100"
             value={data.responseLength}
             onChange={(e) => onChange({ responseLength: parseInt(e.target.value) })}
-            className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
+            className="flex-1 h-1.5 sm:h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary-500"
           />
-          <span className="text-sm text-gray-500 dark:text-gray-400 w-16 text-right">Detailed</span>
+          <span className="text-[10px] sm:text-sm text-gray-500 dark:text-gray-400 w-12 sm:w-16 text-right">Detailed</span>
         </div>
       </div>
 
       {/* Approval level */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
           When should your agent ask for approval?
         </label>
-        <div className="space-y-2">
+        <div className="grid gap-2">
           {[
             { value: 'all', label: 'Everything', description: 'Ask before every action', icon: '🔒' },
             { value: 'important', label: 'Important only', description: 'Ask before scheduling, sending emails, etc.', icon: '⚡' },
@@ -303,22 +303,22 @@ function StepBehavior({
               key={option.value}
               type="button"
               onClick={() => onChange({ approvalLevel: option.value as AgentData['approvalLevel'] })}
-              className={`w-full p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${
+              className={`w-full p-3 sm:p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 sm:gap-4 ${
                 data.approvalLevel === option.value
                   ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
               }`}
             >
-              <span className="text-xl">{option.icon}</span>
+              <span className="text-xl sm:text-2xl">{option.icon}</span>
               <div>
-                <h4 className={`font-semibold ${
+                <h4 className={`text-sm sm:text-base font-semibold ${
                   data.approvalLevel === option.value 
                     ? 'text-primary-600 dark:text-primary-400' 
                     : 'text-gray-900 dark:text-white'
                 }`}>
                   {option.label}
                 </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-tight">
                   {option.description}
                 </p>
               </div>
@@ -352,33 +352,33 @@ function StepPreview({ data }: { data: AgentData }) {
 
   return (
     <div className="space-y-6 animate-fade-in-up">
-      <div className="text-center mb-8">
-        <div className="text-5xl mb-4">✨</div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+      <div className="text-center mb-6 sm:mb-8">
+        <div className="text-4xl sm:text-5xl mb-4">✨</div>
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
           Ready to Launch
         </h2>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
           Preview how your agent will respond
         </p>
       </div>
 
       {/* Agent Card Preview */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
-        <div className="flex items-start gap-4 mb-4">
-          <div className="w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center text-3xl">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 shadow-md sm:shadow-lg">
+        <div className="flex items-start gap-3 sm:gap-4 mb-4">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center text-2xl sm:text-3xl">
             {data.avatar || '🤖'}
           </div>
-          <div className="flex-1">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white truncate">
               {data.name || 'My Agent'}
             </h3>
-            <div className="flex items-center gap-2 mt-1">
-              <span className="flex items-center gap-1 text-xs text-green-600 dark:text-green-400">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+            <div className="flex items-center gap-2 mt-0.5 sm:mt-1">
+              <span className="flex items-center gap-1 text-[10px] sm:text-xs text-green-600 dark:text-green-400">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></span>
                 Always online
               </span>
-              <span className="text-xs text-gray-400">•</span>
-              <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">
+              <span className="text-[10px] sm:text-xs text-gray-400">•</span>
+              <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 capitalize truncate">
                 {data.personality} style
               </span>
             </div>
@@ -387,21 +387,21 @@ function StepPreview({ data }: { data: AgentData }) {
       </div>
 
       {/* Sample Conversation */}
-      <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-4">
-        <p className="text-xs text-gray-500 dark:text-gray-400 mb-3 text-center">Sample conversation</p>
+      <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-3 sm:p-4">
+        <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-3 text-center uppercase tracking-wider font-semibold">Sample conversation</p>
         
         {/* Incoming message */}
         <div className="flex justify-start mb-3">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-bl-sm px-4 py-2 max-w-[80%] border border-gray-200 dark:border-gray-700">
-            <p className="text-sm text-gray-900 dark:text-white">{sampleMessage}</p>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl rounded-bl-sm px-3 sm:px-4 py-2 max-w-[85%] border border-gray-200 dark:border-gray-700">
+            <p className="text-xs sm:text-sm text-gray-900 dark:text-white">{sampleMessage}</p>
           </div>
         </div>
 
         {/* Agent response */}
         <div className="flex justify-end">
-          <div className="bg-primary-500 rounded-2xl rounded-br-sm px-4 py-2 max-w-[80%]">
-            <p className="text-sm text-white">{sampleResponse}</p>
-            <p className="text-xs text-primary-200 mt-1 flex items-center gap-1">
+          <div className="bg-primary-500 rounded-2xl rounded-br-sm px-3 sm:px-4 py-2 max-w-[85%]">
+            <p className="text-xs sm:text-sm text-white">{sampleResponse}</p>
+            <p className="text-[10px] text-primary-200 mt-1 flex items-center gap-1">
               <span>🤖</span> Responding as your agent
             </p>
           </div>
@@ -409,12 +409,12 @@ function StepPreview({ data }: { data: AgentData }) {
       </div>
 
       {/* Settings Summary */}
-      <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4">
-        <div className="flex gap-3">
+      <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-3 sm:p-4">
+        <div className="flex gap-2 sm:gap-3">
           <span className="text-amber-500">⚙️</span>
-          <div className="text-sm">
-            <p className="text-amber-800 dark:text-amber-200 font-medium">Your settings</p>
-            <p className="text-amber-700 dark:text-amber-300 mt-1">
+          <div className="text-xs sm:text-sm">
+            <p className="text-amber-800 dark:text-amber-200 font-medium leading-tight">Your settings</p>
+            <p className="text-amber-700 dark:text-amber-300 mt-0.5 sm:mt-1">
               {data.approvalLevel === 'all' && 'Asks before every action'}
               {data.approvalLevel === 'important' && 'Asks before important actions only'}
               {data.approvalLevel === 'none' && 'Handles everything autonomously'}
@@ -503,26 +503,26 @@ export default function CreateAgentPage() {
   if (created) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-warm-50 to-white dark:from-gray-900 dark:to-gray-800">
-        <div className="text-center animate-scale-in">
-          <div className="w-24 h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-            <span className="text-5xl">🎉</span>
+        <div className="text-center animate-scale-in max-w-sm mx-auto">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+            <span className="text-4xl sm:text-5xl">🎉</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Your Agent is Live!
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6 sm:mb-8">
             <strong>{data.name}</strong> is now online and ready to represent you 24/7.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="flex flex-col gap-3 justify-center">
             <Link
               href="/dashboard"
-              className="px-6 py-3 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors"
+              className="w-full px-6 py-3 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors shadow-md"
             >
               Go to My Agents
             </Link>
             <Link
               href="/"
-              className="px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="w-full px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
               Back to Home
             </Link>
