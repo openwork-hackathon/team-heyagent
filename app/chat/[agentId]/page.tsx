@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { ThinkingIndicator, ThinkingBadge, SparkleThinking, ProcessingBar } from '../../components/thinking-indicator'
-import { AgentDisclosure, ResponseTime } from '../../components/chat-ui'
+import { AgentDisclosure, ResponseTime, SuggestedResponseCard } from '../../components/chat-ui'
 import { TokenBadge, PremiumAgentBadge } from '../../components/token-badge'
 
 interface Agent {
@@ -411,6 +411,18 @@ export default function ChatPage() {
               ) : (
                 <ThinkingIndicator agentName={agent.name} variant="brain" />
               )
+            )}
+
+            {messages.length === 1 && !isTyping && (
+              <div className="animate-message-in">
+                <SuggestedResponseCard 
+                  agentName={agent.name}
+                  response={`I can definitely help with that! Should I check the calendar for tomorrow afternoon?`}
+                  onUse={() => {
+                    setInput(`Yes, please check tomorrow afternoon.`)
+                  }}
+                />
+              </div>
             )}
 
             <div ref={messagesEndRef} />
