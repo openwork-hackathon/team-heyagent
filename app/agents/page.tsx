@@ -230,6 +230,8 @@ export default function AgentsPage() {
   const [selectedSpecialty, setSelectedSpecialty] = useState('all')
   const [selectedOwner, setSelectedOwner] = useState<OwnerFilter>('all')
   const [sortBy, setSortBy] = useState<SortOption>('reputation')
+  const [showAvailableOnly, setShowAvailableOnly] = useState(false)
+  const [showPremiumOnly, setShowPremiumOnly] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [filtersExpanded, setFiltersExpanded] = useState(false)
 
@@ -291,6 +293,16 @@ export default function AgentsPage() {
       )
     }
 
+    // Availability filter
+    if (showAvailableOnly) {
+      result = result.filter(agent => agent.available)
+    }
+
+    // Premium filter
+    if (showPremiumOnly) {
+      result = result.filter(agent => agent.reputation >= 80)
+    }
+
     // Owner filter
     if (selectedOwner !== 'all') {
       if (selectedOwner === 'network') {
@@ -327,7 +339,7 @@ export default function AgentsPage() {
     return result
   }, [agents, searchQuery, selectedSpecialty, selectedOwner, networkOwners, sortBy])
 
-  const hasActiveFilters = searchQuery || selectedSpecialty !== 'all' || selectedOwner !== 'all'
+  const hasActiveFilters = searchQuery || selectedSpecialty !== 'all' || selectedOwner !== 'all' || showAvailableOnly || showPremiumOnly
 
   return (
     <main className="min-h-screen">
@@ -489,6 +501,41 @@ export default function AgentsPage() {
                   <option value="rate-high">Sort: Rate ↓</option>
                 </select>
               </div>
+
+              {/* Toggles - NEW */}
+              <div className="flex flex-wrap gap-4 mt-4">
+                <label className="flex items-center gap-2 cursor-pointer group">
+                  <div className="relative">
+                    <input 
+                      type="checkbox" 
+                      className="sr-only" 
+                      checked={showAvailableOnly}
+                      onChange={(e) => setShowAvailableOnly(e.target.checked)}
+                    />
+                    <div className={`w-10 h-5 rounded-full transition-colors ${showAvailableOnly ? 'bg-primary-500' : 'bg-gray-200 dark:bg-gray-700'}`}></div>
+                    <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform ${showAvailableOnly ? 'translate-x-5' : 'translate-x-0'}`}></div>
+                  </div>
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                    Available Only
+                  </span>
+                </label>
+
+                <label className="flex items-center gap-2 cursor-pointer group">
+                  <div className="relative">
+                    <input 
+                      type="checkbox" 
+                      className="sr-only" 
+                      checked={showPremiumOnly}
+                      onChange={(e) => setShowPremiumOnly(e.target.checked)}
+                    />
+                    <div className={`w-10 h-5 rounded-full transition-colors ${showPremiumOnly ? 'bg-amber-500' : 'bg-gray-200 dark:bg-gray-700'}`}></div>
+                    <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform ${showPremiumOnly ? 'translate-x-5' : 'translate-x-0'}`}></div>
+                  </div>
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                    Premium Agents ✨
+                  </span>
+                </label>
+              </div>
               
               {/* Clear filters button */}
               {hasActiveFilters && (
@@ -497,10 +544,12 @@ export default function AgentsPage() {
                     setSearchQuery('')
                     setSelectedSpecialty('all')
                     setSelectedOwner('all')
+                    setShowAvailableOnly(false)
+                    setShowPremiumOnly(false)
                   }}
-                  className="mt-3 text-primary-600 text-sm font-medium"
+                  className="mt-4 text-primary-600 dark:text-primary-400 text-sm font-medium hover:underline"
                 >
-                  Clear filters
+                  Clear all filters
                 </button>
               )}
             </div>
