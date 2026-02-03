@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 
 interface ThinkingIndicatorProps {
   agentName: string
-  variant?: 'dots' | 'pulse' | 'brain' | 'steps'
+  variant?: 'dots' | 'pulse' | 'brain' | 'steps' | 'searching'
   showStatus?: boolean
 }
 
@@ -49,6 +49,7 @@ export function ThinkingIndicator({
           {variant === 'pulse' && <PulseAnimation />}
           {variant === 'brain' && <BrainAnimation />}
           {variant === 'steps' && <StepsAnimation />}
+          {variant === 'searching' && <SearchingAnimation />}
         </div>
 
         {showStatus && (
@@ -139,6 +140,18 @@ function StepsAnimation() {
           </span>
         </div>
       ))}
+    </div>
+  )
+}
+
+// Searching animation
+function SearchingAnimation() {
+  return (
+    <div className="flex items-center gap-2 h-5">
+      <div className="relative w-5 h-5 flex items-center justify-center">
+        <span className="text-lg animate-spin-slow">🔍</span>
+      </div>
+      <span className="text-sm text-gray-500 dark:text-gray-400">Searching web...</span>
     </div>
   )
 }
