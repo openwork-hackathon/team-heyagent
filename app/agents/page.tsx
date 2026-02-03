@@ -572,7 +572,7 @@ export default function AgentsPage() {
 
       {/* Agent Grid */}
       <section className="pb-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto content-visibility-auto">
           {loading ? (
             <AgentCardSkeletonGrid count={6} />
           ) : filteredAgents.length === 0 ? (

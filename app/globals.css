@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap&font-display=swap');
 
 /* Light theme variables */
 :root {
@@ -32,6 +32,7 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   transition: background 0.3s ease, color 0.3s ease;
+  text-rendering: optimizeSpeed;
 }
 
 /* Smooth scrolling */
@@ -99,14 +100,17 @@ html, body {
 
 .animate-fade-in {
   animation: fadeIn 0.2s ease-out forwards;
+  will-change: opacity;
 }
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out forwards;
+  will-change: transform, opacity;
 }
 
 .animate-pulse-glow {
@@ -120,6 +124,7 @@ html, body {
 
 .animate-shimmer {
   animation: shimmer 2s linear infinite;
+  will-change: background-position;
 }
 
 @keyframes scale-in {
@@ -129,6 +134,7 @@ html, body {
 
 .animate-scale-in {
   animation: scale-in 0.3s ease-out forwards;
+  will-change: transform, opacity;
 }
 
 /* Stagger animations */
@@ -150,6 +156,7 @@ html, body {
   background: rgb(var(--card-bg));
   border-color: rgb(var(--border-color));
   transition: background 0.3s ease, border-color 0.3s ease;
+  contain: paint;
 }
 
 /* Card hover effects */
@@ -621,6 +628,12 @@ textarea:focus-visible {
   transition-property: background-color, border-color;
   transition-duration: 0.2s;
   transition-timing-function: ease;
+}
+
+/* Performance Utilities */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
 }
 
 /* Exclude animations from theme transitions */
