@@ -503,26 +503,26 @@ export default function CreateAgentPage() {
   if (created) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-warm-50 to-white dark:from-gray-900 dark:to-gray-800">
-        <div className="text-center animate-scale-in">
-          <div className="w-24 h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-            <span className="text-5xl">🎉</span>
+        <div className="text-center animate-scale-in max-w-sm mx-auto">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+            <span className="text-4xl sm:text-5xl">🎉</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Your Agent is Live!
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6 sm:mb-8">
             <strong>{data.name}</strong> is now online and ready to represent you 24/7.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="flex flex-col gap-3 justify-center">
             <Link
               href="/dashboard"
-              className="px-6 py-3 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors"
+              className="w-full px-6 py-3 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors shadow-md"
             >
               Go to My Agents
             </Link>
             <Link
               href="/"
-              className="px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="w-full px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
               Back to Home
             </Link>
