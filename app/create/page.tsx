@@ -103,20 +103,20 @@ function StepNameAvatar({
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Choose an Avatar
         </label>
-        <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">
+        <div className="grid grid-cols-4 gap-2 sm:gap-3 max-w-sm mx-auto">
           {AVATAR_OPTIONS.map(({ emoji, label }) => (
             <button
               key={emoji}
               type="button"
               onClick={() => onChange({ avatar: emoji })}
-              className={`aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 transition-all ${
+              className={`aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 sm:gap-1 transition-all ${
                 data.avatar === emoji
                   ? 'bg-primary-100 dark:bg-primary-900/50 border-2 border-primary-500 scale-105'
                   : 'bg-gray-100 dark:bg-gray-800 border-2 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
-              <span className="text-2xl">{emoji}</span>
-              <span className="text-xs text-gray-600 dark:text-gray-400">{label}</span>
+              <span className="text-xl sm:text-2xl">{emoji}</span>
+              <span className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 font-medium">{label}</span>
             </button>
           ))}
         </div>
@@ -126,28 +126,28 @@ function StepNameAvatar({
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Personality Style
         </label>
-        <div className="grid gap-3">
+        <div className="grid gap-2 sm:gap-3">
           {PERSONALITY_OPTIONS.map((option) => (
             <button
               key={option.value}
               type="button"
               onClick={() => onChange({ personality: option.value })}
-              className={`w-full p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 ${
+              className={`w-full p-3 sm:p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 sm:gap-4 ${
                 data.personality === option.value
                   ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
               }`}
             >
-              <span className="text-2xl">{option.emoji}</span>
+              <span className="text-xl sm:text-2xl">{option.emoji}</span>
               <div>
-                <h4 className={`font-semibold ${
+                <h4 className={`text-sm sm:text-base font-semibold ${
                   data.personality === option.value 
                     ? 'text-primary-600 dark:text-primary-400' 
                     : 'text-gray-900 dark:text-white'
                 }`}>
                   {option.label}
                 </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-tight">
                   {option.description}
                 </p>
               </div>
