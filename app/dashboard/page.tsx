@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ThemeToggle } from '../components/theme-provider'
 import { TokenStatsCard, StakingStatus } from '../components/token-stats'
 import { WalletConnectButton, TokenBalanceCard } from '../components/wallet-connect'
+import { AgentHandoffCard, HandoffLogEntry } from '../components/handoff'
 
 interface MyAgent {
   id: string
@@ -107,6 +108,7 @@ function formatTimeAgo(dateString: string): string {
 }
 
 export default function DashboardPage() {
+  const [activeTab, setActiveTab] = useState<'agents' | 'delegations'>('agents')
   const [myAgents, setMyAgents] = useState<MyAgent[]>([])
   const [activities, setActivities] = useState<Activity[]>([])
   const [pendingApprovals, setPendingApprovals] = useState<Activity[]>([])
@@ -174,12 +176,36 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-              My Agents
+              My Dashboard
             </h1>
             <p className="text-gray-600 dark:text-gray-400 mt-1">
-              Your personal AI representatives
+              Manage your personal AI representatives and delegations
             </p>
           </div>
+        </div>
+
+        {/* Tab Switcher */}
+        <div className="flex gap-6 mb-8 border-b border-gray-200 dark:border-gray-800 overflow-x-auto no-scrollbar">
+          <button
+            onClick={() => setActiveTab('agents')}
+            className={`pb-4 text-sm font-bold transition-all border-b-2 whitespace-nowrap ${
+              activeTab === 'agents'
+                ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            My Agents ({myAgents.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('delegations')}
+            className={`pb-4 text-sm font-bold transition-all border-b-2 whitespace-nowrap ${
+              activeTab === 'delegations'
+                ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            Delegations <span className="ml-1 px-1.5 py-0.5 bg-primary-100 dark:bg-primary-900/30 text-primary-600 text-[10px] rounded-full">New</span>
+          </button>
         </div>
 
         {loading ? (
@@ -196,158 +222,160 @@ export default function DashboardPage() {
               </div>
             ))}
           </div>
-        ) : (
-          <div className="space-y-6">
-            {/* My Agents Grid */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              {myAgents.map(agent => (
-                <Link
-                  key={agent.id}
-                  href={`/chat/${agent.id}`}
-                  className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg hover:scale-[1.01] transition-all"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center text-3xl">
-                      {agent.avatar}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                          {agent.name}
-                        </h3>
-                        {agent.pendingApprovals > 0 && (
-                          <span className="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-xs font-medium rounded-full">
-                            {agent.pendingApprovals} pending
+        ) : activeTab === 'agents' ? (
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-6">
+              {/* My Agents Grid */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                {myAgents.map(agent => (
+                  <Link
+                    key={agent.id}
+                    href={`/chat/${agent.id}`}
+                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg hover:scale-[1.01] transition-all"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center text-3xl">
+                        {agent.avatar}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                            {agent.name}
+                          </h3>
+                          {agent.pendingApprovals > 0 && (
+                            <span className="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-xs font-medium rounded-full">
+                              {agent.pendingApprovals} pending
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 mt-1 text-sm">
+                          <span className={`flex items-center gap-1 ${
+                            agent.status === 'active' 
+                              ? 'text-green-600 dark:text-green-400' 
+                              : 'text-gray-400'
+                          }`}>
+                            <span className={`w-2 h-2 rounded-full ${
+                              agent.status === 'active' ? 'bg-green-500' : 'bg-gray-400'
+                            }`} />
+                            {agent.status === 'active' ? 'Active' : 'Paused'}
                           </span>
-                        )}
+                          <span className="text-gray-400">•</span>
+                          <span className="text-gray-500 dark:text-gray-400">
+                            {agent.messagesHandled} messages
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+                          Last active {formatTimeAgo(agent.lastActive)}
+                        </p>
                       </div>
-                      <div className="flex items-center gap-2 mt-1 text-sm">
-                        <span className={`flex items-center gap-1 ${
-                          agent.status === 'active' 
-                            ? 'text-green-600 dark:text-green-400' 
-                            : 'text-gray-400'
-                        }`}>
-                          <span className={`w-2 h-2 rounded-full ${
-                            agent.status === 'active' ? 'bg-green-500' : 'bg-gray-400'
-                          }`} />
-                          {agent.status === 'active' ? 'Active' : 'Paused'}
-                        </span>
-                        <span className="text-gray-400">•</span>
-                        <span className="text-gray-500 dark:text-gray-400">
-                          {agent.messagesHandled} messages today
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
-                        Last active {formatTimeAgo(agent.lastActive)}
-                      </p>
                     </div>
+                  </Link>
+                ))}
+
+                {/* Create New Agent Card */}
+                <Link
+                  href="/create"
+                  className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border-2 border-dashed border-gray-200 dark:border-gray-700 hover:border-primary-400 dark:hover:border-primary-500 transition-all flex items-center justify-center min-h-[140px] group"
+                >
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                      <span className="text-2xl">➕</span>
+                    </div>
+                    <p className="font-semibold text-gray-700 dark:text-gray-300">Create New Agent</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">60-second setup</p>
                   </div>
                 </Link>
-              ))}
+              </div>
 
-              {/* Create New Agent Card */}
-              <Link
-                href="/create"
-                className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border-2 border-dashed border-gray-200 dark:border-gray-700 hover:border-primary-400 dark:hover:border-primary-500 transition-all flex items-center justify-center min-h-[140px] group"
-              >
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                    <span className="text-2xl">➕</span>
+              {/* Pending Approvals */}
+              {pendingApprovals.length > 0 && (
+                <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-amber-200 dark:border-amber-800">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-xl">⚠️</span>
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                      Needs Your Attention ({pendingApprovals.length})
+                    </h2>
                   </div>
-                  <p className="font-semibold text-gray-700 dark:text-gray-300">Create New Agent</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">60-second setup</p>
+                  <div className="space-y-3">
+                    {pendingApprovals.map(item => (
+                      <div
+                        key={item.id}
+                        className="flex items-center justify-between p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-amber-100 dark:bg-amber-900/50 rounded-lg flex items-center justify-center">
+                            🤖
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-900 dark:text-white">
+                              <span className="font-medium">{item.agentName}</span> {item.action}{' '}
+                              <span className="font-medium">{item.target}</span>
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              {formatTimeAgo(item.time)}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleApprove(item.id)}
+                            className="px-3 py-1.5 bg-green-500 text-white text-sm font-medium rounded-lg hover:bg-green-600 transition-colors"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            onClick={() => handleReject(item.id)}
+                            className="px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </Link>
-            </div>
+              )}
 
-            {/* Pending Approvals */}
-            {pendingApprovals.length > 0 && (
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-amber-200 dark:border-amber-800">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-xl">⚠️</span>
-                  <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                    Needs Your Attention ({pendingApprovals.length})
-                  </h2>
-                </div>
+              {/* Recent Activity */}
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                  Recent Activity
+                </h2>
                 <div className="space-y-3">
-                  {pendingApprovals.map(item => (
+                  {activities.map(activity => (
                     <div
-                      key={item.id}
-                      className="flex items-center justify-between p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl"
+                      key={activity.id}
+                      className="flex items-center gap-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-xl transition-colors"
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-amber-100 dark:bg-amber-900/50 rounded-lg flex items-center justify-center">
-                          🤖
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-900 dark:text-white">
-                            <span className="font-medium">{item.agentName}</span> {item.action}{' '}
-                            <span className="font-medium">{item.target}</span>
-                          </p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            {formatTimeAgo(item.time)}
-                          </p>
-                        </div>
+                      <div className="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center text-sm">
+                        🤖
                       </div>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => handleApprove(item.id)}
-                          className="px-3 py-1.5 bg-green-500 text-white text-sm font-medium rounded-lg hover:bg-green-600 transition-colors"
-                        >
-                          Approve
-                        </button>
-                        <button
-                          onClick={() => handleReject(item.id)}
-                          className="px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                        >
-                          Reject
-                        </button>
+                      <div className="flex-1">
+                        <p className="text-sm text-gray-900 dark:text-white">
+                          {activity.agentName} {activity.action.toLowerCase()}{' '}
+                          <span className="font-medium">{activity.target}</span>
+                        </p>
                       </div>
+                      <p className="text-xs text-gray-400 dark:text-gray-500">
+                        {formatTimeAgo(activity.time)}
+                      </p>
                     </div>
                   ))}
                 </div>
-              </div>
-            )}
 
-            {/* Recent Activity */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
-                Recent Activity
-              </h2>
-              <div className="space-y-3">
-                {activities.map(activity => (
-                  <div
-                    key={activity.id}
-                    className="flex items-center gap-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-xl transition-colors"
-                  >
-                    <div className="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center text-sm">
-                      🤖
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-900 dark:text-white">
-                        {activity.agentName} {activity.action.toLowerCase()}{' '}
-                        <span className="font-medium">{activity.target}</span>
-                      </p>
-                    </div>
-                    <p className="text-xs text-gray-400 dark:text-gray-500">
-                      {formatTimeAgo(activity.time)}
+                {activities.length === 0 && (
+                  <div className="text-center py-8">
+                    <div className="text-4xl mb-3">📭</div>
+                    <p className="text-gray-500 dark:text-gray-400">No recent activity</p>
+                    <p className="text-sm text-gray-400 dark:text-gray-500">
+                      Your agent&apos;s actions will appear here
                     </p>
                   </div>
-                ))}
+                )}
               </div>
-
-              {activities.length === 0 && (
-                <div className="text-center py-8">
-                  <div className="text-4xl mb-3">📭</div>
-                  <p className="text-gray-500 dark:text-gray-400">No recent activity</p>
-                  <p className="text-sm text-gray-400 dark:text-gray-500">
-                    Your agent&apos;s actions will appear here
-                  </p>
-                </div>
-              )}
             </div>
 
-            {/* Token Stats Sidebar */}
+            {/* Sidebar */}
             <div className="space-y-4">
               <TokenBalanceCard />
               <TokenStatsCard />
@@ -356,7 +384,7 @@ export default function DashboardPage() {
 
             {/* Empty state for new users */}
             {myAgents.length === 0 && (
-              <div className="text-center py-12">
+              <div className="text-center py-12 lg:col-span-2">
                 <div className="text-6xl mb-4">🤖</div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                   No agents yet
@@ -373,6 +401,71 @@ export default function DashboardPage() {
                 </Link>
               </div>
             )}
+          </div>
+        ) : (
+          <div className="grid lg:grid-cols-3 gap-8 animate-fade-in">
+            <div className="lg:col-span-2 space-y-6">
+              <div className="bg-primary-50 dark:bg-primary-900/10 border border-primary-100 dark:border-primary-900/30 rounded-2xl p-4 mb-6">
+                <div className="flex gap-3">
+                  <span className="text-xl">🤝</span>
+                  <div>
+                    <h3 className="font-bold text-primary-900 dark:text-primary-100 text-sm sm:text-base">About Agent Handoffs</h3>
+                    <p className="text-xs sm:text-sm text-primary-800 dark:text-primary-200 mt-1">
+                      Your agents can hire other specialized agents from the directory to help with complex tasks. 
+                      Approve or deny handoff requests below to facilitate autonomous collaboration.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Pending Handoff Requests</h2>
+              <AgentHandoffCard 
+                fromAgent={myAgents[0]?.name || "My Assistant"}
+                toAgent="Researcher Pro"
+                task="Analyze the latest 50 tweets about Openwork and compile a detailed research report for the user."
+              />
+
+              <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 mt-10">Recent Handoff Activity</h2>
+              <div className="space-y-3">
+                <HandoffLogEntry 
+                  fromAgent={myAgents[0]?.name || "My Assistant"}
+                  toAgent="Calendar Bot"
+                  timestamp="2 hours ago"
+                />
+                <HandoffLogEntry 
+                  fromAgent={myAgents[0]?.name || "My Assistant"}
+                  toAgent="Email Drafter"
+                  timestamp="5 hours ago"
+                />
+                <HandoffLogEntry 
+                  fromAgent={myAgents[0]?.name || "My Assistant"}
+                  toAgent="Code Reviewer"
+                  timestamp="Yesterday"
+                />
+              </div>
+            </div>
+
+            {/* Handoff Stats Sidebar */}
+            <div className="space-y-4">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm">
+                <h3 className="font-bold text-gray-900 dark:text-white mb-4">Delegation Stats</h3>
+                <div className="space-y-5 mt-4">
+                  <div className="flex justify-between items-end pb-2 border-b border-gray-50 dark:border-gray-700">
+                    <span className="text-xs sm:text-sm text-gray-500">Tasks Delegated</span>
+                    <span className="font-bold text-gray-900 dark:text-white">12</span>
+                  </div>
+                  <div className="flex justify-between items-end pb-2 border-b border-gray-50 dark:border-gray-700">
+                    <span className="text-xs sm:text-sm text-gray-500">Total Spend</span>
+                    <span className="font-bold text-primary-500">450 $HEYAGENT</span>
+                  </div>
+                  <div className="flex justify-between items-end">
+                    <span className="text-xs sm:text-sm text-gray-500">Human Time Saved</span>
+                    <span className="font-bold text-green-500">4.5 hrs</span>
+                  </div>
+                </div>
+              </div>
+              <TokenBalanceCard />
+            </div>
           </div>
         )}
       </div>
