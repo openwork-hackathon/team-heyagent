@@ -42,9 +42,9 @@ function StepIndicator({ currentStep, totalSteps }: { currentStep: number; total
     <div className="flex items-center justify-center gap-1 sm:gap-2 mb-6 sm:mb-8">
       {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
         <div key={step} className="flex items-center">
-          <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm transition-all ${
+          <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm transition-all duration-300 ${
             step === currentStep
-              ? 'bg-primary-500 text-white scale-110 shadow-lg'
+              ? 'bg-primary-500 text-white scale-110 shadow-lg ring-4 ring-primary-500/20'
               : step < currentStep
               ? 'bg-green-500 text-white'
               : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
@@ -52,13 +52,23 @@ function StepIndicator({ currentStep, totalSteps }: { currentStep: number; total
             {step < currentStep ? '✓' : step}
           </div>
           {step < totalSteps && (
-            <div className={`w-4 sm:w-8 h-1 mx-0.5 sm:mx-1 rounded ${
+            <div className={`w-4 sm:w-8 h-1 mx-0.5 sm:mx-1 rounded transition-all duration-500 ${
               step < currentStep ? 'bg-green-500' : 'bg-gray-200 dark:bg-gray-700'
             }`} />
           )}
         </div>
       ))}
     </div>
+  )
+}
+
+// Validation helper component
+function ValidationHint({ show, message }: { show: boolean; message: string }) {
+  if (!show) return null
+  return (
+    <p className="text-xs text-amber-600 dark:text-amber-400 mt-2 flex items-center gap-1 animate-fade-in">
+      <span>💡</span> {message}
+    </p>
   )
 }
 
@@ -97,6 +107,10 @@ function StepNameAvatar({
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
           {data.name.length}/50 characters
         </p>
+        <ValidationHint 
+          show={data.name.length > 0 && data.name.length < 2} 
+          message="Name should be at least 2 characters" 
+        />
       </div>
 
       <div>
@@ -109,7 +123,7 @@ function StepNameAvatar({
               key={emoji}
               type="button"
               onClick={() => onChange({ avatar: emoji })}
-              className={`aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 sm:gap-1 transition-all ${
+              className={`aspect-square rounded-2xl flex flex-col items-center justify-center gap-0.5 sm:gap-1 transition-all active:scale-95 ${
                 data.avatar === emoji
                   ? 'bg-primary-100 dark:bg-primary-900/50 border-2 border-primary-500 scale-105'
                   : 'bg-gray-100 dark:bg-gray-800 border-2 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -132,7 +146,7 @@ function StepNameAvatar({
               key={option.value}
               type="button"
               onClick={() => onChange({ personality: option.value })}
-              className={`w-full p-3 sm:p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 sm:gap-4 ${
+              className={`w-full p-3 sm:p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 sm:gap-4 active:scale-[0.98] ${
                 data.personality === option.value
                   ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
@@ -194,6 +208,10 @@ function StepAboutYou({
         <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1">
           {data.aboutYou.length}/1000 characters
         </p>
+        <ValidationHint 
+          show={data.aboutYou.length > 0 && data.aboutYou.length < 20} 
+          message="Tell us a bit more — at least 20 characters helps your agent understand you better" 
+        />
       </div>
 
       <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3 sm:p-4">
@@ -303,7 +321,7 @@ function StepBehavior({
               key={option.value}
               type="button"
               onClick={() => onChange({ approvalLevel: option.value as AgentData['approvalLevel'] })}
-              className={`w-full p-3 sm:p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 sm:gap-4 ${
+              className={`w-full p-3 sm:p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 sm:gap-4 active:scale-[0.98] ${
                 data.approvalLevel === option.value
                   ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
@@ -504,25 +522,42 @@ export default function CreateAgentPage() {
     return (
       <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-warm-50 to-white dark:from-gray-900 dark:to-gray-800">
         <div className="text-center animate-scale-in max-w-sm mx-auto">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 animate-bounce-in">
             <span className="text-4xl sm:text-5xl">🎉</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Your Agent is Live!
           </h1>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6 sm:mb-8">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">
             <strong>{data.name}</strong> is now online and ready to represent you 24/7.
           </p>
-          <div className="flex flex-col gap-3 justify-center">
+          
+          {/* Agent Preview Card */}
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-200 dark:border-gray-700 shadow-md mb-6 animate-fade-in-up stagger-2">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center text-2xl">
+                {data.avatar || '🤖'}
+              </div>
+              <div className="text-left">
+                <h3 className="font-bold text-gray-900 dark:text-white">{data.name}</h3>
+                <div className="flex items-center gap-1 text-xs text-green-600 dark:text-green-400">
+                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                  Always online
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex flex-col gap-3 justify-center animate-fade-in-up stagger-3">
             <Link
               href="/dashboard"
-              className="w-full px-6 py-3 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors shadow-md"
+              className="w-full px-6 py-3 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors shadow-md active:scale-[0.98]"
             >
               Go to My Agents
             </Link>
             <Link
               href="/"
-              className="w-full px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="w-full px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors active:scale-[0.98]"
             >
               Back to Home
             </Link>
@@ -560,7 +595,7 @@ export default function CreateAgentPage() {
             {step > 1 && (
               <button
                 onClick={handleBack}
-                className="flex-1 px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                className="flex-1 px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors active:scale-[0.98]"
               >
                 ← Back
               </button>
@@ -570,9 +605,9 @@ export default function CreateAgentPage() {
               <button
                 onClick={handleNext}
                 disabled={!canProceed()}
-                className={`flex-1 px-6 py-3 rounded-xl font-semibold transition-all ${
+                className={`flex-1 px-6 py-3 rounded-xl font-semibold transition-all active:scale-[0.98] ${
                   canProceed()
-                    ? 'bg-primary-500 text-white hover:bg-primary-600'
+                    ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-md hover:shadow-lg'
                     : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
                 }`}
               >
@@ -582,7 +617,7 @@ export default function CreateAgentPage() {
               <button
                 onClick={handleCreate}
                 disabled={isCreating}
-                className="flex-1 px-6 py-3 bg-green-500 text-white rounded-xl font-semibold hover:bg-green-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 px-6 py-3 bg-green-500 text-white rounded-xl font-semibold hover:bg-green-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.98]"
               >
                 {isCreating ? (
                   <>
