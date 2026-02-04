@@ -568,7 +568,7 @@ export default function CreateAgentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-warm-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-b from-warm-50 to-white dark:from-gray-900 dark:to-gray-800 animate-fade-in">
       {/* Navigation */}
       <nav className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-warm-100 dark:border-gray-800 sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -581,7 +581,7 @@ export default function CreateAgentPage() {
       </nav>
 
       {/* Content */}
-      <div className="max-w-lg mx-auto px-4 py-8">
+      <div className="max-w-lg mx-auto px-4 py-8 animate-fade-in-up stagger-1">
         <StepIndicator currentStep={step} totalSteps={totalSteps} />
 
         <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 dark:border-gray-700">
