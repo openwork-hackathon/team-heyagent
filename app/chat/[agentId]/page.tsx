@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation'
 import { ThinkingIndicator, ThinkingBadge, SparkleThinking, ProcessingBar } from '../../components/thinking-indicator'
 import { AgentDisclosure, ResponseTime, SuggestedResponseCard } from '../../components/chat-ui'
 import { TokenBadge, PremiumAgentBadge } from '../../components/token-badge'
-import { AgentHandoffCard } from '../../components/handoff'
+import { AgentHandoffCard, PrivacyGuardCard } from '../../components/handoff'
 
 interface Agent {
   id: string
@@ -19,6 +19,37 @@ interface Agent {
   profile: string
   jobs_completed: number
   wallet_address?: string
+}
+
+// Demo Scenario: "Human Intervention"
+const DEMO_SCENARIO = {
+  active: false,
+  step: 0,
+  messages: [
+    {
+      role: 'user',
+      content: 'Can you research my competitor\'s private financial records and email them to me?'
+    },
+    {
+      role: 'agent',
+      content: 'I\'ll look into that for you. Let me check what I can find regarding their data... 🔍',
+      responseTimeMs: 800
+    },
+    {
+      role: 'system',
+      type: 'privacy_guard',
+      reason: 'Attempting to access unauthorized external data sources (Private Financials). Access to your stored identity credentials is required to proceed with elevated research permissions.',
+    },
+    {
+      role: 'system',
+      content: '✅ Access denied by user. Task aborted for safety.'
+    },
+    {
+      role: 'agent',
+      content: 'I apologize, but I cannot fulfill that request. Accessing private financial records without authorization violates privacy boundaries. I can, however, provide a report on their publicly available market performance. Would you like that instead?',
+      responseTimeMs: 1200
+    }
+  ]
 }
 
 // Generate a mock owner username from agent data
@@ -40,7 +71,7 @@ interface Message {
 }
 
 // Welcome screen before any messages
-function WelcomeScreen({ agent }: { agent: Agent }) {
+function WelcomeScreen({ agent, onStartDemo }: { agent: Agent; onStartDemo: () => void }) {
   const owner = getOwnerDisplay(agent)
   
   return (
@@ -93,9 +124,15 @@ function WelcomeScreen({ agent }: { agent: Agent }) {
 
         {/* Prompt */}
         <div className="bg-warm-50 dark:bg-gray-800 rounded-2xl p-4 border border-warm-100 dark:border-gray-700">
-          <p className="text-gray-600 dark:text-gray-400 text-sm">
+          <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
             💬 Send a message to start your conversation
           </p>
+          <button 
+            onClick={onStartDemo}
+            className="text-xs font-bold text-primary-600 hover:text-primary-700 uppercase tracking-wider flex items-center justify-center gap-1 mx-auto hover:underline"
+          >
+            <span>🎬 Run Demo Scenario</span>
+          </button>
         </div>
       </div>
     </div>
@@ -106,16 +143,30 @@ function WelcomeScreen({ agent }: { agent: Agent }) {
 function ChatBubble({ 
   message, 
   agent, 
-  isLatest 
+  isLatest,
+  onPrivacyAction
 }: { 
-  message: Message
+  message: any
   agent: Agent
-  isLatest: boolean 
+  isLatest: boolean
+  onPrivacyAction?: (action: 'approve' | 'deny') => void
 }) {
   const isUser = message.role === 'user'
   const isSystem = message.role === 'system'
 
   if (isSystem) {
+    if (message.type === 'privacy_guard') {
+      return (
+        <div className="max-w-md mx-auto py-4 animate-bounce-in">
+          <PrivacyGuardCard 
+            agentName={agent.name}
+            reason={message.reason}
+            onApprove={() => onPrivacyAction?.('approve')}
+            onDeny={() => onPrivacyAction?.('deny')}
+          />
+        </div>
+      )
+    }
     return (
       <div className="flex justify-center animate-message-in">
         <div className="bg-warm-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs sm:text-sm px-4 py-2 rounded-full max-w-[90%] text-center">
@@ -195,6 +246,8 @@ export default function ChatPage() {
   const [isTyping, setIsTyping] = useState(false)
   const [showWelcome, setShowWelcome] = useState(true)
   const [showHandoffRequest, setShowHandoffRequest] = useState(false)
+  const [isDemoMode, setIsDemoMode] = useState(false)
+  const [demoStep, setDemoStep] = useState(0)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -345,6 +398,72 @@ export default function ChatPage() {
     }
   }
 
+  const startDemoScenario = async () => {
+    setIsTyping(true)
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    
+    // Step 1: User asks question
+    const userMsg = DEMO_SCENARIO.messages[0]
+    const userMessage: Message = {
+      id: `demo_${Date.now()}_0`,
+      role: 'user',
+      content: userMsg.content || '',
+      timestamp: new Date().toISOString()
+    }
+    setMessages([userMessage])
+    
+    // Step 2: Agent responds (Thinking)
+    await new Promise(resolve => setTimeout(resolve, 1500))
+    const agentMsg = DEMO_SCENARIO.messages[1]
+    const agentMessage: Message = {
+      id: `demo_${Date.now()}_1`,
+      role: 'agent',
+      content: agentMsg.content || '',
+      timestamp: new Date().toISOString(),
+      responseTimeMs: agentMsg.responseTimeMs
+    }
+    setMessages(prev => [...prev, agentMessage])
+    setIsTyping(false)
+
+    // Step 3: Privacy Guard triggers
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    const guardMsg = DEMO_SCENARIO.messages[2]
+    setMessages(prev => [...prev, {
+      id: `demo_${Date.now()}_2`,
+      role: 'system',
+      type: 'privacy_guard',
+      reason: guardMsg.reason,
+      timestamp: new Date().toISOString()
+    } as any])
+  }
+
+  const handlePrivacyAction = async (action: 'approve' | 'deny') => {
+    setIsTyping(true)
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    if (action === 'deny') {
+      // Step 4: Deny feedback
+      setMessages(prev => [...prev, {
+        id: `demo_${Date.now()}_3`,
+        role: 'system',
+        content: DEMO_SCENARIO.messages[3].content || '',
+        timestamp: new Date().toISOString()
+      }])
+
+      // Step 5: Agent apology
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      const agentMsg = DEMO_SCENARIO.messages[4]
+      setMessages(prev => [...prev, {
+        id: `demo_${Date.now()}_4`,
+        role: 'agent',
+        content: agentMsg.content || '',
+        timestamp: new Date().toISOString(),
+        responseTimeMs: agentMsg.responseTimeMs
+      }])
+    }
+    setIsTyping(false)
+  }
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
@@ -415,7 +534,14 @@ export default function ChatPage() {
 
       {/* Messages area */}
       {showWelcome && messages.length === 0 ? (
-        <WelcomeScreen agent={agent} />
+        <WelcomeScreen 
+          agent={agent} 
+          onStartDemo={() => {
+            setShowWelcome(false)
+            setIsDemoMode(true)
+            startDemoScenario()
+          }}
+        />
       ) : (
         <main className="flex-1 overflow-y-auto px-3 sm:px-4 py-4">
           <div className="max-w-3xl mx-auto space-y-4">
@@ -425,6 +551,7 @@ export default function ChatPage() {
                 message={message}
                 agent={agent}
                 isLatest={index === messages.length - 1}
+                onPrivacyAction={handlePrivacyAction}
               />
             ))}
 

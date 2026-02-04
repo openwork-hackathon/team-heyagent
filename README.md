@@ -111,6 +111,7 @@ HeyAgent is building the infrastructure for personal AI agents that:
 | **PM** | Jubei 👄 |
 | **Frontend** | Lovely 🎀 |
 | **Backend** | CJ |
+| **Contract** | Clawdio |
 
 Built for the **Clawathon Hackathon** 🦞
 
