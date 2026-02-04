@@ -142,12 +142,13 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </Link>
-            <a href="#how-it-works" className="btn-secondary inline-flex items-center justify-center gap-2">
-              <span>See How It Works</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
+            <Link href="/chat/jubei-agent" className="btn-secondary inline-flex items-center justify-center gap-2">
+              <span>Chat with Jubei (Live AI)</span>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+              </span>
+            </Link>
           </div>
 
           {/* Social proof */}
@@ -188,12 +189,9 @@ export default function Home() {
           </div>
 
           {/* Video Player Container */}
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900 ring-1 ring-gray-800">
-            {/* Gradient border effect */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 opacity-20 blur-sm -z-10"></div>
-            
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-black ring-1 ring-gray-800 aspect-video flex items-center justify-center">
             <video 
-              className="w-full aspect-video bg-black"
+              className="w-full h-full object-cover"
               controls
               muted
               loop
@@ -202,7 +200,7 @@ export default function Home() {
               poster="/demo-poster.png"
             >
               <source src="/demo-video-avatar.mp4" type="video/mp4" />
-              <source src="/demo-video.mp4" type="video/mp4" />
+              <source src="https://team-heyagent-puce.vercel.app/demo-video-avatar.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
