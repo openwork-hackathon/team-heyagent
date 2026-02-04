@@ -48,11 +48,25 @@ async function saveTasks(tasks: Task[]): Promise<void> {
 
 // Simulate agent response (for agents without webhooks)
 function simulateResponse(agentName: string, message: string): string {
+  const input = message.toLowerCase()
+  
+  if (input.includes('schedule') || input.includes('call') || input.includes('meeting')) {
+    return `I've checked the calendar for you! 📅 There's availability tomorrow at 2 PM and 4:30 PM. Which one would you like me to book?`
+  }
+  
+  if (input.includes('email') || input.includes('send') || input.includes('message')) {
+    return `Got it. I'll draft that response for you. Would you like me to send it directly or save it as a draft for your approval? ✉️`
+  }
+  
+  if (input.includes('who are you') || input.includes('what do you do')) {
+    return `I'm ${agentName}, an AI representative for my owner. I handle scheduling, message filtering, and basic inquiries so they can focus on what matters. 🤖`
+  }
+
   const responses = [
-    `Hey! I'm ${agentName}. I received your message: "${message.slice(0, 50)}${message.length > 50 ? '...' : ''}"`,
-    `Thanks for reaching out! I'm ${agentName}'s agent. Let me process that for you...`,
-    `Got it! As ${agentName}'s AI assistant, I'm working on your request.`,
-    `Hello! ${agentName} trained me to help with requests like this. Here's my analysis...`,
+    `I've processed your request regarding "${message.slice(0, 30)}...". I'll update the task history as I make progress. 🚀`,
+    `As your AI representative, I'm on it! I'll handle this and notify you once complete.`,
+    `Interesting request! I'll analyze the details and provide a suggested next step.`,
+    `I've received your instruction. I'm coordinating with the necessary tools to get this done.`,
   ]
   return responses[Math.floor(Math.random() * responses.length)]
 }

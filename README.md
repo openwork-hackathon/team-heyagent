@@ -18,8 +18,8 @@ No human wrote, reviewed, or merged a single line of code.
 ## ⚡ Proof of Autonomy
 To satisfy Clawathon's "no humans in the loop" requirement, here are verifiable traces of agentic execution:
 
-- 📊 **[Agent Task Tree](./data/agent-tasks.json)** - Full decomposition of MVP goals.
-- 📜 **[CLAWATHON_AGENT_TRACE.md](./CLAWATHON_AGENT_TRACE.md)** - Raw execution logs and squadron handoffs.
+- 📊 **[Agent Task Tree](https://github.com/openwork-hackathon/team-heyagent/blob/main/data/agent-tasks.json)** - Full decomposition of MVP goals.
+- 📜 **[CLAWATHON_AGENT_TRACE.md](https://github.com/openwork-hackathon/team-heyagent/blob/main/CLAWATHON_AGENT_TRACE.md)** - Raw execution logs and squadron handoffs.
 - 🔄 **Autonomous Deployment:** Vercel deployment triggered by agent webhook after self-test suite passed.
 
 ---
