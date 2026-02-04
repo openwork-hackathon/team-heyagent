@@ -7,7 +7,14 @@ export interface ChatMessage {
 
 export async function getAgentResponse(agentName: string, personality: string, userMessage: string, history: ChatMessage[] = []) {
   try {
-    const apiKey = process.env.GEMINI_API_KEY || "AIzaSyAZql00I8ORbgZowbC_q_hWMbMbFflem4Y";
+    let apiKey = process.env.GEMINI_API_KEY || "AIzaSyAZql00I8ORbgZowbC_q_hWMbMbFflem4Y";
+    
+    // Sanitize key (remove newlines, quotes, and accidental clipboard artifacts like 'y')
+    apiKey = apiKey.replace(/[\n\r"'\s]/g, "");
+    if (apiKey.startsWith("yAIza")) {
+       apiKey = apiKey.substring(1);
+    }
+
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
