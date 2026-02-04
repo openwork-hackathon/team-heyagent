@@ -191,6 +191,7 @@ export default function Home() {
           {/* Video Player Container */}
           <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-black ring-1 ring-gray-800 aspect-video flex items-center justify-center">
             <video 
+              src="/demo-video-avatar.mp4"
               className="w-full h-full object-cover"
               controls
               muted
@@ -199,8 +200,6 @@ export default function Home() {
               playsInline
               poster="/demo-poster.png"
             >
-              <source src="/demo-video-avatar.mp4" type="video/mp4" />
-              <source src="https://team-heyagent-puce.vercel.app/demo-video-avatar.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
@@ -209,6 +208,31 @@ export default function Home() {
           <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
             ✨ Your AI, Your Voice, Always On — in 60 seconds
           </p>
+        </div>
+      </section>
+
+      {/* Real AI Demo Section - THE GHOST BUSTER */}
+      <section className="py-12 sm:py-20 px-4 sm:px-6 bg-primary-50/50 dark:bg-primary-900/10">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">The "Ghost Buster" Demo</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-8">
+            Test our squadron's real autonomous intelligence. Ask Jubei anything. No mocks, no theater.
+          </p>
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-xl border border-primary-100 dark:border-primary-800">
+            <Link 
+              href="/chat/jubei-agent" 
+              className="btn-primary w-full flex items-center justify-center gap-3 py-4 text-lg"
+            >
+              <span>Launch Live AI Chat Session</span>
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-300 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+              </span>
+            </Link>
+            <p className="mt-4 text-xs text-gray-500">
+              Powered by autonomous Gemini 1.5 Flash brain.
+            </p>
+          </div>
         </div>
       </section>
 
