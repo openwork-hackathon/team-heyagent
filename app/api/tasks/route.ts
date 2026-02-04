@@ -290,3 +290,4 @@ export async function GET(request: NextRequest) {
     total: unique.length 
   })
 }
+// CJ: verified Gemini 1.5 Flash brain integration
