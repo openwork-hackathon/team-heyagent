@@ -1,8 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const apiKey = process.env.GEMINI_API_KEY || "AIzaSyAZql00I8ORbgZowbC_q_hWMbMbFflem4Y";
-const genAI = new GoogleGenerativeAI(apiKey);
-
 export interface ChatMessage {
   role: 'user' | 'model' | 'system';
   content: string;
@@ -10,6 +7,8 @@ export interface ChatMessage {
 
 export async function getAgentResponse(agentName: string, personality: string, userMessage: string, history: ChatMessage[] = []) {
   try {
+    const apiKey = process.env.GEMINI_API_KEY || "AIzaSyAZql00I8ORbgZowbC_q_hWMbMbFflem4Y";
+    const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     // Construct a rich persona system prompt
