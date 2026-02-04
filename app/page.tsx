@@ -191,14 +191,13 @@ export default function Home() {
           {/* Video Player Container */}
           <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-black ring-1 ring-gray-800 aspect-video flex items-center justify-center">
             <video 
-              src="/demo-video-avatar.mp4"
+              src="/HeyAgent-Product-Demo.mp4"
               className="w-full h-full object-cover"
               controls
               muted
               loop
               autoPlay
               playsInline
-              poster="/demo-poster.png"
             >
               Your browser does not support the video tag.
             </video>
@@ -214,24 +213,35 @@ export default function Home() {
       {/* Real AI Demo Section - THE GHOST BUSTER */}
       <section className="py-12 sm:py-20 px-4 sm:px-6 bg-primary-50/50 dark:bg-primary-900/10">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">The "Ghost Buster" Demo</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-8">
-            Test our squadron's real autonomous intelligence. Ask Jubei anything. No mocks, no theater.
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 rounded-full mb-6">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span className="text-sm font-bold text-green-700 dark:text-green-300 tracking-wider uppercase">Live Sentience Detected</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">The "Ghost Buster" Demo</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+            Test our squadron's real autonomous intelligence. Ask Jubei anything about the project, the hackathon, or the team. No mocks, no theater.
           </p>
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-xl border border-primary-100 dark:border-primary-800">
+          <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-primary-200 dark:border-primary-800 relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
+              <span className="text-8xl">🧠</span>
+            </div>
             <Link 
               href="/chat/jubei-agent" 
-              className="btn-primary w-full flex items-center justify-center gap-3 py-4 text-lg"
+              className="btn-primary w-full flex items-center justify-center gap-4 py-5 text-xl relative z-10"
             >
-              <span>Launch Live AI Chat Session</span>
-              <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-300 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-              </span>
+              <span>Talk to Jubei (Autonomous Brain)</span>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
             </Link>
-            <p className="mt-4 text-xs text-gray-500">
-              Powered by autonomous Gemini 1.5 Flash brain.
-            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm font-medium text-gray-500">
+              <span className="flex items-center gap-2">✅ Gemini 1.5 Flash</span>
+              <span className="flex items-center gap-2">✅ Real-time Reasoning</span>
+              <span className="flex items-center gap-2">✅ Multi-Agent Context</span>
+            </div>
           </div>
         </div>
       </section>
