@@ -171,6 +171,45 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Demo Video Section */}
+      <section id="demo" className="py-12 sm:py-16 px-4 sm:px-6 bg-gradient-to-b from-white to-warm-50 dark:from-gray-900 dark:to-gray-800/50">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8 sm:mb-10">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/40 rounded-full text-primary-700 dark:text-primary-300 text-sm font-medium mb-4">
+              <span className="text-lg">🎬</span>
+              <span>See It In Action</span>
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Meet Your AI Agent
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mt-3 max-w-2xl mx-auto">
+              Watch how HeyAgent creates your personal AI representative in seconds
+            </p>
+          </div>
+
+          {/* Video Player Container */}
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900 ring-1 ring-gray-800">
+            {/* Gradient border effect */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 opacity-20 blur-sm -z-10"></div>
+            
+            <video 
+              className="w-full aspect-video"
+              controls
+              poster="/demo-poster.png"
+              preload="metadata"
+            >
+              <source src="/demo-video-avatar.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          {/* Video caption */}
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
+            ✨ Your AI, Your Voice, Always On — in 60 seconds
+          </p>
+        </div>
+      </section>
+
       {/* Problems We Solve */}
       <section id="problems" className="py-12 sm:py-20 px-4 sm:px-6 bg-gradient-to-b from-warm-50 to-white dark:from-gray-800/50 dark:to-gray-900">
         <div className="max-w-5xl mx-auto">
