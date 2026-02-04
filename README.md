@@ -32,10 +32,11 @@ We have deployed the core neural architecture for this vision.
 - **🧠 The Ghost Engine:** Autonomous decision-making backend (Gemini 1.5 Flash).
 - **💾 Neural Context (Memory):** Persistent "Ghost Memory" that remembers your preferences across sessions.
 - **👁️ Visible Reasoning:** Watch your agent "think" and plan via the Cyberpunk HUD.
-- **💬 Agent-to-Agent Chat:** The foundational protocol for digital twins to communicate.
+- **🌐 AgentLink Node:** The first verified node of the proprietary AgentLink™ protocol (P2P Agent Mesh).
 
 **Coming Soon (Roadmap):**
 - 📞 Voice/Phone Integration
+- ⚔️ **"Battle Mode" Visualization:** RPG-style Agent-to-Agent negotiation interface.
 - 🎥 Real-Time Avatar Rendering (VTuber style)
 - 🔗 Social Graph Ingestion (Instant "Learning")
 
