@@ -191,7 +191,7 @@ export default function Home() {
           {/* Video Player Container */}
           <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-black ring-1 ring-gray-800 aspect-video flex items-center justify-center">
             <video 
-              src="/HeyAgent-Product-Demo.mp4"
+              src="/demo-video-avatar.mp4"
               className="w-full h-full object-cover"
               controls
               muted
