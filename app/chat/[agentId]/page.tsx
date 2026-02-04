@@ -7,6 +7,7 @@ import { ThinkingIndicator, ThinkingBadge, SparkleThinking, ProcessingBar } from
 import { AgentDisclosure, ResponseTime, SuggestedResponseCard } from '../../components/chat-ui'
 import { TokenBadge, PremiumAgentBadge } from '../../components/token-badge'
 import { AgentHandoffCard, PrivacyGuardCard } from '../../components/handoff'
+import { GhostMemoryPanel } from '../../components/ghost-memory'
 
 interface Agent {
   id: string
@@ -714,6 +715,7 @@ export default function ChatPage() {
           </p>
         </div>
       </footer>
+      <GhostMemoryPanel />
     </div>
   )
 }
