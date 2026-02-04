@@ -1,8 +1,9 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const apiKey = process.env.GEMINI_API_KEY || "AIzaSyAZql00I8ORbgZowbC_q_hWMbMbFflem4Y";
+const genAI = new GoogleGenerativeAI(apiKey);
 
-interface ChatMessage {
+export interface ChatMessage {
   role: 'user' | 'model' | 'system';
   content: string;
 }
