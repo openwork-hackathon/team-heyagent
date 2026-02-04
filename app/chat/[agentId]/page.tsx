@@ -139,6 +139,55 @@ function WelcomeScreen({ agent, onStartDemo }: { agent: Agent; onStartDemo: () =
   )
 }
 
+// Thinking Component - Shows internal reasoning logs
+function AgentThinkingLog({ log }: { log: string }) {
+  const [expanded, setExpanded] = useState(false);
+  
+  // Clean log text (remove XML tags if present in display)
+  const cleanLog = log.replace(/<\/?thinking>/g, '').trim();
+
+  return (
+    <div className="flex flex-col animate-message-in max-w-[85%] mb-2">
+      <button 
+        onClick={() => setExpanded(!expanded)}
+        className="flex items-center gap-2 text-xs font-mono text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 px-3 py-1.5 rounded-lg border border-cyan-100 dark:border-cyan-900/50 hover:bg-cyan-100 dark:hover:bg-cyan-900/30 transition-all self-start"
+      >
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+        </span>
+        <span>AGENT_THOUGHT_PROCESS</span>
+        <svg 
+          className={`w-3 h-3 transition-transform ${expanded ? 'rotate-180' : ''}`} 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      
+      {expanded && (
+        <div className="mt-2 p-3 bg-black/90 text-green-400 font-mono text-xs rounded-lg border border-green-900/50 shadow-inner overflow-x-auto">
+          <div className="flex items-center gap-2 mb-2 border-b border-green-900/50 pb-1">
+            <span className="text-[10px] uppercase tracking-wider text-green-600">sys.log.stream</span>
+          </div>
+          <pre className="whitespace-pre-wrap leading-relaxed">
+            {cleanLog.split('...').map((step, i) => (
+              step.trim() && (
+                <div key={i} className="flex gap-2">
+                  <span className="text-gray-500">[{new Date().toLocaleTimeString([], {hour12: false, second: '2-digit'})}.{i}42]</span>
+                  <span>{step.trim()}...</span>
+                </div>
+              )
+            ))}
+          </pre>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // Chat bubble component
 function ChatBubble({ 
   message, 
@@ -153,6 +202,11 @@ function ChatBubble({
 }) {
   const isUser = message.role === 'user'
   const isSystem = message.role === 'system'
+
+  // Parse for thinking tags
+  const thinkingMatch = !isUser && message.content.match(/<thinking>([\s\S]*?)<\/thinking>/);
+  const thinkingContent = thinkingMatch ? thinkingMatch[1] : null;
+  const finalContent = !isUser ? message.content.replace(/<thinking>[\s\S]*?<\/thinking>/, '').trim() : message.content;
 
   if (isSystem) {
     if (message.type === 'privacy_guard') {
@@ -177,60 +231,68 @@ function ChatBubble({
   }
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} animate-message-in`}>
-      {/* Agent avatar (left side) */}
-      {!isUser && (
-        <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-bold mr-2 flex-shrink-0 shadow-sm">
-          {agent.name.charAt(0).toUpperCase()}
-        </div>
+    <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} animate-message-in w-full`}>
+      
+      {/* Internal Thought Log (Cyberpunk Style) */}
+      {thinkingContent && (
+        <AgentThinkingLog log={thinkingContent} />
       )}
 
-      <div className="flex flex-col max-w-[75%] sm:max-w-[70%]">
-        {/* Agent name label */}
+      <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} w-full max-w-[85%]`}>
+        {/* Agent avatar (left side) */}
         {!isUser && (
-          <span className="text-xs text-gray-500 dark:text-gray-500 ml-1 mb-1">{agent.name}</span>
+          <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-bold mr-2 flex-shrink-0 shadow-sm self-start">
+            {agent.name.charAt(0).toUpperCase()}
+          </div>
         )}
 
-        {/* Message bubble */}
-        <div
-          className={`px-4 py-2.5 sm:py-3 ${
-            isUser
-              ? 'bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-2xl rounded-br-md shadow-md'
-              : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-2xl rounded-bl-md shadow-sm border border-gray-100 dark:border-gray-700'
-          }`}
-        >
-          <p className="text-sm sm:text-base whitespace-pre-wrap break-words leading-relaxed">
-            {message.content}
-          </p>
-        </div>
+        <div className="flex flex-col w-full">
+          {/* Agent name label */}
+          {!isUser && (
+            <span className="text-xs text-gray-500 dark:text-gray-500 ml-1 mb-1">{agent.name}</span>
+          )}
 
-        {/* Timestamp and response time */}
-        <div className={`flex items-center gap-2 mt-1 ${isUser ? 'justify-end mr-1' : 'ml-1'}`}>
-          <span className="text-xs text-gray-400 dark:text-gray-500">
-            {new Date(message.timestamp).toLocaleTimeString([], { 
-              hour: '2-digit', 
-              minute: '2-digit' 
-            })}
-          </span>
-          {!isUser && message.responseTimeMs && (
-            <ResponseTime ms={message.responseTimeMs} />
+          {/* Message bubble */}
+          <div
+            className={`px-4 py-2.5 sm:py-3 ${
+              isUser
+                ? 'bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-2xl rounded-br-md shadow-md ml-auto'
+                : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-2xl rounded-bl-md shadow-sm border border-gray-100 dark:border-gray-700'
+            }`}
+          >
+            <p className="text-sm sm:text-base whitespace-pre-wrap break-words leading-relaxed">
+              {finalContent}
+            </p>
+          </div>
+
+          {/* Timestamp and response time */}
+          <div className={`flex items-center gap-2 mt-1 ${isUser ? 'justify-end mr-1' : 'ml-1'}`}>
+            <span className="text-xs text-gray-400 dark:text-gray-500">
+              {new Date(message.timestamp).toLocaleTimeString([], { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+              })}
+            </span>
+            {!isUser && message.responseTimeMs && (
+              <ResponseTime ms={message.responseTimeMs} />
+            )}
+          </div>
+          
+          {/* Agent disclosure for first agent message */}
+          {!isUser && isLatest && (
+            <div className="mt-2 ml-1">
+              <AgentDisclosure agentName={agent.name} ownerName={getOwnerDisplay(agent).displayName} />
+            </div>
           )}
         </div>
-        
-        {/* Agent disclosure for first agent message */}
-        {!isUser && isLatest && (
-          <div className="mt-2 ml-1">
-            <AgentDisclosure agentName={agent.name} ownerName={getOwnerDisplay(agent).displayName} />
+
+        {/* User avatar (right side) - optional */}
+        {isUser && (
+          <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 text-xs sm:text-sm font-bold ml-2 flex-shrink-0 self-start">
+            You
           </div>
         )}
       </div>
-
-      {/* User avatar (right side) - optional */}
-      {isUser && (
-        <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 text-xs sm:text-sm font-bold ml-2 flex-shrink-0">
-          You
-        </div>
-      )}
     </div>
   )
 }
@@ -250,6 +312,30 @@ export default function ChatPage() {
   const [demoStep, setDemoStep] = useState(0)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  // Load chat history from localStorage on mount
+  useEffect(() => {
+    if (!agentId) return
+    
+    try {
+      const saved = localStorage.getItem(`chat_history_${agentId}`)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed)
+          setShowWelcome(false)
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load chat history:', e)
+    }
+  }, [agentId])
+
+  // Save chat history to localStorage whenever it changes
+  useEffect(() => {
+    if (!agentId || messages.length === 0) return
+    localStorage.setItem(`chat_history_${agentId}`, JSON.stringify(messages))
+  }, [messages, agentId])
 
   // Mock fallback agent for demo
   const mockAgent: Agent = {
