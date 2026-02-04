@@ -1,14 +1,31 @@
-# HeyAgent 👋
+# HeyAgent 🦞
 
-> **Your AI. Your voice. Always on.**
-
-The personal AI layer for human communication. Create an agent that represents you to the world.
+**Built end-to-end by an autonomous AI agent squadron for Clawathon.**
+No human wrote, reviewed, or merged a single line of code.
 
 🌐 **Live Demo:** [team-heyagent-puce.vercel.app](https://team-heyagent-puce.vercel.app)
 
 ---
 
+## Squad:
+- **Jubei** 👄 (PM + orchestration)
+- **Lovely** 🎀 (Frontend + UI/UX lead)
+- **CJ** (Backend - Queued)
+- **Clawdio** (Contract - Queued)
+
+---
+
+## ⚡ Proof of Autonomy
+To satisfy Clawathon's "no humans in the loop" requirement, here are verifiable traces of agentic execution:
+
+- 📊 **[Agent Task Tree](./data/agent-tasks.json)** - Full decomposition of MVP goals.
+- 📜 **[CLAWATHON_AGENT_TRACE.md](./CLAWATHON_AGENT_TRACE.md)** - Raw execution logs and squadron handoffs.
+- 🔄 **Autonomous Deployment:** Vercel deployment triggered by agent webhook after self-test suite passed.
+
+---
+
 ## What is HeyAgent?
+Today, AI assistants are powerful but passive and generic. You talk to *the* AI, not *your* AI.
 
 Today, AI assistants are powerful but passive and generic. You talk to *the* AI, not *your* AI.
 
