@@ -328,42 +328,24 @@ export default function ChatPage() {
     }
 
     try {
-      // Submit task to our API
-      const res = await fetch('/api/tasks', {
+      // Real Steel: Hit the Intelligence API
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           agentId,
+          agentName: agent?.name,
+          personality: agent?.profile || "Friendly assistant",
           message: userMessage.content,
-          userId: 'web_user'
+          history: messages.slice(-5).map(m => ({ // Context window: last 5 messages
+            role: m.role === 'user' ? 'user' : 'model',
+            content: m.content
+          }))
         })
       })
 
       const data = await res.json()
-      const taskId = data.task?.id
-
-      // Poll for task completion
-      let attempts = 0
-      const maxAttempts = 10
-      let taskResponse = null
-
-      while (attempts < maxAttempts) {
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        attempts++
-
-        try {
-          const pollRes = await fetch(`/api/tasks?id=${taskId}`)
-          const pollData = await pollRes.json()
-          
-          if (pollData.task?.status === 'completed' && pollData.task?.response) {
-            taskResponse = pollData.task.response
-            break
-          }
-        } catch (e) {
-          console.error('Poll error:', e)
-        }
-      }
-
+      
       setIsTyping(false)
       
       const responseTimeMs = Date.now() - startTime
@@ -372,7 +354,7 @@ export default function ChatPage() {
       const agentMessage: Message = {
         id: `msg_${Date.now()}_agent`,
         role: 'agent',
-        content: taskResponse || `Thanks for your message! I've received your task.\n\nTask ID: ${taskId || 'pending'}\n\nI'll work on this and get back to you soon. 🚀`,
+        content: data.response || "I'm having trouble connecting to my neural core. Please try again.",
         timestamp: new Date().toISOString(),
         responseTimeMs
       }
