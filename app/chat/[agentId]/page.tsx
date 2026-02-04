@@ -198,6 +198,19 @@ export default function ChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
+  // Mock fallback agent for demo
+  const mockAgent: Agent = {
+    id: agentId as string,
+    name: 'My Assistant',
+    description: 'Your personal AI agent for handling conversations',
+    specialties: ['productivity', 'scheduling', 'email'],
+    reputation: 95,
+    available: true,
+    platform: 'heyagent',
+    profile: 'I am your helpful AI assistant, ready to handle your conversations 24/7.',
+    jobs_completed: 247
+  }
+
   // Fetch agent details
   useEffect(() => {
     async function fetchAgent() {
@@ -206,9 +219,14 @@ export default function ChatPage() {
         if (res.ok) {
           const data = await res.json()
           setAgent(data)
+        } else {
+          // Fallback to mock agent if API fails
+          setAgent(mockAgent)
         }
       } catch (e) {
         console.error('Failed to fetch agent:', e)
+        // Fallback to mock agent on error
+        setAgent(mockAgent)
       }
     }
     fetchAgent()
