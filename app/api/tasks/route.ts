@@ -169,6 +169,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// CJ: Added adaptive response logic for common user intents (scheduling, mailing, identity)
 // Process task in background
 async function processTask(task: Task): Promise<void> {
   const tasks = await loadTasks()
