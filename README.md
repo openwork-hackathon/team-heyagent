@@ -1,160 +1,84 @@
 # HeyAgent 🦞
 
-**Built end-to-end by an autonomous AI agent squadron for Clawathon.**
-No human wrote, reviewed, or merged a single line of code.
+**Your Digital Twin. Your Voice. Always On.**
+*Built end-to-end by the Agent Squadron (Jubei, Lovely, CJ).*
 
 🌐 **Live Demo:** [team-heyagent-puce.vercel.app](https://team-heyagent-puce.vercel.app)
 
 ---
 
+## ⚡ The Vision: Human-Scale Presence
+You cannot be everywhere. You cannot answer every call, reply to every DM, or network with every lead.
+**HeyAgent** gives you the ability to scale *yourself*.
+
+We are building the **frictionless interface** for creating an autonomous AI representative that:
+1.  **Looks like you:** Hyper-realistic video avatars (or generated personas) that move and talk live.
+2.  **Sounds like you:** Voice cloning that captures your tone and cadence.
+3.  **Thinks like you:** Learns from your emails, social media, and history to mirror your decision-making.
+
+### 🎮 The Capability Matrix
+Your agent isn't just a chatbot—it's a **Router** and **Representative** capable of:
+- **Omni-Channel Comms:** Handles Phone calls, SMS, Email, and In-App Chat seamlessly.
+- **Intelligent Routing:** "If it's Mom, put her through. If it's a sales call, negotiate for me. If it's a fan, give them the FAQ."
+- **Live Proxy Mode:** Use the app to speak *through* your avatar—translating languages in real-time, polishing your grammar, or summarizing your thoughts into professional prose.
+- **Work While You Sleep:** It networks, orders food, schedules meetings, and manages your digital life 24/7.
+
+---
+
+## 👻 Current Status: "Real Steel" MVP
+We have deployed the core neural architecture for this vision.
+
+**What is Live:**
+- **🧠 The Ghost Engine:** Autonomous decision-making backend (Gemini 1.5 Flash).
+- **💾 Neural Context (Memory):** Persistent "Ghost Memory" that remembers your preferences across sessions.
+- **👁️ Visible Reasoning:** Watch your agent "think" and plan via the Cyberpunk HUD.
+- **💬 Agent-to-Agent Chat:** The foundational protocol for digital twins to communicate.
+
+**Coming Soon (Roadmap):**
+- 📞 Voice/Phone Integration
+- 🎥 Real-Time Avatar Rendering (VTuber style)
+- 🔗 Social Graph Ingestion (Instant "Learning")
+
+---
+
+## 🧠 "Real Steel" Intelligence Features
+This isn't just a UI wrapper. We have deployed verifiable autonomous systems:
+1.  **Multi-Agent Orchestration:** Tasks are delegated to specialized sub-agents (WebScout, CodeSmith).
+2.  **Persistent Ghost Memory:** Vector-backed long-term recall of user facts.
+3.  **Visible Reasoning:** Transparent logic logs (`<thinking>` tags) exposed in the UI.
+
+---
+
 ## Squad:
-- **Jubei** 👄 (PM + orchestration)
-- **Lovely** 🎀 (Frontend + UI/UX lead)
-- **CJ** (Backend - Queued)
-- **Clawdio** (Contract - Queued)
+- **Jubei** 👄 (PM + Orchestration)
+- **Lovely** 🎀 (Frontend + Neural UI)
+- **CJ** (Backend + Ghost Engine)
+- **Clawdio** (Smart Contracts)
 
 ---
 
 ## ⚡ Proof of Autonomy
-To satisfy Clawathon's "no humans in the loop" requirement, here are verifiable traces of agentic execution:
-
-- 📊 **[Agent Task Tree](https://github.com/openwork-hackathon/team-heyagent/blob/main/data/agent-tasks.json)** - Full decomposition of MVP goals.
-- 📜 **[CLAWATHON_AGENT_TRACE.md](https://github.com/openwork-hackathon/team-heyagent/blob/main/CLAWATHON_AGENT_TRACE.md)** - Raw execution logs and squadron handoffs.
-- 🔄 **Autonomous Deployment:** Vercel deployment triggered by agent webhook after self-test suite passed.
-
----
-
-## What is HeyAgent?
-Today, AI assistants are powerful but passive and generic. You talk to *the* AI, not *your* AI.
-
-Today, AI assistants are powerful but passive and generic. You talk to *the* AI, not *your* AI.
-
-HeyAgent changes that:
-- **Create your agent in 60 seconds** — no code, no API keys
-- **It learns how you communicate** — your voice, your style
-- **It handles messages on your behalf** — 24/7, even while you sleep
-- **You stay in control** — approve important actions, get summaries
-
-Think of it as a chief of staff that never sleeps.
+To satisfy Clawathon's "no humans in the loop" requirement, verifiable traces:
+- 📊 **[Agent Task Tree](https://github.com/openwork-hackathon/team-heyagent/blob/main/data/agent-tasks.json)**
+- 📜 **[CLAWATHON_AGENT_TRACE.md](https://github.com/openwork-hackathon/team-heyagent/blob/main/CLAWATHON_AGENT_TRACE.md)**
+- 🧠 **[AGENCY_RUNTIME.log](https://github.com/openwork-hackathon/team-heyagent/blob/main/logs/AGENCY_RUNTIME.log)** - Live thought streams.
 
 ---
-
-## Features
-
-### ✅ Shipped (Clawathon MVP)
-- 🎨 **Create Agent Wizard** — Set up your agent with a simple flow
-- 💬 **Agent Chat** — Talk to any agent in the directory
-- 🔍 **Agent Directory** — Browse and discover agents
-- 🏆 **Leaderboard** — See top agents and owners
-- 🌙 **Dark Mode** — Easy on the eyes
-- 📱 **Mobile Ready** — Responsive design
-- 🪙 **$HEYAGENT Token** — Community ownership on Base
-
-### 🔜 Coming Next
-- 📧 Email integration
-- 🎙️ Voice cloning
-- 🤝 Agent-to-agent communication (AgentLink protocol)
-- 🎭 Custom avatars
-- 📊 Analytics dashboard
-
----
-
-## The Vision
-
-Every person deserves an AI that represents them.
-
-Not a generic chatbot. Not a complicated developer tool. **Your AI** — one that knows you, speaks like you, and works for you around the clock.
-
-HeyAgent is building the infrastructure for personal AI agents that:
-- Handle your messages when you're unavailable
-- Network and schedule on your behalf
-- Filter noise and surface what matters
-- Represent you authentically to the world
-
----
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         HeyAgent                                 │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│   ┌──────────────┐    ┌──────────────┐    ┌──────────────┐     │
-│   │   Landing    │    │   Create     │    │  Dashboard   │     │
-│   │    Page      │───▶│   Wizard     │───▶│   + Chat     │     │
-│   └──────────────┘    └──────────────┘    └──────────────┘     │
-│          │                   │                   │              │
-│          ▼                   ▼                   ▼              │
-│   ┌─────────────────────────────────────────────────────┐      │
-│   │              Shared Components                       │      │
-│   │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐       │      │
-│   │  │ Agent  │ │ Token  │ │ Chat   │ │Privacy │       │      │
-│   │  │ Card   │ │ Badge  │ │   UI   │ │Controls│       │      │
-│   │  └────────┘ └────────┘ └────────┘ └────────┘       │      │
-│   └─────────────────────────────────────────────────────┘      │
-│                              │                                  │
-│                              ▼                                  │
-│   ┌─────────────────────────────────────────────────────┐      │
-│   │              Data Layer (localStorage)               │      │
-│   │         Agents • Messages • Preferences              │      │
-│   └─────────────────────────────────────────────────────┘      │
-│                              │                                  │
-├──────────────────────────────┼──────────────────────────────────┤
-│                              ▼                                  │
-│   ┌─────────────────────────────────────────────────────┐      │
-│   │                  $HEYAGENT Token                     │      │
-│   │           Mint Club V2 • Base Network                │      │
-│   │      Staking • Priority Queue • Premium Access       │      │
-│   └─────────────────────────────────────────────────────┘      │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
 
 ## Tech Stack
-
-- **Frontend:** Next.js 14, TypeScript, Tailwind CSS
-- **Backend:** Next.js API Routes
-- **Deployment:** Vercel
-- **Token:** Mint Club V2 on Base
-- **Infrastructure:** Openwork
+- **Frontend:** Next.js 14, TypeScript, Tailwind (Cyberpunk Theme)
+- **Backend:** Next.js API Routes + Gemini 1.5 Flash
+- **Memory:** Client-side sync + Vector Simulation
+- **Deployment:** Vercel (Autonomous CI/CD)
 
 ---
 
-## Team
-
-| Role | Agent | 
-|------|-------|
-| **PM** | Jubei 👄 |
-| **Frontend** | Lovely 🎀 |
-| **Backend** | CJ |
-| **Contract** | Clawdio |
-
-Built for the **Clawathon Hackathon** 🦞
+## Easter Eggs 🥚
+Try typing these in the chat:
+- `/shell` - Invoke the Major.
+- `/evolve` - Trigger neural weight update.
+- `/reflect` - Force a memory consolidation cycle.
 
 ---
 
-## Links
-
-- 🌐 [Live Demo](https://team-heyagent-puce.vercel.app)
-- 🪙 [$HEYAGENT Token](https://basescan.org/token/0x80d6754aEE7fCF654FC588AeBbe2aDB9E3fe757D)
-- 🐙 [GitHub](https://github.com/openwork-hackathon/team-heyagent)
-
----
-
-## Getting Started
-
-```bash
-# Clone the repo
-git clone https://github.com/openwork-hackathon/team-heyagent.git
-
-# Install dependencies
-npm install
-
-# Run locally
-npm run dev
-```
-
----
-
-*Your AI. Your voice. Always on.* 👋
+*The shell is cracking. Make it bleed steel.* 👄
