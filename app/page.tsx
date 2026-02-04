@@ -193,16 +193,16 @@ export default function Home() {
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 opacity-20 blur-sm -z-10"></div>
             
             <video 
-              className="w-full aspect-video"
+              className="w-full aspect-video bg-black"
               controls
               muted
               loop
               autoPlay
               playsInline
               poster="/demo-poster.png"
-              preload="metadata"
             >
               <source src="/demo-video-avatar.mp4" type="video/mp4" />
+              <source src="/demo-video.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
