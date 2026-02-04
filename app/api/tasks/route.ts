@@ -233,8 +233,27 @@ export async function GET(request: NextRequest) {
   }
 
   // Return recent tasks (for demo)
+  const defaultTasks = [
+    {
+      id: 'task_demo_1',
+      agentName: 'TaskMaster Pro',
+      message: 'Schedule a call with Sarah for next Tuesday at 2pm',
+      status: 'completed',
+      response: 'Call scheduled with Sarah. Tuesday, Feb 10 @ 2:00 PM. 📅',
+      updatedAt: new Date().toISOString()
+    },
+    {
+      id: 'task_demo_2',
+      agentName: 'Inbox Hero',
+      message: 'Draft an email to the team about the new sprint goals',
+      status: 'completed',
+      response: 'Drafted email sent to drafts folder. ✉️',
+      updatedAt: new Date().toISOString()
+    }
+  ]
+
   return NextResponse.json({ 
-    tasks: tasks.slice(0, limit),
-    total: tasks.length 
+    tasks: tasks.length > 0 ? tasks.slice(0, limit) : defaultTasks,
+    total: tasks.length > 0 ? tasks.length : defaultTasks.length 
   })
 }
