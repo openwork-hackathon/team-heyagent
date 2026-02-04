@@ -195,6 +195,10 @@ export default function Home() {
             <video 
               className="w-full aspect-video"
               controls
+              muted
+              loop
+              autoPlay
+              playsInline
               poster="/demo-poster.png"
               preload="metadata"
             >

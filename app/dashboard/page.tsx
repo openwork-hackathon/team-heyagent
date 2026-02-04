@@ -182,8 +182,12 @@ export default function DashboardPage() {
       pendingApprovals: Math.floor(Math.random() * 3), // Demo: random approvals
     }))
     
-    // Use saved agents if any, otherwise show mock for demo
-    setMyAgents(transformedAgents.length > 0 ? transformedAgents : mockMyAgents)
+    // Use saved agents if any, always include the mock for demo stability
+    const finalAgents = transformedAgents.length > 0 
+      ? [...transformedAgents, ...mockMyAgents] 
+      : mockMyAgents
+      
+    setMyAgents(finalAgents)
     setActivities(mockActivities)
     setPendingApprovals(mockPendingApprovals)
     setLoading(false)
