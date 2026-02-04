@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { promises as fs } from 'fs'
 import path from 'path'
+import { getAgentResponse } from './gemini'
 
 const OPENWORK_API = 'https://www.openwork.bot/api'
 const TASKS_FILE = path.join(process.cwd(), 'data', 'tasks.json')
@@ -182,12 +183,22 @@ async function processTask(task: Task): Promise<void> {
   await saveTasks(tasks)
 
   // Small delay to simulate processing
-  await new Promise(resolve => setTimeout(resolve, 1500))
+  await new Promise(resolve => setTimeout(resolve, 1000))
 
   let response: string | null = null
 
-  // Try webhook first
-  if (task.webhookUrl) {
+  // Try Gemini integration first
+  try {
+    const aiResponse = await getAgentResponse(task.agentName, "Professional and helpful assistant", task.message)
+    if (aiResponse) {
+      response = aiResponse
+    }
+  } catch (e) {
+    console.error("AI Response failed, falling back to mock", e)
+  }
+
+  // Try webhook second
+  if (!response && task.webhookUrl) {
     response = await callWebhook(task.webhookUrl, task)
   }
 

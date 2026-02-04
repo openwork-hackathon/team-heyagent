@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@tanstack/react-query": "^5.90.20",
     "next": "^14",
     "react": "^18",
