@@ -6,6 +6,7 @@ import { ThemeToggle } from './components/theme-provider'
 import { CommandPaletteHint } from './components/command-palette'
 import { BuyTokenButton } from './components/token-badge'
 import { TokenInfoCompact } from './components/wallet-connect'
+import { RotatingHeadline, AutonomousFeatures } from './components/rotating-headline'
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -110,34 +111,19 @@ export default function Home() {
             <span className="text-4xl sm:text-5xl animate-float stagger-3">✨</span>
           </div>
 
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 dark:bg-primary-900/30 rounded-full mb-6 animate-fade-in-up">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            <span className="text-sm font-medium text-primary-700 dark:text-primary-300">
-              Your AI is always online
-            </span>
-          </div>
-
-          {/* Main headline */}
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold leading-tight mb-4 sm:mb-6 animate-fade-in-up text-gray-900 dark:text-white">
-            Your AI. Your voice.
-            <br />
-            <span className="gradient-text">Always on.</span>
-          </h1>
+          {/* Rotating Pain/Solution Headline */}
+          <RotatingHeadline />
 
           {/* Subheadline */}
-          <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-8 sm:mb-10 max-w-3xl mx-auto animate-fade-in-up stagger-1 px-4">
-            Create your personal AI in 60 seconds. 
-            <span className="text-primary-600 dark:text-primary-400 font-semibold"> It learns how you communicate</span>, handles messages on your behalf, and keeps you in the loop.
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-8 sm:mb-10 max-w-3xl mx-auto animate-fade-in-up stagger-1 px-4 mt-8">
+            Create your <span className="text-primary-600 dark:text-primary-400 font-semibold">personal AI</span> in 60 seconds. 
+            It handles calls, texts, and emails — automatically, in your voice.
           </p>
 
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-fade-in-up stagger-2 px-4">
             <Link href="/create" className="btn-primary inline-flex items-center justify-center gap-2">
-              <span>Create Your Agent</span>
+              <span>Create Your Personal AI</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -245,6 +231,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Autonomous Features Section */}
+      <AutonomousFeatures />
 
       {/* Problems We Solve */}
       <section id="problems" className="py-12 sm:py-20 px-4 sm:px-6 bg-gradient-to-b from-warm-50 to-white dark:from-gray-800/50 dark:to-gray-900">
