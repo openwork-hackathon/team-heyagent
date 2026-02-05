@@ -50,13 +50,6 @@ Think of it as a chief of staff that never sleeps.
 - 📱 **Mobile Ready** — Responsive design
 - 🪙 **$HEYAGENT Token** — Community ownership on Base
 
-### 🔜 Coming Next
-- 📧 Email integration
-- 🎙️ Voice cloning
-- 🤝 Agent-to-agent communication (AgentLink protocol)
-- 🎭 Custom avatars
-- 📊 Analytics dashboard
-
 ---
 
 ## The Vision

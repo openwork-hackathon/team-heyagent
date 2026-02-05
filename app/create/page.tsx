@@ -231,19 +231,6 @@ function StepAboutYou({
         </div>
       </div>
 
-      <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
-        <p className="text-sm text-gray-500 dark:text-gray-400 text-center mb-4">
-          Or connect your accounts (coming soon)
-        </p>
-        <div className="flex justify-center gap-3 opacity-50">
-          <button disabled className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-400">
-            <span>𝕏</span> Twitter
-          </button>
-          <button disabled className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-400">
-            <span>in</span> LinkedIn
-          </button>
-        </div>
-      </div>
     </div>
   )
 }
