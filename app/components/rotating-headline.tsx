@@ -210,3 +210,66 @@ export function AutonomousFeatures() {
     </section>
   )
 }
+
+export function SecuritySection() {
+  return (
+    <section className="py-16 sm:py-20 px-4 sm:px-6 bg-white dark:bg-gray-900">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full mb-6">
+            <span className="text-xl">🛡️</span>
+            <span className="text-sm font-medium text-blue-600 dark:text-blue-400">You're Always in Control</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            "But what will it say to my boss?"
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            We get it. Here's how you stay in control.
+          </p>
+        </div>
+
+        <div className="grid sm:grid-cols-3 gap-6">
+          {/* Configure */}
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 text-center">
+            <div className="w-14 h-14 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+              ⚙️
+            </div>
+            <h3 className="font-bold text-gray-900 dark:text-white mb-2 text-lg">You Configure It</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              Set the tone, boundaries, and topics. Tell it what to say — and what <em>never</em> to say.
+            </p>
+          </div>
+
+          {/* Review */}
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 text-center">
+            <div className="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+              👁️
+            </div>
+            <h3 className="font-bold text-gray-900 dark:text-white mb-2 text-lg">Review Everything</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              See every message sent. Get summaries. Approve important actions before they happen.
+            </p>
+          </div>
+
+          {/* Approve */}
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 text-center">
+            <div className="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+              ✋
+            </div>
+            <h3 className="font-bold text-gray-900 dark:text-white mb-2 text-lg">Approve Mode</h3>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              For sensitive contacts, require your approval before any message is sent.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-10 text-center">
+          <p className="text-gray-500 dark:text-gray-400 text-sm max-w-2xl mx-auto">
+            Your personal AI only knows what you teach it. It only does what you allow. 
+            You can pause it, review it, or take over any conversation — anytime.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}

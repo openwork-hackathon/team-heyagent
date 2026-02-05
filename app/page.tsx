@@ -6,7 +6,7 @@ import { ThemeToggle } from './components/theme-provider'
 import { CommandPaletteHint } from './components/command-palette'
 import { BuyTokenButton } from './components/token-badge'
 import { TokenInfoCompact } from './components/wallet-connect'
-import { RotatingHeadline, AutonomousFeatures } from './components/rotating-headline'
+import { RotatingHeadline, AutonomousFeatures, SecuritySection } from './components/rotating-headline'
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -234,6 +234,9 @@ export default function Home() {
 
       {/* Autonomous Features Section */}
       <AutonomousFeatures />
+
+      {/* Security & Control Section */}
+      <SecuritySection />
 
       {/* Problems We Solve */}
       <section id="problems" className="py-12 sm:py-20 px-4 sm:px-6 bg-gradient-to-b from-warm-50 to-white dark:from-gray-800/50 dark:to-gray-900">
