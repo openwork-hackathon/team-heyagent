@@ -98,7 +98,6 @@ This document captures our full product vision beyond the Clawathon MVP.
 
 *Features we've discussed but not prioritized:*
 
-- **Bring Your Own Agent (BYOA)** — Connect existing OpenClaw agents (imports SOUL.md, MEMORY.md, personality). Also support importing agents from other platforms via adapter pattern. HeyAgent becomes the communication layer for pre-trained agents. "Agent portability" differentiator.
 - **Vibe Slider** — "Professional ↔ Chaos Gremlin" personality spectrum
 - **Voice Presets** — "Polite British" / "Cyberpunk Glitch" / "Anime Protagonist"
 - **Avatar Style Picker** — Pokemon style, Realistic, Cartoon, etc.
